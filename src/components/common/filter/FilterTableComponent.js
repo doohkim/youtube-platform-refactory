@@ -27,18 +27,20 @@ const FilterTableBlock = styled(Responsive)`
         margin: 0 auto;
         /* background: lightsalmon; */
         .type {
-            width: 10%;
+            /* width: 7%; */
             cursor: pointer;
-            height: 40px;
+            height: 30px;
             justify-content: center;
             align-items: center;
             display: flex;
             /* background: lightseagreen; */
-            margin-right: 10px;
-            margin-top: 10px;
+
             border-radius: 10px;
             &:hover {
                 background-color: lightseagreen;
+            }
+            & + & {
+                margin-right: 10px;
             }
         }
     }
@@ -48,16 +50,27 @@ const FilterTableComponent = () => {
         <FilterTableBlock>
             <div className="category">국가</div>
             <div className="type-box">
-                <div className="type">dd</div>
-                <div className="type">dd</div>
-                <div className="type">dd</div>
-                <div className="type">dd</div>
-                <div className="type">dd</div>
-                <div className="type">dd</div>
-                <div className="type">dd</div>
-                <div className="type">dd</div>
-                <div className="type">dd</div>
-                <div className="type">dd</div>
+                <div className="type">dddddd&nbsp; &nbsp; </div>
+                <div className="type">dd&nbsp; &nbsp; </div>
+                <div className="type">dd&nbsp; &nbsp; </div>
+                <div className="type">dd&nbsp; &nbsp; </div>
+                <div className="type">dd&nbsp; &nbsp; </div>
+                <div className="type">dd&nbsp; &nbsp; </div>
+                <div className="type">dd&nbsp; &nbsp; </div>
+                <div className="type">dddddd&nbsp; &nbsp; </div>
+                <div className="type">dd&nbsp; &nbsp; </div>
+                <div className="type">dd&nbsp; &nbsp; </div>
+                <div className="type">dd&nbsp; &nbsp; </div>
+                <div className="type">dd&nbsp; &nbsp; </div>
+                <div className="type">dd&nbsp; &nbsp; </div>
+                <div className="type">dd&nbsp; &nbsp; </div>
+                <div className="type">dddddd&nbsp; &nbsp; </div>
+                <div className="type">dd&nbsp; &nbsp; </div>
+                <div className="type">dd&nbsp; &nbsp; </div>
+                <div className="type">dd&nbsp; &nbsp; </div>
+                <div className="type">dd&nbsp; &nbsp; </div>
+                <div className="type">dd&nbsp; &nbsp; </div>
+                <div className="type">dd&nbsp; &nbsp; </div>
             </div>
         </FilterTableBlock>
     );
