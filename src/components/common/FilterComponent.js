@@ -6,15 +6,18 @@ const FilterBlock = styled.div`
     width: 100%;
     border: 1px solid darkgray;
 `;
-const FilterComponent = () => {
+
+const FilterComponent = ({ filter_factories, onToggle }) => {
     return (
         <FilterBlock>
-            <FilterTableComponent />
-            <FilterTableComponent />
-            <FilterTableComponent />
-            <FilterTableComponent />
-            <FilterTableComponent />
-            <FilterTableComponent />
+            {filter_factories &&
+                filter_factories.map((factory, key) => (
+                    <FilterTableComponent
+                        key={key}
+                        category={factory}
+                        onToggle={onToggle}
+                    />
+                ))}
         </FilterBlock>
     );
 };

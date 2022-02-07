@@ -1,10 +1,10 @@
 import React from 'react';
-import FilterComponent from '../components/common/FilterComponent';
+import FilterTableContainer from '../containers/common/FilterContainer';
 
 const PostListPage = () => {
     return (
         <div>
-            <FilterComponent />
+            <FilterTableContainer />
         </div>
     );
 };

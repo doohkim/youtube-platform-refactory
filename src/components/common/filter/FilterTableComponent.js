@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import Responsive from '../Responsive';
+import FilterDivComponent from './FilterDivComponent';
 
 const FilterTableBlock = styled(Responsive)`
     width: 100%;
     height: auto;
     border: 1px solid red;
+    padding: 0;
+
     div {
         letter-spacing: 2px;
+        display: flex;
     }
     .category {
         width: 15%;
@@ -15,62 +19,43 @@ const FilterTableBlock = styled(Responsive)`
         padding: 0;
         background-color: lightgray;
         font-weight: bold;
-        display: flex;
+
         justify-content: flex-start;
         align-items: center;
     }
     .type-box {
         flex: 1;
-        display: flex;
         flex-wrap: wrap;
         padding: 1rem;
         margin: 0 auto;
-        /* background: lightsalmon; */
-        .type {
-            /* width: 7%; */
-            cursor: pointer;
-            height: 30px;
-            justify-content: center;
-            align-items: center;
-            display: flex;
-            /* background: lightseagreen; */
-
-            border-radius: 10px;
-            &:hover {
-                background-color: lightseagreen;
-            }
-            & + & {
-                margin-right: 10px;
-            }
-        }
     }
 `;
-const FilterTableComponent = () => {
+
+const FilterTableComponent = ({ category, onToggle }) => {
+    const { text } = category;
     return (
         <FilterTableBlock>
-            <div className="category">국가</div>
+            <div className="category">{text}</div>
             <div className="type-box">
-                <div className="type">dddddd&nbsp; &nbsp; </div>
-                <div className="type">dd&nbsp; &nbsp; </div>
-                <div className="type">dd&nbsp; &nbsp; </div>
-                <div className="type">dd&nbsp; &nbsp; </div>
-                <div className="type">dd&nbsp; &nbsp; </div>
-                <div className="type">dd&nbsp; &nbsp; </div>
-                <div className="type">dd&nbsp; &nbsp; </div>
-                <div className="type">dddddd&nbsp; &nbsp; </div>
-                <div className="type">dd&nbsp; &nbsp; </div>
-                <div className="type">dd&nbsp; &nbsp; </div>
-                <div className="type">dd&nbsp; &nbsp; </div>
-                <div className="type">dd&nbsp; &nbsp; </div>
-                <div className="type">dd&nbsp; &nbsp; </div>
-                <div className="type">dd&nbsp; &nbsp; </div>
-                <div className="type">dddddd&nbsp; &nbsp; </div>
-                <div className="type">dd&nbsp; &nbsp; </div>
-                <div className="type">dd&nbsp; &nbsp; </div>
-                <div className="type">dd&nbsp; &nbsp; </div>
-                <div className="type">dd&nbsp; &nbsp; </div>
-                <div className="type">dd&nbsp; &nbsp; </div>
-                <div className="type">dd&nbsp; &nbsp; </div>
+                {category.types &&
+                    category.types.map((type) =>
+                        type.done ? (
+                            <FilterDivComponent
+                                key={type.id}
+                                select
+                                onClick={() => onToggle(text, type)}
+                            >
+                                &nbsp;{type.factory}&nbsp;
+                            </FilterDivComponent>
+                        ) : (
+                            <FilterDivComponent
+                                key={type.id}
+                                onClick={() => onToggle(text, type)}
+                            >
+                                &nbsp;{type.factory}&nbsp;
+                            </FilterDivComponent>
+                        ),
+                    )}
             </div>
         </FilterTableBlock>
     );
