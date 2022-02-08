@@ -4,14 +4,16 @@ import FilterTableComponent from './filter/FilterTableComponent';
 
 const FilterBlock = styled.div`
     width: 100%;
-    border: 1px solid darkgray;
+    border-top: 1px solid darkgray;
+    border-left: 1px solid darkgray;
+    border-right: 1px solid darkgray;
 `;
 
-const FilterComponent = ({ filter_factories, onToggle }) => {
+const FilterComponent = ({ filterCategories, onToggle }) => {
     return (
         <FilterBlock>
-            {filter_factories &&
-                filter_factories.map((factory, key) => (
+            {filterCategories &&
+                filterCategories.map((factory, key) => (
                     <FilterTableComponent
                         key={key}
                         category={factory}

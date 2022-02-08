@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FilterComponent from '../../components/common/FilterComponent';
-import { toggle } from '../../modules/category';
+import { getCategory, toggle } from '../../modules/category';
 
 const FilterTableContainer = () => {
-    const { filter_factories } = useSelector(({ category }) => ({
-        filter_factories: category.filter_categories,
+    const { filterCategories } = useSelector(({ category }) => ({
+        filterCategories: category.filterCategories,
     }));
     const dispatch = useDispatch();
     const onToggle = (text, factory) => {
         dispatch(toggle(text, factory));
     };
 
+    useEffect(() => {
+        dispatch(getCategory());
+    }, [dispatch]);
     return (
         <FilterComponent
-            filter_factories={filter_factories}
+            filterCategories={filterCategories}
             onToggle={onToggle}
         />
     );

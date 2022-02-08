@@ -6,6 +6,7 @@ import ChannelDetailPage from './pages/ChangeDetailPage';
 import LoginPage from './pages/LoginPage';
 import PostListPage from './pages/PostListPage';
 import RegisterPage from './pages/RegisterPage';
+import VideoListPage from './pages/VideoListPage';
 function App() {
     return (
         <div>
@@ -21,6 +22,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route index element={<PostListPage />} />
+                    <Route path="/video" element={<VideoListPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/analysis/:id" element={<ChannelDetailPage />}>

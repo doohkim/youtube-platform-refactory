@@ -18,7 +18,7 @@ const Spacer = styled.div`
 `;
 
 const HeaderComponent = ({ user, onLogout }) => {
-    const [category, setCategory] = useState('channel');
+    const [category, setCategory] = useState('');
     const onSelect = useCallback((category) => setCategory(category), []);
     return (
         <>

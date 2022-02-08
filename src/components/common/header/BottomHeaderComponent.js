@@ -1,9 +1,10 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import palette from '../../../lib/styles/palette';
+import { Link } from 'react-router-dom';
 const categories = [
     {
-        name: 'channel',
+        name: '',
         text: '채널순위',
     },
     {
@@ -59,6 +60,7 @@ const Category = styled.div`
             }
         `}
 `;
+
 const BottomHeaderComponent = ({ onSelect, category }) => {
     return (
         <BottomHeaderBlock>
@@ -68,7 +70,7 @@ const BottomHeaderComponent = ({ onSelect, category }) => {
                     active={category === c.name}
                     onClick={() => onSelect(c.name)}
                 >
-                    {c.text}
+                    <Link to={'/' + c.name}>{c.text}</Link>
                 </Category>
             ))}
         </BottomHeaderBlock>

@@ -2,7 +2,7 @@ import React from 'react';
 import RankContentComponent from '../components/rank/common/RankContentComponent';
 import FilterTableContainer from '../containers/common/FilterContainer';
 
-const PostListPage = () => {
+const VideoListPage = () => {
     return (
         <div>
             <FilterTableContainer />
@@ -10,4 +10,4 @@ const PostListPage = () => {
         </div>
     );
 };
-export default PostListPage;
+export default VideoListPage;
