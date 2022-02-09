@@ -33,7 +33,7 @@ const SortBlock = styled.div`
 
 const Sort = styled.div`
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     white-space: pre;
     text-decoration: none;
     letter-spacing: 1px;
@@ -53,13 +53,14 @@ const Sort = styled.div`
             }
         `}
 `;
-const SortComponent = () => {
+const SortComponent = ({ setSort }) => {
     const [standard, SetStandard] = useState('subscriber');
     const onSelect = useCallback((standard) => SetStandard(standard), []);
     return (
         <SortBlock>
-            {standards.map((c) => (
+            {standards.map((c, key) => (
                 <Sort
+                    onClickCapture={() => setSort(key + 1)}
                     key={c.name}
                     active={standard === c.name}
                     onClick={() => onSelect(c.name)}

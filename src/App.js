@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Layout from './Layout';
 import AnalysisPage from './pages/AnalysisPage';
 import ChannelDetailPage from './pages/ChangeDetailPage';
+import ChannelListPage from './pages/ChannelListPage';
 import LoginPage from './pages/LoginPage';
 import PostListPage from './pages/PostListPage';
 import RegisterPage from './pages/RegisterPage';
@@ -21,8 +22,9 @@ function App() {
             </Routes> */}
             <Routes>
                 <Route path="/" element={<Layout />}>
-                    <Route index element={<PostListPage />} />
+                    <Route index element={<ChannelListPage />} />
                     <Route path="/video" element={<VideoListPage />} />
+                    <Route path="/market" element={<PostListPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/analysis/:id" element={<ChannelDetailPage />}>

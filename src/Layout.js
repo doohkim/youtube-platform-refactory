@@ -1,6 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
+import FooterComponent from './components/common/footer/FooterComponent';
 import HeaderContainer from './containers/common/HeaderContainer';
 
 const LayoutBlock = styled.div`
@@ -20,6 +21,7 @@ const Layout = () => {
             <div className="main">
                 <Outlet />
             </div>
+            <FooterComponent />
         </LayoutBlock>
     );
 };

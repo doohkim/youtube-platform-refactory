@@ -23,7 +23,7 @@ export const unloadChannel = createAction(UNLOAD_CHANNEL);
 
 const getChannelListSaga = createRequestSaga(
     GET_CHANNEL_LIST,
-    channelAPI.getChannelList,
+    channelAPI.filterChannel,
 );
 const readChannelSaga = createRequestSaga(
     READ_CHANNEL,
