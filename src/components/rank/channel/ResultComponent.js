@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from '../../../../node_modules/react-router/index';
 import ChannelItemComponent from './ChannelItemComponent';
 
 const ResultBlock = styled.div`
@@ -12,7 +13,9 @@ const ChannelListErrorBlock = styled.div`
     background: gray;
 `;
 const ResultComponent = ({ channelList, channelListError, channelLoading }) => {
+    const navigate = useNavigate();
     if (channelListError) {
+        navigate('');
         return (
             <ChannelListErrorBlock>에러가 발생했습니다.</ChannelListErrorBlock>
         );

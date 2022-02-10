@@ -283,7 +283,7 @@ const ChannelItemComponent = ({ channelInfo, index }) => {
                             <div>
                                 {Math.round(
                                     channelInfo.channel_statistics
-                                        .subscriber_count / 10000,
+                                        .diff_subscriber_count / 10000,
                                 ) + '만'}
                             </div>
                         </div>
@@ -297,8 +297,8 @@ const ChannelItemComponent = ({ channelInfo, index }) => {
                         </div>
                         <div className="channel-card-info-status-value">
                             {Math.round(
-                                channelInfo.channel_statistics
-                                    .subscriber_count / 10000,
+                                channelInfo.channel_statistics.view_count /
+                                    10000000,
                             ) + '만'}
                         </div>
                         <div className="channel-card-info-status-change">
@@ -308,7 +308,7 @@ const ChannelItemComponent = ({ channelInfo, index }) => {
                             <div>
                                 {Math.round(
                                     channelInfo.channel_statistics
-                                        .subscriber_count / 10000,
+                                        .diff_view_count / 10000,
                                 ) + '만'}
                             </div>
                         </div>
@@ -322,8 +322,9 @@ const ChannelItemComponent = ({ channelInfo, index }) => {
                         </div>
                         <div className="channel-card-info-status-value">
                             {Math.round(
-                                channelInfo.channel_statistics
-                                    .subscriber_count / 10000,
+                                channelInfo.channel_statistics.view_count /
+                                    channelInfo.channel_statistics.video_count /
+                                    10000,
                             ) + '만'}
                         </div>
                         <div className="channel-card-info-status-change">

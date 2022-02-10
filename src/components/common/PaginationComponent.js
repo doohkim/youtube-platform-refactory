@@ -23,8 +23,7 @@ const PaginationComponent = ({
     if (channelLoading || !channelList) {
         return null;
     }
-    console.log('channel length', channelList.results.length);
-    console.log('page', page);
+
     return (
         <PaginationBlock>
             <Pagination

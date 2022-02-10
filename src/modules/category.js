@@ -7,13 +7,15 @@ import * as categoryAPI from '../lib/api/channel';
 
 const TOGGLE = 'category/TOGGLE';
 const [GET_CATEGORY, GET_CATEGORY_SUCCESS, GET_CATEGORY_FAILURE] =
-    createRequestActionTypes('channel/GET_CATEGORY');
+    createRequestActionTypes('category/GET_CATEGORY');
+const UNLOAD_CATEGORY = 'category/UNLOAD_CATEGORY';
 
 export const toggle = createAction(TOGGLE, (text, factory) => ({
     text,
     factory,
 }));
 export const getCategory = createAction(GET_CATEGORY);
+export const unloadCategory = createAction(UNLOAD_CATEGORY);
 
 const getCategorySaga = createRequestSaga(
     GET_CATEGORY,
@@ -185,27 +187,38 @@ const initialState = {
                 },
                 {
                     id: 2,
-                    factory: '구독자비공개',
+                    factory: '미정',
                     done: false,
                 },
                 {
                     id: 3,
-                    factory: '~1만',
+                    factory: '그파',
                     done: false,
                 },
                 {
                     id: 4,
-                    factory: '1만~10만',
+                    factory: '오팔',
                     done: false,
                 },
                 {
                     id: 5,
-                    factory: '10만~100만',
+                    factory: '브론즈',
                     done: false,
                 },
                 {
                     id: 6,
-                    factory: '100만~',
+                    factory: '실버',
+                    done: false,
+                },
+
+                {
+                    id: 7,
+                    factory: '골드',
+                    done: false,
+                },
+                {
+                    id: 8,
+                    factory: '다이아',
                     done: false,
                 },
             ],
@@ -259,6 +272,7 @@ const category = handleActions(
             ...state,
             filterCategoriesError: action.payload,
         }),
+        [UNLOAD_CATEGORY]: () => initialState,
     },
     initialState,
 );

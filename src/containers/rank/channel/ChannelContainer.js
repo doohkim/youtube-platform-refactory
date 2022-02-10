@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import RankContentComponent from '../../../components/rank/common/RankContentComponent';
-import { getCategory, toggle } from '../../../modules/category';
-import { getListChannels } from '../../../modules/channel';
+import { toggle, unloadCategory } from '../../../modules/category';
+import { getListChannels, unloadChannel } from '../../../modules/channel';
 import FilterTableContainer from '../../common/FilterContainer';
 
 const ChannelContainer = () => {
     const [page, setPage] = useState(1);
     const [sort, setSort] = useState(1);
+
     const dispatch = useDispatch();
     const {
         channelList,
@@ -25,6 +26,12 @@ const ChannelContainer = () => {
     const onToggle = (text, factory) => {
         dispatch(toggle(text, factory));
     };
+
+    useEffect(() => {
+        dispatch(unloadCategory());
+        dispatch(unloadChannel());
+    }, [dispatch]);
+
     useEffect(() => {
         // dispatch(getCategory());
         // console.log(page, sort);
