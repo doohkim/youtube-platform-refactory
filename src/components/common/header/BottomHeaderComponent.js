@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import palette from '../../../lib/styles/palette';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 const categories = [
     {
         name: '',
@@ -61,13 +62,14 @@ const Category = styled.div`
         `}
 `;
 
-const BottomHeaderComponent = ({ onSelect, category }) => {
+const BottomHeaderComponent = ({ onSelect }) => {
+    const { pathname } = useLocation();
     return (
         <BottomHeaderBlock>
             {categories.map((c) => (
                 <Category
                     key={c.name}
-                    active={category === c.name}
+                    active={pathname.replace('/', '') === c.name}
                     onClick={() => onSelect(c.name)}
                 >
                     <Link to={'/' + c.name}>{c.text}</Link>

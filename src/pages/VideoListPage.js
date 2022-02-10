@@ -5,8 +5,8 @@ import FilterTableContainer from '../containers/common/FilterContainer';
 const VideoListPage = () => {
     return (
         <div>
-            <FilterTableContainer />
-            <RankContentComponent />
+            {/* <FilterTableContainer />
+            <RankContentComponent /> */}
         </div>
     );
 };

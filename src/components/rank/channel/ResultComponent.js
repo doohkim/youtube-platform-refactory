@@ -21,7 +21,7 @@ const ResultComponent = ({ channelList, channelListError, channelLoading }) => {
         <ResultBlock>
             {!channelLoading &&
                 channelList &&
-                channelList.map((channel, index) => (
+                channelList.results.map((channel, index) => (
                     <ChannelItemComponent
                         key={channel.pk}
                         index={index}

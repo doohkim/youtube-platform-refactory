@@ -1,7 +1,7 @@
 import React from 'react';
+import Pagination from 'react-js-pagination';
 import styled from 'styled-components';
 import '../rank/common/PaginationComponent.css';
-import Pagination from 'react-js-pagination';
 
 const PaginationBlock = styled.div`
     width: 100%;
@@ -23,17 +23,17 @@ const PaginationComponent = ({
     if (channelLoading || !channelList) {
         return null;
     }
-    console.log(channelList.length);
+    console.log('channel length', channelList.results.length);
+    console.log('page', page);
     return (
         <PaginationBlock>
             <Pagination
                 activePage={page}
-                totalItemsCount={channelList.length}
-                itemsCountPerPage={10}
+                itemsCountPerPage={5}
+                totalItemsCount={channelList.count}
                 pageRangeDisplayed={5}
-                prevPageText={'<'}
-                nextPageText={'>'}
                 onChange={setPage}
+                hideDisabled
             />
         </PaginationBlock>
     );

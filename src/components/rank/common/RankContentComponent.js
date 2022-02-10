@@ -26,18 +26,22 @@ const RankContentComponent = ({
     return (
         <RankContentBlock>
             <SortComponent setSort={setSort} sort={sort} />
-            <ResultComponent
-                channelList={channelList}
-                channelListError={channelListError}
-                channelLoading={channelLoading}
-            />
-            <PaginationComponent
-                channelList={channelList}
-                channelListError={channelListError}
-                channelLoading={channelLoading}
-                setPage={setPage}
-                page={page}
-            />
+            {channelList && (
+                <ResultComponent
+                    channelList={channelList}
+                    channelListError={channelListError}
+                    channelLoading={channelLoading}
+                />
+            )}
+            {channelList && (
+                <PaginationComponent
+                    channelList={channelList}
+                    channelListError={channelListError}
+                    channelLoading={channelLoading}
+                    setPage={setPage}
+                    page={page}
+                />
+            )}
         </RankContentBlock>
     );
 };

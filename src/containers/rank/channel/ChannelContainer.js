@@ -27,6 +27,7 @@ const ChannelContainer = () => {
     };
     useEffect(() => {
         // dispatch(getCategory());
+        // console.log(page, sort);
         if (filterCategories) {
             dispatch(getListChannels(filterCategories, page, sort));
         }

@@ -5,8 +5,8 @@ import FilterTableContainer from '../containers/common/FilterContainer';
 const PostListPage = () => {
     return (
         <div>
-            <FilterTableContainer />
-            <RankContentComponent />
+            {/* <FilterTableContainer />
+            <RankContentComponent /> */}
         </div>
     );
 };
