@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import FilterComponent from '../../components/common/FilterComponent';
-import { getCategory, toggle } from '../../modules/category';
 
 const FilterTableContainer = ({ filterCategories, onToggle }) => {
     return (

@@ -83,6 +83,7 @@ const ChannelItemBlock = styled.div`
             }
             .channel-card-info-desc {
                 margin: 5px 0;
+
                 .desc-block {
                     width: 100%;
                     color: #212529;

@@ -1,42 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import RankChannelContentComponent from '../../../components/rank/common/RankChannelContentComponent';
+import RankVideoContentComponent from '../../../components/rank/video/RankVideoContentComponent';
 import { toggle, unloadCategory } from '../../../modules/category';
-import { getListChannels, unloadChannel } from '../../../modules/channel';
+import { getListVideos, unloadVideo } from '../../../modules/video';
 import FilterTableContainer from '../../common/FilterContainer';
 
-const ChannelContainer = () => {
+const VideoContainer = () => {
     const [page, setPage] = useState(1);
     const [sort, setSort] = useState(1);
 
     const dispatch = useDispatch();
     const {
-        channelList,
-        channelListError,
-        channelLoading,
+        videoList,
+        videoListError,
+        videoLoading,
         filterCategories,
         filterCategoriesError,
-    } = useSelector(({ channel, category, loading }) => ({
-        channelList: channel.channelList,
-        channelListError: channel.channelListError,
-        channelLoading: loading['channel/GET_CHANNEL_LIST'],
+    } = useSelector(({ video, category, loading }) => ({
+        videoList: video.videoList,
+        videoListError: video.videoListError,
+        videoLoading: loading['video/GET_VIDEO_LIST'],
         filterCategories: category.filterCategories,
         filterCategoriesError: category.filterCategoriesError,
     }));
+
     const onToggle = (text, factory) => {
         dispatch(toggle(text, factory));
     };
 
     useEffect(() => {
         dispatch(unloadCategory());
-        dispatch(unloadChannel());
+        dispatch(unloadVideo());
     }, [dispatch]);
 
     useEffect(() => {
-        // dispatch(getCategory());
-        // console.log(page, sort);
         if (filterCategories) {
-            dispatch(getListChannels(filterCategories, page, sort));
+            dispatch(getListVideos(filterCategories, page, sort));
         }
     }, [dispatch, filterCategories, page, sort]);
 
@@ -47,17 +46,17 @@ const ChannelContainer = () => {
                 filterCategoriesError={filterCategoriesError}
                 onToggle={onToggle}
             />
-            <RankChannelContentComponent
+            <RankVideoContentComponent
                 setSort={setSort}
                 sort={sort}
                 setPage={setPage}
                 page={page}
-                dataList={channelList}
-                dataListError={channelListError}
-                loading={channelLoading}
+                dataList={videoList}
+                dataListError={videoListError}
+                loading={videoLoading}
             />
         </div>
     );
 };
 
-export default ChannelContainer;
+export default VideoContainer;

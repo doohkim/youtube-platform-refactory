@@ -11,16 +11,16 @@ const PaginationBlock = styled.div`
     padding-bottom: 40px;
 `;
 const PaginationComponent = ({
-    channelList,
-    channelListError,
-    channelLoading,
+    dataList,
+    dataListError,
+    loading,
     setPage,
     page,
 }) => {
-    if (channelListError) {
+    if (dataListError) {
         return <div>에러가 발생했습니다.</div>;
     }
-    if (channelLoading || !channelList) {
+    if (loading || !dataList) {
         return null;
     }
 
@@ -28,8 +28,8 @@ const PaginationComponent = ({
         <PaginationBlock>
             <Pagination
                 activePage={page}
-                itemsCountPerPage={5}
-                totalItemsCount={channelList.count}
+                itemsCountPerPage={20}
+                totalItemsCount={dataList.count}
                 pageRangeDisplayed={5}
                 onChange={setPage}
                 hideDisabled

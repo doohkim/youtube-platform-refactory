@@ -1,12 +1,11 @@
 import React from 'react';
-import RankContentComponent from '../components/rank/common/RankContentComponent';
-import FilterTableContainer from '../containers/common/FilterContainer';
+
+import VideoContainer from '../containers/rank/video/VideoContainer';
 
 const VideoListPage = () => {
     return (
         <div>
-            {/* <FilterTableContainer />
-            <RankContentComponent /> */}
+            <VideoContainer />
         </div>
     );
 };

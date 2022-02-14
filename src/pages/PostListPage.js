@@ -1,5 +1,5 @@
 import React from 'react';
-import RankContentComponent from '../components/rank/common/RankContentComponent';
+import RankContentComponent from '../components/rank/common/RankChannelContentComponent';
 import FilterTableContainer from '../containers/common/FilterContainer';
 
 const PostListPage = () => {

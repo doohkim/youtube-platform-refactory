@@ -1,24 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
 import palette from '../../../lib/styles/palette';
-const standards = [
-    {
-        name: 'subscriber',
-        text: '구독자순',
-    },
-    {
-        name: 'dailyViews',
-        text: '일일조회수 순',
-    },
-    {
-        name: 'subscriberSoaring',
-        text: '구독자 급상승 순',
-    },
-    {
-        name: 'videoAverageViews',
-        text: '영상 평균 조회수 순',
-    },
-];
+
 const SortBlock = styled.div`
     width: 100%;
     margin-top: 2rem;
@@ -53,8 +36,8 @@ const Sort = styled.div`
             }
         `}
 `;
-const SortComponent = ({ setSort }) => {
-    const [standard, SetStandard] = useState('subscriber');
+const SortComponent = ({ setSort, standards }) => {
+    const [standard, SetStandard] = useState(standards[0].name);
     const onSelect = useCallback((standard) => SetStandard(standard), []);
     return (
         <SortBlock>
