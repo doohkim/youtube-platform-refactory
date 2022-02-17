@@ -15,7 +15,7 @@ const ChannelListErrorBlock = styled.div`
 const ResultComponent = ({ dataList, dataListError, loading }) => {
     const navigate = useNavigate();
     if (dataListError) {
-        navigate('');
+        navigate('/');
         return (
             <ChannelListErrorBlock>에러가 발생했습니다.</ChannelListErrorBlock>
         );

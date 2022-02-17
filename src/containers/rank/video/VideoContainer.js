@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 import RankVideoContentComponent from '../../../components/rank/video/RankVideoContentComponent';
 import { toggle, unloadCategory } from '../../../modules/category';
 import { getListVideos, unloadVideo } from '../../../modules/video';
 import FilterTableContainer from '../../common/FilterContainer';
+const VideoContainerBlock = styled.div`
+    width: 1080px;
+    margin:auto;
 
+`;
 const VideoContainer = () => {
     const [page, setPage] = useState(1);
     const [sort, setSort] = useState(1);
@@ -40,7 +45,7 @@ const VideoContainer = () => {
     }, [dispatch, filterCategories, page, sort]);
 
     return (
-        <div>
+        <VideoContainerBlock>
             <FilterTableContainer
                 filterCategories={filterCategories}
                 filterCategoriesError={filterCategoriesError}
@@ -55,7 +60,7 @@ const VideoContainer = () => {
                 dataListError={videoListError}
                 loading={videoLoading}
             />
-        </div>
+        </VideoContainerBlock>
     );
 };
 

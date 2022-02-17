@@ -5,11 +5,8 @@ import TopHeaderComponent from './TopHeaderComponent';
 
 const HeaderBlock = styled.div`
     width: 1080px;
-    /* border: 1px solid red; */
-    position: fixed;
-    z-index: 1;
-    background: white;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
+    margin: auto;
+    background: inherit; 
 `;
 /**
  * 헤더가 fixed로 되어 있기 때문에 페이지의 콘텐츠가 4rem 아래에 나타나도록 해 주는 컴포넌트
@@ -30,7 +27,6 @@ const HeaderComponent = ({ user, onLogout }) => {
                     onSelect={onSelect}
                 />
             </HeaderBlock>
-            <Spacer />
         </>
     );
 };

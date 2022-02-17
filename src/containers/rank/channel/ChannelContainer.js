@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 import RankChannelContentComponent from '../../../components/rank/common/RankChannelContentComponent';
 import { toggle, unloadCategory } from '../../../modules/category';
 import { getListChannels, unloadChannel } from '../../../modules/channel';
 import FilterTableContainer from '../../common/FilterContainer';
+
+const ChannelContainerBlock = styled.div`
+    width: 1080px;
+    margin:auto;
+
+`;
 
 const ChannelContainer = () => {
     const [page, setPage] = useState(1);
@@ -41,7 +48,7 @@ const ChannelContainer = () => {
     }, [dispatch, filterCategories, page, sort]);
 
     return (
-        <div>
+        <ChannelContainerBlock>
             <FilterTableContainer
                 filterCategories={filterCategories}
                 filterCategoriesError={filterCategoriesError}
@@ -56,7 +63,7 @@ const ChannelContainer = () => {
                 dataListError={channelListError}
                 loading={channelLoading}
             />
-        </div>
+        </ChannelContainerBlock>
     );
 };
 

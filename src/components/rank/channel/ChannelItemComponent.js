@@ -212,7 +212,7 @@ const ChannelItemBlock = styled.div`
 const ChannelItemComponent = ({ channelInfo, index }) => {
     const { videos } = channelInfo;
     // const { thumbnail } = videos;
-
+    // console.log(videos&& videos.id,channelInfo.title)
     return (
         <ChannelItemBlock>
             <div className="channel-card-top-area">
@@ -225,7 +225,7 @@ const ChannelItemComponent = ({ channelInfo, index }) => {
                     <p className="channel-card-rank">{index + 1}</p>
                 </div>
                 <div className="channel-card-thumbnails-wrap">
-                    <Link to="#">
+                    <Link to={`/analysis/${channelInfo.pk}`}>
                         <img
                             className="channel-card-thumbnails"
                             src={channelInfo.logo.replace(
@@ -237,13 +237,19 @@ const ChannelItemComponent = ({ channelInfo, index }) => {
                     </Link>
                 </div>
                 <div className="channel-card-info-wrap">
-                    <Link className="title-block" to="#">
+                    <Link
+                        to={`/analysis/${channelInfo.pk}`}
+                        className="title-block"
+                    >
                         <div className="channel-card-info-title">
                             {channelInfo.title}
                         </div>
                     </Link>
                     <div className="channel-card-info-desc">
-                        <Link to="#" className="desc-block">
+                        <Link
+                            to={`/analysis/${channelInfo.pk}`}
+                            className="desc-block"
+                        >
                             {channelInfo.description}
                         </Link>
                     </div>
@@ -251,13 +257,18 @@ const ChannelItemComponent = ({ channelInfo, index }) => {
                         {channelInfo.categories.map((category, index) => (
                             <span key={index}>{category.kind_hangle}</span>
                         ))}
-                        {/* <span>Vlog/일상</span>
-                        <span>영화/애니</span>
-                        <span>FUN</span> */}
                     </p>
                     <div className="channel-card-info-action-btns">
                         <div className="channel-card-info-action-btns-half-front">
-                            <Link to="#" className="sns-block">
+                            <Link
+                                onClick={() =>
+                                    window.open(
+                                        `https://www.youtube.com/c/${channelInfo.title}`,
+                                    )
+                                }
+                                to="#"
+                                className="sns-block"
+                            >
                                 <AiFillYoutube className="channel-card-info-link-img" />
                             </Link>
                         </div>
@@ -328,20 +339,19 @@ const ChannelItemComponent = ({ channelInfo, index }) => {
                                     10000,
                             ) + '만'}
                         </div>
-                        <div className="channel-card-info-status-change">
-                            {/* <div className="status-change-img">
-                                <AiOutlineArrowUp />
-                            </div>
-                            <div></div> */}
-                        </div>
+                        <div className="channel-card-info-status-change"></div>
                     </div>
                     <div className="channel-card-info-status-wrap-dailyview"></div>
                     <div className="channel-card-info-status-wrap-avgviews"></div>
                 </div>
                 <div className="channel-card-info-video-wrap">
-                    <Link to="#" className="video-link">
+                    <Link
+                        to={videos ? `/detail/video/${videos.id}` : '#'}
+                        className="video-link"
+                    >
                         {videos === null ? (
                             <img
+                                className="not-video"
                                 src="https://i.ytimg.com/vi/0pJ1oD-OXZo/mqdefault.jpg"
                                 alt="thumbnail"
                             />

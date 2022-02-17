@@ -6,8 +6,7 @@ const FooterBlock = styled.div`
     display: flex;
     flex-direction: column;
     padding: 25px 0;
-    /* background-color: lightyellow; */
-    width: 100%;
+    width: 1080px;
     border-top: 1px solid lightgray;
     .footer-top {
         margin-left: 1rem;

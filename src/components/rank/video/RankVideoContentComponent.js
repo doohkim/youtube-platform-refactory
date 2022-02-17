@@ -7,6 +7,8 @@ import ResultComponent from './ResultComponent';
 
 const RankVideoContentBlock = styled.div`
     width: 1080px;
+    margin: auto;
+    
     .pagination-block {
         width: 100%;
         margin-top: 40px;
