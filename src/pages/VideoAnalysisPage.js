@@ -1,10 +1,9 @@
 import React from 'react';
+import AnalysisVideoContainer from '../containers/analysis/video/AnalysisVideoContainer';
 
 const VideoAnalysisPage = () => {
     return (
-        <div>
-            <div>video 분석 페이지</div>
-        </div>
+        <AnalysisVideoContainer />
     );
 };
 export default VideoAnalysisPage;

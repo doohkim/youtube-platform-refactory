@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
 
 const subCategories = [
@@ -24,6 +24,7 @@ const subCategories = [
 ];
 const AnalysisMenuBlock = styled.div`
     width: 1080px;
+    padding-top:1rem;
     margin: auto;
     display: flex;
 `;
@@ -67,6 +68,7 @@ const AnalysisMenuComponent = ({ subCategory, onSubSelect }) => {
     const params = Object.values(useParams());
     const channelId = params[0];
     const type = params[1];
+    console.log(channelId)
     return (
         <AnalysisMenuBlock>
             {subCategories.map((c) => (

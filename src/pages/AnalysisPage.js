@@ -1,10 +1,7 @@
 import React from 'react';
+import AnalysisChannelContainer from '../containers/analysis/channel/AnalysisChannelContainer';
 
 const AnalysisPage = () => {
-    return (
-        <div>
-            <div>channel 분석 페이지</div>
-        </div>
-    );
+    return <AnalysisChannelContainer />;
 };
 export default AnalysisPage;
