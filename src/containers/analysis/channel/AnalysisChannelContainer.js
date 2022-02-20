@@ -9,6 +9,7 @@ import AnalysisChannelPerformanceComponent from './AnalysisChannelPerformanceCom
 const AnalysisChannelBlock = styled.div`
     width: 1080px;
     margin: auto;
+    margin-top: 10px;
 `;
 
 const AnalysisChannelContainer = () => {

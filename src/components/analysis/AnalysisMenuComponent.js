@@ -50,7 +50,7 @@ const Category = styled.div`
     ${(props) =>
         props.active &&
         css`
-            border-bottom: 1px solid ${palette.cyan[5]};
+            border-bottom: 3px solid ${palette.cyan[5]};
             font-weight: 600;
             color: ${palette.cyan[5]};
             &:hover {
