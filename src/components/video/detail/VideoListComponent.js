@@ -22,24 +22,20 @@ const VideoListComponent = ({
     setPage,
     page,
 }) => {
+    console.log(videoDetail);
     return (
         <VideoListBlock>
-            {videoDetail && (
-                <ResultComponent
-                    videoDetail={videoDetail}
-                    videoDetailError={videoDetailError}
-                    loading={loading}
-                />
-            )}
-            {videoDetail && (
-                <PaginationComponent
-                    videoDetail={videoDetail}
-                    videoDetailError={videoDetailError}
-                    loading={loading}
-                    setPage={setPage}
-                    page={page}
-                />
-            )}
+            <ResultComponent
+                dataList={videoDetail}
+                dataListError={videoDetailError}
+                loading={loading}
+            />
+            <PaginationComponent
+                dataList={videoDetail}
+                dataListError={videoDetailError}
+                setPage={setPage}
+                page={page}
+            />
         </VideoListBlock>
     );
 };

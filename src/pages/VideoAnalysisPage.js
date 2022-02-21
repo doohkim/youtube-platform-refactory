@@ -1,5 +1,5 @@
 import React from 'react';
-import AnalysisVideoContainer from '../containers/analysis/video/AnalysisVideoContainer';
+import AnalysisVideoContainer from '../components/analysis/video/AnalysisVideoContainer';
 
 const VideoAnalysisPage = () => {
     return (

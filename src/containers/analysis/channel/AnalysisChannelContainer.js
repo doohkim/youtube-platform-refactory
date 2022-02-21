@@ -1,10 +1,8 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useOutletContext } from '../../../../node_modules/react-router/index';
-import AnalysisChannelChartComponent from './AnalysisChannelChartComponent';
-import AnalysisChannelPerformanceComponent from './AnalysisChannelPerformanceComponent';
+import { useOutletContext } from 'react-router-dom';
+import AnalysisChannelChartComponent from '../../../components/analysis/channel/AnalysisChannelChartComponent';
+import AnalysisChannelPerformanceComponent from '../../../components/analysis/channel/AnalysisChannelPerformanceComponent';
 
 const AnalysisChannelBlock = styled.div`
     width: 1080px;

@@ -15,6 +15,7 @@ const VideoListErrorBlock = styled.div`
     background: gray;
 `;
 const ResultComponent = ({ dataList, dataListError, loading }) => {
+    console.log(dataList)
     const navigate = useNavigate();
     if (dataListError) {
         navigate('');
