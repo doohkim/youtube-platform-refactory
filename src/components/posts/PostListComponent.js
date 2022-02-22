@@ -28,11 +28,11 @@ const PostListBlock = styled.div`
     }
 `;
 
-const PostListComponent = ({ sort, setSort }) => {
+const PostListComponent = ({ sort, setSort, postList }) => {
     return (
         <PostListBlock>
             <div className="posts-menu-block">
-                <div className="count">{`총 ${245}개`}</div>
+                <div className="count">{`총 ${postList.length}개`}</div>
                 <div className="sort-menu-block">
                     <SortComponent
                         setSort={setSort}
@@ -41,7 +41,7 @@ const PostListComponent = ({ sort, setSort }) => {
                     />
                 </div>
             </div>
-            <PostListContentComponent />
+            <PostListContentComponent postList={postList} />
             <PaginationComponent />
         </PostListBlock>
     );

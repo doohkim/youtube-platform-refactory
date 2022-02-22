@@ -1,22 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import PostItemComponent from './PostItemComponent';
-
 const PostListContentBlock = styled.div`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
 `;
 
-const PostListContentComponent = () => {
+const PostListContentComponent = ({postList}) => {
     return (
         <PostListContentBlock>
-            <PostItemComponent />
-            <PostItemComponent />
-            <PostItemComponent />
-            <PostItemComponent />
-            <PostItemComponent />
-            <PostItemComponent />
+            {postList && postList.map((post, key) => (
+                <PostItemComponent key={key} post={post} />
+            ))}
         </PostListContentBlock>
     );
 };

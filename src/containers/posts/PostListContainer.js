@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 import PostListComponent from '../../components/posts/PostListComponent';
+import { postListData } from '../../utils/postData';
 
 const PostListBlock = styled.div`
     width: 1080px;
@@ -27,7 +28,7 @@ const PostListContainer = () => {
             <div className="title">
                 <h3>베스트</h3>
             </div>
-            <PostListComponent/>
+            <PostListComponent postList={postListData}/>
         </PostListBlock>
     )
 }

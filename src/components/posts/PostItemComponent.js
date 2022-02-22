@@ -13,6 +13,10 @@ const PostItemBlock = styled.div`
             width: 100%;
             height: 435px;
             background-color: #f9f8f9;
+            img{
+                width: 330px;
+                height: 100%;
+            }
         }
         .post-info-block {
             padding: 14px 10px 10px 0;
@@ -30,17 +34,17 @@ const PostItemBlock = styled.div`
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
             }
-            .post-cost{
+            .post-cost {
                 display: block;
                 padding-top: 7px;
                 font-size: 18px;
                 line-height: 29px;
-                .post-price{
+                .post-price {
                     font-weight: 800;
                     color: #333;
                 }
             }
-            .post-desc{
+            .post-desc {
                 display: block;
                 padding-top: 11px;
                 font-size: 13px;
@@ -51,15 +55,17 @@ const PostItemBlock = styled.div`
     }
 `;
 
-const PostItemComponent = () => {
+const PostItemComponent = ({ post }) => {
     return (
         <PostItemBlock>
             <div className="item">
-                <div className="thumbnail-block"></div>
+                <div className="thumbnail-block"><img src={post.image} alt="thumbnail" /></div>
                 <div className="post-info-block">
-                    <div className="post-title">[동남집 양지곰탕 600g</div>
-                    <div className="post-cost">6,200원</div>
-                    <div className="post-desc">얇게 썬 고기와 맑은 국물의 조화</div>
+                    <div className="post-title">{post.name}</div>
+                    <div className="post-cost">{post.price}</div>
+                    <div className="post-desc">
+                        {post.desc}
+                    </div>
                 </div>
             </div>
         </PostItemBlock>
