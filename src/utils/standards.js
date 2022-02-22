@@ -30,5 +30,32 @@ export const videoStandards = [
         name: 'uploaDate',
         text: '업로드 날짜 순',
     },
+];
 
+export const postsStandards = [
+    {
+        name: 'recommend',
+        text: '추천순',
+    },
+    {
+        name: 'new',
+        text: '신상품순',
+    },
+    {
+        name: 'sales',
+        text: '판매량순',
+    },
+
+    {
+        name: 'benefit',
+        text: '혜택순',
+    },
+    {
+        name: 'low',
+        text: '낮은가격순',
+    },
+    {
+        name: 'high',
+        text: '높은가격순',
+    },
 ];
