@@ -11,7 +11,7 @@ const PostListContentComponent = ({postList}) => {
     return (
         <PostListContentBlock>
             {postList && postList.map((post, key) => (
-                <PostItemComponent key={key} post={post} />
+                <PostItemComponent key={key} index={key} post={post} />
             ))}
         </PostListContentBlock>
     );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const PostItemBlock = styled.div`
@@ -12,8 +13,8 @@ const PostItemBlock = styled.div`
             display: block;
             width: 100%;
             height: 435px;
-            background-color: #f9f8f9;
-            img{
+            /* background-color: #f9f8f9; */
+            img {
                 width: 330px;
                 height: 100%;
             }
@@ -55,18 +56,20 @@ const PostItemBlock = styled.div`
     }
 `;
 
-const PostItemComponent = ({ post }) => {
+const PostItemComponent = ({ post, index }) => {
     return (
         <PostItemBlock>
             <div className="item">
-                <div className="thumbnail-block"><img src={post.image} alt="thumbnail" /></div>
-                <div className="post-info-block">
-                    <div className="post-title">{post.name}</div>
-                    <div className="post-cost">{post.price}</div>
-                    <div className="post-desc">
-                        {post.desc}
+                <Link to={`market/${index}`}>
+                    <div className="thumbnail-block">
+                        <img src={post.image} alt="thumbnail" />
                     </div>
-                </div>
+                    <div className="post-info-block">
+                        <div className="post-title">{post.name}</div>
+                        <div className="post-cost">{post.price}</div>
+                        <div className="post-desc">{post.desc}</div>
+                    </div>
+                </Link>
             </div>
         </PostItemBlock>
     );
