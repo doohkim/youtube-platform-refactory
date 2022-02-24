@@ -7,6 +7,8 @@ import user, { userSaga } from './user';
 import category, { categorySaga } from './category';
 import channel, { channelListSaga } from './channel';
 import video, { videoListSaga } from './video';
+import post, { postListSaga} from './posts';
+
 const rootReducer = combineReducers({
     auth,
     loading,
@@ -14,6 +16,7 @@ const rootReducer = combineReducers({
     category,
     channel,
     video,
+    post,
 });
 
 export function* rootSaga() {
@@ -23,6 +26,7 @@ export function* rootSaga() {
         categorySaga(),
         channelListSaga(),
         videoListSaga(),
+        postListSaga(),
     ]);
 }
 

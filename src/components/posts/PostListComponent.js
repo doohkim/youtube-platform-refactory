@@ -21,18 +21,29 @@ const PostListBlock = styled.div`
             color: #333;
             line-height: 18px;
         }
-        .sort-menu-block{
+        .sort-menu-block {
             margin-right: 8px;
             width: 80%;
         }
     }
 `;
 
-const PostListComponent = ({ sort, setSort, postList }) => {
+const PostListComponent = ({
+    sort,
+    setSort,
+    page,
+    setPage,
+    postList,
+    postListError,
+    loading,
+}) => {
+    if (postListError) {
+        return <PostListComponent>Error</PostListComponent>;
+    }
     return (
         <PostListBlock>
-            <div className="posts-menu-block">
-                <div className="count">{`총 ${postList.length}개`}</div>
+            {postList && <div className="posts-menu-block">
+                <div className="count">{`총 ${postList.count}개`}</div>
                 <div className="sort-menu-block">
                     <SortComponent
                         setSort={setSort}
@@ -40,9 +51,19 @@ const PostListComponent = ({ sort, setSort, postList }) => {
                         standards={postsStandards}
                     />
                 </div>
-            </div>
-            <PostListContentComponent postList={postList} />
-            <PaginationComponent />
+            </div>}
+            {!loading && postList && (
+                <PostListContentComponent postList={postList} />
+            )}
+            {!loading && postList && (
+                <PaginationComponent
+                    dataList={postList}
+                    setPage={setPage}
+                    page={page}
+                    dataListError={postListError}
+                    loading={loading}
+                />
+            )}
         </PostListBlock>
     );
 };

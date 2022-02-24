@@ -57,17 +57,28 @@ const PostItemBlock = styled.div`
 `;
 
 const PostItemComponent = ({ post, index }) => {
+    const { title, post_images, price, short_description } = post;
+
+    const mainImage = post_images.filter(
+        (image) => image.image_type === 'main',
+    );
     return (
         <PostItemBlock>
             <div className="item">
                 <Link to={`market/${index}`}>
                     <div className="thumbnail-block">
-                        <img src={post.image} alt="thumbnail" />
+                        <img
+                            src={mainImage[0].image.replace(
+                                'http://youtube-market-front.s3.amazonaws.com/https%3A/',
+                                'https://',
+                            )}
+                            alt="thumbnail"
+                        />
                     </div>
                     <div className="post-info-block">
-                        <div className="post-title">{post.name}</div>
-                        <div className="post-cost">{post.price}</div>
-                        <div className="post-desc">{post.desc}</div>
+                        <div className="post-title">{title}</div>
+                        <div className="post-cost">{`${price}원`}</div>
+                        <div className="post-desc">{short_description}</div>
                     </div>
                 </Link>
             </div>

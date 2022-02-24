@@ -22,13 +22,13 @@ const VideoListComponent = ({
     setPage,
     page,
 }) => {
-    console.log(videoDetail);
     return (
         <VideoListBlock>
             <ResultComponent
                 dataList={videoDetail}
                 dataListError={videoDetailError}
                 loading={loading}
+                
             />
             <PaginationComponent
                 dataList={videoDetail}

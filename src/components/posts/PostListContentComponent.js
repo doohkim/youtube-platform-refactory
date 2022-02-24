@@ -10,8 +10,8 @@ const PostListContentBlock = styled.div`
 const PostListContentComponent = ({postList}) => {
     return (
         <PostListContentBlock>
-            {postList && postList.map((post, key) => (
-                <PostItemComponent key={key} index={key} post={post} />
+            {postList && postList.results.map((post, key) => (
+                <PostItemComponent key={key} index={post.id} post={post} />
             ))}
         </PostListContentBlock>
     );

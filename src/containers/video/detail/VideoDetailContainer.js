@@ -43,6 +43,8 @@ const VideoDetailContainer = () => {
             <VideoContentComponent
                 setPage={setPage}
                 page={page}
+                setSort={setSort}
+                sort={sort}
                 videoDetail={videoDetail}
                 videoDetailError={videoDetailError}
                 loading={videoReadLoading}
