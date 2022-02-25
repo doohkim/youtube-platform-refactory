@@ -65,7 +65,7 @@ const PostItemComponent = ({ post, index }) => {
     return (
         <PostItemBlock>
             <div className="item">
-                <Link to={`market/${index}`}>
+                <Link to={`post/${index}`}>
                     <div className="thumbnail-block">
                         <img
                             src={mainImage[0].image.replace(

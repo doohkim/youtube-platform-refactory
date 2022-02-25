@@ -20,7 +20,7 @@ export const unloadPost = createAction(UNLOAD_POST);
 
 const getPostListSaga = createRequestSaga(GET_POST_LIST, postsAPI.getPosts);
 
-const readPostSaga = createRequestSaga(READ_POST, postsAPI.readPost);
+const readPostSaga = createRequestSaga(READ_POST, postsAPI.readDetailPost);
 
 export function* postListSaga() {
     yield takeLatest(GET_POST_LIST, getPostListSaga);
@@ -34,7 +34,7 @@ const initialState = {
     postDetailError: null,
 };
 
-const post = handleActions(
+const posts = handleActions(
     {
         [GET_POST_LIST_SUCCESS]: (state, action) => ({
             ...state,
@@ -57,4 +57,4 @@ const post = handleActions(
     initialState,
 );
 
-export default post;
+export default posts;

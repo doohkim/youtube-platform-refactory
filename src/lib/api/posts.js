@@ -7,6 +7,6 @@ export const getPosts = (params) =>
     client.get(`/posts/?page=${params.page}&sort=${params.sort}/`);
 
 
-export const readPost = (videoId) => {
-    return client.get(`/posts/${videoId}/`);
+export const readDetailPost = (postId) => {
+    return client.get(`/posts/${postId}/`);
 };

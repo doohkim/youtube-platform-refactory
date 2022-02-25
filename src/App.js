@@ -7,6 +7,7 @@ import ChannelListPage from './pages/ChannelListPage';
 import CustomerServicePage from './pages/CustomerServicePage';
 import LoginPage from './pages/LoginPage';
 import PostListPage from './pages/PostListPage';
+import PostPage from './pages/PostPage';
 import RegisterPage from './pages/RegisterPage';
 import VideoAnalysisPage from './pages/VideoAnalysisPage';
 import VideoDetailPage from './pages/VideoDetailPage';
@@ -19,7 +20,8 @@ function App() {
                 <Route path="/" element={<Layout />}>
                     <Route index element={<ChannelListPage />} />
                     <Route path="/video" element={<VideoListPage />} />
-                    <Route path="/market" element={<PostListPage />} />
+                    <Route path="/post" element={<PostListPage />} />
+                    <Route path="/post/:postId" element={<PostPage/>}/>
                     <Route path="service" element={<CustomerServicePage />} />
                     <Route path="/detail/video/:videoId" element={<VideoDetailPage />} />
                     <Route path="/analysis/:channelId/*" element={<ChannelDetailPage />}>
