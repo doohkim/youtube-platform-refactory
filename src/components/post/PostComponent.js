@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import PostSectionViewComponent from './PostSectionViewComponent';
+import PostViewInfomationComponent from './PostViewInfomationComponent';
 
 const PostBlock = styled.div`
     /* background-color: aliceblue; */
@@ -12,14 +13,13 @@ const PostBlock = styled.div`
 const PostComponent = ({ postDetail, postDetailError, loading }) => {
     return (
         <PostBlock>
-            
             {!loading && postDetail && (
                 <PostSectionViewComponent
                     postDetail={postDetail}
                     postDetailError={postDetailError}
                 />
             )}
-            
+            {!loading && postDetail && <PostViewInfomationComponent />}
         </PostBlock>
     );
 };

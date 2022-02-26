@@ -114,7 +114,7 @@ const PostSectionViewBlock = styled.div`
                         /* -webkit-appearance: none; */
                         /* -moz-appearance: none; */
                         /* appearance: none; */
-
+                        background-color: gray;
                         display: block;
                         overflow: hidden;
                         width: 100%;
@@ -195,7 +195,7 @@ const PostSectionViewComponent = ({ postDetail, postDetailError }) => {
                     <div className="product-select-block">
                         <div className="column">상품 선택</div>
                         <div className="select-block">
-                            <select className="select-box">
+                            {/* <select className="select-box">
                                 <option
                                     className="option-block"
                                     value=""
@@ -214,7 +214,7 @@ const PostSectionViewComponent = ({ postDetail, postDetailError }) => {
                                         {numberWithCommas(product.price)}
                                     </option>
                                 ))}
-                            </select>
+                            </select> */}
                         </div>
                     </div>
                 </div>
