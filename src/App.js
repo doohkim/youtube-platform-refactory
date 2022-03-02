@@ -20,7 +20,7 @@ function App() {
                 <Route path="/" element={<Layout />}>
                     <Route index element={<ChannelListPage />} />
                     <Route path="/video" element={<VideoListPage />} />
-                    <Route path="/post" element={<PostListPage />} />
+                    <Route path="/posts" element={<PostListPage />} />
                     <Route path="/post/:postId" element={<PostPage/>}/>
                     <Route path="service" element={<CustomerServicePage />} />
                     <Route path="/detail/video/:videoId" element={<VideoDetailPage />} />

@@ -29,9 +29,9 @@ const PostListContainer = () => {
 
     const dispatch = useDispatch();
     const { postList, postListError, postListLoading } = useSelector(
-        ({ post, loading }) => ({
-            postList: post.postList,
-            postListError: post.postListError,
+        ({ posts, loading }) => ({
+            postList: posts.postList,
+            postListError: posts.postListError,
             postListLoading: loading['posts/GET_POST_LIST'],
         }),
     );

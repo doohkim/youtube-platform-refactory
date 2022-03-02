@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import PostGoodsIntroComponent from './explain/PostGoodsIntroComponent';
+import PostGoodsCheckPointComponent from './explain/PostGoodsCheckPointComponent';
+import PostGoodsTipsComponent from './explain/PostGoodsTipsComponent';
+import PostGoodsInnerComponent from './explain/PostGoodsInnerComponent';
 
 const PostViewInfomationBlock = styled.div`
     width: 100%;
@@ -41,29 +44,6 @@ const PostViewInfomationBlock = styled.div`
     }
     .goods-view-infomation-content {
     }
-    .goods-check-point-block {
-        .check-title-block {
-            display: inline-block;
-            position: relative;
-            z-index: 10;
-            font-size: 50px;
-            width: 100%;
-            margin-bottom: 70px;
-            font-family: sans-serif;
-            font-weight: 700;
-            color: #666;
-            .check-title {
-                display: inline-block;
-                position: relative;
-                z-index: 10;
-                margin-left: auto;
-                margin-right: auto;
-                padding: 0 15px;
-                background-color: #fff;
-                text-shadow: 2px 0;
-            }
-        }
-    }
 `;
 
 const PostViewInfomationComponent = () => {
@@ -71,26 +51,24 @@ const PostViewInfomationComponent = () => {
         <PostViewInfomationBlock>
             <div className="tab-group-block">
                 <div className="tab-block">
-                    <div class="tab">상세설명</div>
+                    <div className="tab">상세설명</div>
                 </div>
                 <div className="tab-block">
-                    <div class="tab">상세정보</div>
+                    <div className="tab">상세정보</div>
                 </div>
                 <div className="tab-block">
-                    <div class="tab">
+                    <div className="tab">
                         상세정보<div className="count-review">(34456)</div>
                     </div>
                 </div>
                 <div className="tab-block">
-                    <div class="tab">문의</div>
+                    <div className="tab">문의</div>
                 </div>
             </div>
             <PostGoodsIntroComponent />
-            <div className="goods-check-point-block">
-                <div className="check-title-block">
-                    <div className="check-title">Kurly's Check Point</div>
-                </div>
-            </div>
+            <PostGoodsCheckPointComponent />
+            <PostGoodsTipsComponent />
+            <PostGoodsInnerComponent />
         </PostViewInfomationBlock>
     );
 };

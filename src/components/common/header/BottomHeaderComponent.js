@@ -13,7 +13,7 @@ const categories = [
         text: '영상순위',
     },
     {
-        name: 'market',
+        name: 'posts',
         text: '마켓',
     },
     {

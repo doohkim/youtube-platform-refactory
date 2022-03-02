@@ -19,7 +19,12 @@ const PostComponent = ({ postDetail, postDetailError, loading }) => {
                     postDetailError={postDetailError}
                 />
             )}
-            {!loading && postDetail && <PostViewInfomationComponent />}
+            {!loading && postDetail && (
+                <PostViewInfomationComponent
+                    postDetail={postDetail}
+                    postDetailError={postDetailError}
+                />
+            )}
         </PostBlock>
     );
 };
