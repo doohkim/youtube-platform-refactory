@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
+
 const PostSectionViewBlock = styled.div`
     width: 100%;
     padding-top: 20px;
@@ -111,10 +112,6 @@ const PostSectionViewBlock = styled.div`
                     word-break: break-all;
                     text-align: justify;
                     .select-box {
-                        /* -webkit-appearance: none; */
-                        /* -moz-appearance: none; */
-                        /* appearance: none; */
-                        background-color: gray;
                         display: block;
                         overflow: hidden;
                         width: 100%;
@@ -122,9 +119,11 @@ const PostSectionViewBlock = styled.div`
                         border: 2px solid #f4f4f4;
                         font-size: 12px;
                         line-height: 20px;
-                        /* letter-spacing:20px; */
                         .option-block {
+                            color: #fff;
+                            background-color: white;
                             text-align: justify;
+                            
                         }
                     }
                 }
@@ -132,8 +131,7 @@ const PostSectionViewBlock = styled.div`
         }
     }
 `;
-const PostSectionViewComponent = ({ postDetail, postDetailError }) => {
-    console.log(postDetail);
+const PostSectionViewComponent = ({ postDetail, postDetailError, input, onChangeInput, onInsert }) => {
     const {
         title,
         price,
@@ -146,6 +144,17 @@ const PostSectionViewComponent = ({ postDetail, postDetailError }) => {
     const topImage = post_images.filter(
         (postImage) => postImage.image_type === 'main',
     );
+
+    const onChange = useCallback((e) => {
+        const found = products.find(
+            (product) => product.name === e.target.value,
+        )
+        const { id, name, price} = found;
+        onInsert(id, name, price)
+        onChangeInput(input)
+
+    }, [onChangeInput])
+
     const numberWithCommas = (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
@@ -195,7 +204,7 @@ const PostSectionViewComponent = ({ postDetail, postDetailError }) => {
                     <div className="product-select-block">
                         <div className="column">상품 선택</div>
                         <div className="select-block">
-                            {/* <select className="select-box">
+                            <select className="select-box" onChange={onChange}>
                                 <option
                                     className="option-block"
                                     value=""
@@ -209,12 +218,11 @@ const PostSectionViewComponent = ({ postDetail, postDetailError }) => {
                                         key={product.id}
                                         value={product.name}
                                     >
-                                        {product.name}
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        {numberWithCommas(product.price)}
+                                        {product.name}(
+                                        {numberWithCommas(product.price)}원)
                                     </option>
                                 ))}
-                            </select> */}
+                            </select>
                         </div>
                     </div>
                 </div>

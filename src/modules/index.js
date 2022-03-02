@@ -8,6 +8,8 @@ import category, { categorySaga } from './category';
 import channel, { channelListSaga } from './channel';
 import video, { videoListSaga } from './video';
 import posts, { postListSaga} from './posts';
+import select from './select'
+import cart, {getCartSaga} from './cart'
 
 const rootReducer = combineReducers({
     auth,
@@ -17,6 +19,8 @@ const rootReducer = combineReducers({
     channel,
     video,
     posts,
+    select,
+    cart,
 });
 
 export function* rootSaga() {
@@ -27,6 +31,7 @@ export function* rootSaga() {
         channelListSaga(),
         videoListSaga(),
         postListSaga(),
+        getCartSaga(),
     ]);
 }
 
