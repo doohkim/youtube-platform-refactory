@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './Layout';
 import AnalysisPage from './pages/AnalysisPage';
+import CartPage from './pages/CartPage';
 import ChannelDetailPage from './pages/ChangeDetailPage';
 import ChannelListPage from './pages/ChannelListPage';
 import CustomerServicePage from './pages/CustomerServicePage';
@@ -19,15 +20,22 @@ function App() {
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route index element={<ChannelListPage />} />
-                    <Route path="/video" element={<VideoListPage />} />
-                    <Route path="/posts" element={<PostListPage />} />
-                    <Route path="/post/:postId" element={<PostPage/>}/>
-                    <Route path="service" element={<CustomerServicePage />} />
-                    <Route path="/detail/video/:videoId" element={<VideoDetailPage />} />
-                    <Route path="/analysis/:channelId/*" element={<ChannelDetailPage />}>
+                    <Route
+                        path="/analysis/:channelId/*"
+                        element={<ChannelDetailPage />}
+                    >
                         <Route path="" element={<AnalysisPage />} />
                         <Route path="video" element={<VideoAnalysisPage />} />
                     </Route>
+                    <Route path="/video" element={<VideoListPage />} />
+                    <Route path="/posts" element={<PostListPage />} />
+                    <Route path="/post/:postId" element={<PostPage />} />
+                    <Route path="/service" element={<CustomerServicePage />} />
+                    <Route
+                        path="/detail/video/:videoId"
+                        element={<VideoDetailPage />}
+                    />
+                    <Route path="/cart" element={<CartPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                 </Route>

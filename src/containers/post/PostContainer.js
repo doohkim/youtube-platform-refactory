@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams,useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import PostComponent from '../../components/post/PostComponent';
 import useActions from '../../lib/useActions';
 import { readPost, unloadPost } from '../../modules/posts';
@@ -11,13 +11,13 @@ import {
     decrease,
     increase,
 } from '../../modules/select';
-import { setCart } from '../../modules/cart'
+import { setCart } from '../../modules/cart';
 const PostContainer = () => {
     const { postId } = useParams();
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
-    
+
     const [cartList, setCartList] = useState([]);
     const {
         postDetail,
@@ -104,11 +104,12 @@ const PostContainer = () => {
         new_cart = [];
         overlap_list = [];
         if (window.confirm('장바구니 고?')) {
-            navigate('/list');
+            navigate('/cart');
         } else {
             navigate(`/post/${postId}`);
         }
     }, [selectProducts, cartList]);
+
     useEffect(() => {
         dispatch(unloadPost());
     }, [dispatch]);
@@ -117,12 +118,27 @@ const PostContainer = () => {
         if (postId) {
             dispatch(readPost(postId));
         }
-    }, [dispatch, postId]);
+        const cart = JSON.parse(sessionStorage.getItem('cart'));
+        console.log('session storage', cart);
+        if (cart) {
+            setCartList(cart);
+            console.log('set cart List', cartList);
+        }
+    }, [dispatch, postId, setCartList]);
+
     return (
         <PostComponent
+            selectProducts={selectProducts}
+            input={input}
+            onInsert={onInsert}
+            onChangeInput={onChangeInput}
+            onRemove={onRemove}
+            onDecrease={onDecrease}
+            onIncrease={onIncrease}
             postDetail={postDetail}
             postDetailError={postDetailError}
             loading={postDetailLoading}
+            onClick={onClick}
         />
     );
 };

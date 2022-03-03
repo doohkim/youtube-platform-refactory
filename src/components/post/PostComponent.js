@@ -10,13 +10,33 @@ const PostBlock = styled.div`
     margin: auto;
 `;
 
-const PostComponent = ({ postDetail, postDetailError, loading }) => {
+const PostComponent = ({
+    postDetail,
+    postDetailError,
+    loading,
+    selectProducts,
+    input,
+    onInsert,
+    onChangeInput,
+    onRemove,
+    onDecrease,
+    onIncrease,
+    onClick
+}) => {
     return (
         <PostBlock>
             {!loading && postDetail && (
                 <PostSectionViewComponent
                     postDetail={postDetail}
                     postDetailError={postDetailError}
+                    selectProducts={selectProducts}
+                    input={input}
+                    onInsert={onInsert}
+                    onChangeInput={onChangeInput}
+                    onRemove={onRemove}
+                    onDecrease={onDecrease}
+                    onIncrease={onIncrease}
+                    onClick={onClick}
                 />
             )}
             {!loading && postDetail && (

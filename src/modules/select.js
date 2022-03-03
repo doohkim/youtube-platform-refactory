@@ -36,19 +36,24 @@ const select = handleActions(
         [INSERT]: (state, { payload: product }) =>
             produce(state, (draft) => {
                 let duplicateItem = false;
+
                 draft.selectProducts.find((selectedProduct) => {
                     if (product.id === selectedProduct.id) {
                         duplicateItem = true;
-                    } else {
-                        draft.selectProducts.push(product);
                     }
                 });
+                if (duplicateItem) {
+                    draft.selectProducts = state.selectProducts;
+                    alert('중복');
+                } else {
+                    draft.selectProducts.push(product);
+                }
             }),
         [REMOVE]: (state, { payload: id }) =>
             produce(state, (draft) => {
                 const index = draft.selectProducts.findIndex(
-                    product => product.id === id
-                )
+                    (product) => product.id === id,
+                );
                 draft.selectProducts.splice(index, 1);
             }),
         [INCREASE]: (state, { payload: id }) =>

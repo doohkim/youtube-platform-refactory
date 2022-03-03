@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
+import PostNumberousCartListComponent from './cart/PostNumberousCartListComponent';
+import PostNumberousCartComponent from './cart/PostNumerousCartComponent';
 
 const PostSectionViewBlock = styled.div`
     width: 100%;
@@ -84,7 +86,6 @@ const PostSectionViewBlock = styled.div`
     .cart-block {
         width: 100%;
         display: flex;
-        padding-bottom: 40px;
         .not-need-block {
             width: 39%;
         }
@@ -104,26 +105,48 @@ const PostSectionViewBlock = styled.div`
                     line-height: 20px;
                     padding-top: 10px;
                 }
-                .select-block {
+                .total-block{
                     width: 60%;
-                    overflow: hidden;
-                    font-size: 14px;
-                    line-height: 20px;
-                    word-break: break-all;
-                    text-align: justify;
-                    .select-box {
-                        display: block;
-                        overflow: hidden;
-                        width: 100%;
-                        padding: 9px 0 9px 15px;
-                        border: 2px solid #f4f4f4;
-                        font-size: 12px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-end;
+                    .tit{
+                        display: flex;
+                        font-weight: 700;
+                        font-size: 10px;
                         line-height: 20px;
-                        .option-block {
-                            color: #fff;
-                            background-color: white;
-                            text-align: justify;
+                        vertical-align: 2px;
+                        font-family: sans-serif;
+                        align-items: flex-end;
+                        .price{
+                            padding-left: 8px;
+                            font-weight: 700;
+                            font-size: 24px;
+                        }
+                        .won{
+                            padding-left: 2px;
+                            font-size: 13px;
+                            font-weight: 600;
+                            line-height: 20px;
                             
+                        }
+                    }
+                    .cart-put-btn{
+                        padding-top: 20px;
+                        width: 100%;
+                        display: flex;
+                        justify-content: center;
+                        button{
+                            width: 100%;
+                            background-color: #5f0081;
+                            border-radius: 3px;
+                            font-size: 16px;
+                            color: #f4f4f4;
+                            border: 1px solid #5f0081;
+                            cursor:pointer;
+                            font-weight: 600;
+                            padding-top: 10px;
+                            padding-bottom: 10px;
                         }
                     }
                 }
@@ -131,29 +154,42 @@ const PostSectionViewBlock = styled.div`
         }
     }
 `;
-const PostSectionViewComponent = ({ postDetail, postDetailError, input, onChangeInput, onInsert }) => {
+const PostSectionViewComponent = ({
+    postDetail,
+    postDetailError,
+    selectProducts,
+    input,
+    onInsert,
+    onChangeInput,
+    onRemove,
+    onDecrease,
+    onIncrease,
+    onClick
+}) => {
     const {
         title,
         price,
         short_description,
-        full_description,
         post_descriptions,
         post_images,
         products,
+        
     } = postDetail;
     const topImage = post_images.filter(
         (postImage) => postImage.image_type === 'main',
     );
 
-    const onChange = useCallback((e) => {
-        const found = products.find(
-            (product) => product.name === e.target.value,
-        )
-        const { id, name, price} = found;
-        onInsert(id, name, price)
-        onChangeInput(input)
-
-    }, [onChangeInput])
+    const onChange = useCallback(
+        (e) => {
+            const found = products.find(
+                (product) => product.name === e.target.value,
+            );
+            const { id, name, price } = found;
+            onInsert(id, name, price);
+            onChangeInput(input);
+        },
+        [onChangeInput],
+    );
 
     const numberWithCommas = (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -203,26 +239,38 @@ const PostSectionViewComponent = ({ postDetail, postDetailError, input, onChange
                 <div className="cart-put-block">
                     <div className="product-select-block">
                         <div className="column">상품 선택</div>
-                        <div className="select-block">
-                            <select className="select-box" onChange={onChange}>
-                                <option
-                                    className="option-block"
-                                    value=""
-                                    hidden
-                                >
-                                    상품선택
-                                </option>
-                                {products.map((product) => (
-                                    <option
-                                        className="option-block"
-                                        key={product.id}
-                                        value={product.name}
-                                    >
-                                        {product.name}(
-                                        {numberWithCommas(product.price)}원)
-                                    </option>
-                                ))}
-                            </select>
+                        <PostNumberousCartComponent
+                            onChange={onChange}
+                            input={input}
+                            numberWithCommas={numberWithCommas}
+                            products={products}
+                        />
+                    </div>
+                </div>
+            </div>
+            <div className="cart-block">
+                <div className="not-need-block"></div>
+                <div className="cart-put-block">
+                    <div className="product-select-block">
+                        <div className="column"></div>
+                        <PostNumberousCartListComponent
+                            selectProducts={selectProducts}
+                            onRemove={onRemove}
+                            onDecrease={onDecrease}
+                            onIncrease={onIncrease}
+                            numberWithCommas={numberWithCommas}
+                        />
+                    </div>
+                </div>
+            </div>
+            <div className="cart-block">
+                <div className="not-need-block"></div>
+                <div className="cart-put-block">
+                    <div className="product-select-block">
+                        <div className="column"></div>
+                        <div className="total-block">
+                            <div className="tit">총 상품금액:<div className="price">0</div><div className="won">원</div></div>
+                            <div className="cart-put-btn"><button onClick={onClick}>장바구니</button></div>
                         </div>
                     </div>
                 </div>

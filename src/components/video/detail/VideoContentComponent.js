@@ -20,6 +20,7 @@ const VideoContentComponent = ({
     setPage,
     page,
 }) => {
+    
     return (
         <VideoContentBlock>
             {!loading && videoDetail && (
