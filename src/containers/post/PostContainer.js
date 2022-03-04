@@ -10,6 +10,7 @@ import {
     remove,
     decrease,
     increase,
+    unloadCartProduct
 } from '../../modules/select';
 import { setCart } from '../../modules/cart';
 const PostContainer = () => {
@@ -33,8 +34,8 @@ const PostContainer = () => {
         selectProducts: select.selectProducts,
     }));
 
-    const [onChangeInput, onInsert, onRemove, onDecrease, onIncrease] =
-        useActions([changeInput, insert, remove, decrease, increase]);
+    const [onChangeInput, onInsert, onRemove, onDecrease, onIncrease, ] =
+        useActions([changeInput, insert, remove, decrease, increase, ]);
 
     const onClick = useCallback(() => {
         let cart_db = [];
@@ -106,12 +107,14 @@ const PostContainer = () => {
         if (window.confirm('장바구니 고?')) {
             navigate('/cart');
         } else {
+            dispatch(unloadCartProduct())
             navigate(`/post/${postId}`);
         }
     }, [selectProducts, cartList]);
 
     useEffect(() => {
         dispatch(unloadPost());
+        dispatch(unloadCartProduct())
     }, [dispatch]);
 
     useEffect(() => {
