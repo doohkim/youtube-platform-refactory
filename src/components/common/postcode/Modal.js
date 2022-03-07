@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import Portal from './Portal';
 import { GrClose } from 'react-icons/gr';
+import Portal from './Portal';
 
 const ModalWrapper = styled.div`
     box-sizing: border-box;
@@ -77,7 +77,6 @@ const Modal = ({
             const scrollY = document.body.style.top;
             document.body.style.cssText = `position: ""; top: "";`;
             window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
-            // window.scrollTo(0, parseInt(scrollY || '0') * -1);
         };
     }, []);
     return (

@@ -63,15 +63,80 @@ const CartTotalInfoComponent = () => {
     const [address, setAddress] = useState(null);
     const [postCodes, setPostCodes] = useState(null);
     const [detailAddress, setDetailAddress] = useState('');
-    // useEffect(() => {
-    //     setAddress('경기도 광명시 광삼로 27번길 3 101호')
-    // },[setAddress])
+
+    const handleComplete = useCallback(
+        (data) => {
+            let fullAddress = data.address;
+            let extraAddress = '';
+            let zoneCodes = data.zonecode;
+            if (data.addressType === 'R') {
+                if (data.bname !== '') {
+                    extraAddress += data.bname;
+                }
+                if (data.buildingName !== '') {
+                    extraAddress +=
+                        extraAddress !== ''
+                            ? `, ${data.buildingName}`
+                            : data.buildingName;
+                }
+                fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
+            }
+            //fullAddress -> 전체 주소반환
+            setAddress(fullAddress);
+            setPostCodes(zoneCodes);
+            setIsOpenSecondPopup(true);
+        },
+        [address, postCodes, isOpenSecondPopup],
+    );
     const openModal = useCallback(() => {
         setModalVisible(true);
-    },[]);
+    }, []);
     const closeModal = useCallback(() => {
-        setModalVisible(false)
-    }) 
+        setModalVisible(false);
+    });
+    const onChange = useCallback(
+        (e) => {
+            setDetailAddress(e.target.value);
+        },
+        [detailAddress],
+    );
+    const onClick = useCallback((e) => {
+        e.preventDefault();
+        setAddress(address + detailAddress);
+        setIsOpenSecondPopup(false)
+        closeModal(false);
+
+    }, [closeModal, address, detailAddress, setAddress])
+
+    const onOrder = useCallback(() => {
+        if (selectedCartItems.length === 0 ) {
+            window.alert('주문할 상품을 선택해 주세요')
+        }
+    }, [selectedCartItems])
+
+    const getTotalAmount = (numbers) => {
+        if(numbers.length === 0 ) return 0;
+        const sum = numbers.reduce((acc, cur, i) => {
+            return acc + cur.price * cur.number;
+        })
+        return sum
+    }
+
+    // useEffect(() => {
+    //     // user 정보가 바뀔수도 있음
+    //     // user address 가 없을 수도 있음
+    //     if(user) {
+    //         setAddress(user.user.user_addresses[0].address);
+    //     }else{
+    //         setAddress(null)
+    //     }
+    //     if(cartData) {
+    //         setSelectedCartItems(
+    //             cartData.filter((cart_item) => cart_item.checked === true)
+    //         )
+    //     }
+    //     setAddress('경기도 광명시 광삼로 27번길 3 101호')
+    // },[setAddress])
     return (
         <CartTotalInfoBlock>
             <div className="address-block">
@@ -84,7 +149,10 @@ const CartTotalInfoComponent = () => {
                 {address ? (
                     <div className="address-text-block">
                         <div className="text">{address}</div>
-                        <button className="address-input-btn" onClick={openModal}>
+                        <button
+                            className="address-input-btn"
+                            onClick={openModal}
+                        >
                             배송지 변경
                         </button>
                     </div>
@@ -96,7 +164,12 @@ const CartTotalInfoComponent = () => {
                             <br />
                             배송유형을 확인해 보세요
                         </div>
-                        <button className="address-input-btn" onClick={openModal}>주소검색</button>
+                        <button
+                            className="address-input-btn"
+                            onClick={openModal}
+                        >
+                            주소검색
+                        </button>
                     </div>
                 )}
                 {modalVisible && (
@@ -107,27 +180,24 @@ const CartTotalInfoComponent = () => {
                         onClose={closeModal}
                     >
                         <DaumPostcode
-                            // onComplete={handleComplete}
+                            onComplete={handleComplete}
                             className="post-code"
                         />
-                        {/* {isOpenSecondPopup && (
+                        {isOpenSecondPopup && (
                             <div>
                                 <h3>상세 주소 입력</h3>
                                 <input
                                     placeholder="상세주소 입력을 해주세요"
-                                    // onChange={onChange}
+                                    onChange={onChange}
                                     value={detailAddress}
-                                /> 
+                                />
                                 <button>저장</button>
                             </div>
-                        )} */}
+                        )}
                     </Modal>
                 )}
             </div>
-            <div className="totla-calculate-info-block">
-
-
-            </div>
+            <div className="totla-calculate-info-block"></div>
             <div className="order-button-block"></div>
         </CartTotalInfoBlock>
     );
