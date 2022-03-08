@@ -4,15 +4,18 @@ import palette from '../../lib/styles/palette';
 import { IoLocationOutline } from 'react-icons/io5';
 import Modal from '../common/postcode/Modal';
 import DaumPostcode from 'react-daum-postcode';
+import CartCalculateComponent from './CartCalculateComponent';
+import { Link } from 'react-router-dom';
 
 const CartTotalInfoBlock = styled.div`
     width: 25%;
     margin-left: 20px;
-    border: 1px solid ${palette.gray[2]};
+    
 
     .address-block {
         width: 100%;
         padding: 20px 19px 20px 19px;
+        border: 1px solid ${palette.gray[2]};
         .tit-block {
             display: flex;
             font-size: 16px;
@@ -50,9 +53,28 @@ const CartTotalInfoBlock = styled.div`
             }
         }
     }
-    .totla-calculate-info-block {
-    }
+
     .order-button-block {
+        width: 100%;
+        padding: 20px 0 0;
+        z-index: 2;
+        
+        .order-btn{
+            border:1px solid ${palette.cyan[5]};
+            background-color: ${palette.cyan[5]};
+            width: 100%;
+            height: 56px;
+            border-radius: 6px;
+            color: #fff;
+        }
+        .disabled-order-btn{
+            border:1px solid ${palette.gray[3]};
+            background-color: ${palette.gray[3]};
+            width: 100%;
+            height: 56px;
+            border-radius: 6px;
+            color: #fff;
+        }
     }
 `;
 
@@ -190,6 +212,7 @@ const CartTotalInfoComponent = ({ cartData, loading, user }) => {
             );
         }
     }, [user, setAddress, cartData, selectedCartItems]);
+    console.log(selectedCartItems)
     return (
         <CartTotalInfoBlock>
             <div className="address-block">
@@ -268,8 +291,21 @@ const CartTotalInfoComponent = ({ cartData, loading, user }) => {
                     </Modal>
                 )}
             </div>
-            <div className="totla-calculate-info-block"></div>
-            <div className="order-button-block"></div>
+            <CartCalculateComponent/>
+            { selectedCartItems.length === 0 ? (
+                <div className="order-button-block">
+                <Link to="/list">
+                    <button disabled className="disabled-order-btn">상품을 담아주세요</button>
+                </Link>
+            </div>
+            ) 
+            :
+            (<div className="order-button-block">
+                <Link to="/order">
+                    <button  className="order-btn">주문하기</button>
+                </Link>
+            </div>)
+        }
         </CartTotalInfoBlock>
     );
 };

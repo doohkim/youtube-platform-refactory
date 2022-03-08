@@ -26,6 +26,9 @@ const CartBlock = styled.div`
 `;
 
 const CartComponent = () => {
+    
+
+
     return (
         <CartBlock>
             <div className="page-tit">
