@@ -60,6 +60,7 @@ const PostSelectedItemBlock = styled.div`
 `;
 
 const PostSelectedItemComponent = ({
+    index,
     product,
     onIncrease,
     onDecrease,
@@ -67,7 +68,6 @@ const PostSelectedItemComponent = ({
     onRemove,
 }) => {
     const { id, text, number, price } = product;
-    console.log(product);
     return (
         <PostSelectedItemBlock>
             <div className="first-block">
@@ -78,9 +78,9 @@ const PostSelectedItemComponent = ({
             </div>
             <div className="second-block">
                 <div className="number-block">
-                    <button onClick={() => onIncrease(id)}>-</button>
+                    <button onClick={() => onDecrease(id)}>-</button>
                     <div className="number">{number}</div>
-                    <button onClick={() => onDecrease(id)}>+</button>
+                    <button onClick={() => onIncrease(id)}>+</button>
                 </div>
                 <div className="price-block">{numberWithCommas(price)}원</div>
             </div>
@@ -95,13 +95,13 @@ const PostNumberousCartListComponent = ({
     onIncrease,
     numberWithCommas,
 }) => {
-    console.log('selectProducts', selectProducts);
     return (
         <PostNumberousCartListBlock>
             {selectProducts.map((product) => (
                 <PostSelectedItemComponent
                     product={product}
                     key={product.id}
+                    index={product.id}
                     onRemove={onRemove}
                     onDecrease={onDecrease}
                     onIncrease={onIncrease}

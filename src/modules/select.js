@@ -61,11 +61,8 @@ const select = handleActions(
                 const product = draft.selectProducts.find(
                     (product) => product.id === id,
                 );
-                if (product.number === 1) {
-                    product.number = 1;
-                } else {
-                    product.number = product.number + 1;
-                }
+
+                product.number = product.number + 1;
             }),
         [DECREASE]: (state, { payload: id }) =>
             produce(state, (draft) => {
