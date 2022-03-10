@@ -35,15 +35,23 @@ const initialState = {
 
 const cart = handleActions(
     {
-        [GET_CART]: (state, { payload: cartData }) => ({
-            ...state,
-            cartData,
-        }),
+        // [GET_CART]: (state, { payload: cartData }) => ({
+        //     ...state,
+        //     cartData,
+        // }),
         [GET_CART_SUCCESS]: (state, { payload: cartData }) => ({
             ...state,
             cartData,
         }),
         [GET_CART_FAILURE]: (state, { payload: cartError }) => ({
+            ...state,
+            cartError: cartError,
+        }),
+        [SET_CART_SUCCESS]: (state, { payload: cartData }) => ({
+            ...state,
+            cartData,
+        }),
+        [SET_CART_FAILURE]: (state, { payload: cartError }) => ({
             ...state,
             cartError: cartError,
         }),

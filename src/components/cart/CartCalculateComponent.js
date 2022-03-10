@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { numberWithCommas } from '../../lib/fpp';
 import palette from '../../lib/styles/palette';
 
 const CartCalculateBlock = styled.div`
@@ -56,7 +57,6 @@ const CartCalculateBlock = styled.div`
             .total-num {
                 font-weight: 600;
                 font-size: 22px;
-                
             }
             .total-won {
                 padding-left: 2px;
@@ -66,13 +66,16 @@ const CartCalculateBlock = styled.div`
     }
 `;
 
-const CartCalculateComponent = () => {
+const CartCalculateComponent = ({ totalAmount }) => {
+    
     return (
         <CartCalculateBlock>
             <div className="amount-block">
                 <div className="tit">상품금액</div>
                 <div className="value">
-                    <div className="num">19,900</div>
+                    <div className="num">
+                        {numberWithCommas(totalAmount)}
+                    </div>
                     <div className="won">원</div>
                 </div>
             </div>
@@ -86,17 +89,17 @@ const CartCalculateComponent = () => {
             <div className="amount-block">
                 <div className="tit">배송비</div>
                 <div className="value">
-                    <div className="num">+3000</div>
+                {totalAmount >= 40000 ? <div className="num">{0}</div>: <div className="num">+{numberWithCommas(3000)}</div>}
                     <div className="won">원</div>
                 </div>
             </div>
-            <div className="free-limit-block">
-                20,100원 축 주문시, <strong>무료배송</strong>
-            </div>
+            {totalAmount >= 40000 ? null :<div className="free-limit-block">
+                {`${numberWithCommas(40000 - totalAmount)}원 축 주문시,`} <strong>무료배송</strong>
+            </div>}
             <div className="total-price-block">
                 <div className="total-tit">결제예정금액</div>
                 <div className="total-value-block">
-                    <div className="total-num">22,900</div>
+                    {totalAmount >= 40000 ?<div className="total-num">{numberWithCommas(totalAmount)}</div> :<div className="total-num">{numberWithCommas(totalAmount+3000)}</div>}
                     <div className="total-won">원</div>
                 </div>
             </div>

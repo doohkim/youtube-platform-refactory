@@ -11,10 +11,11 @@ const UNLOAD_CART_PRODUCT = 'select/UNLOAD_CART_PRODUCT';
 export const increase = createAction(INCREASE);
 export const decrease = createAction(DECREASE);
 export const changeInput = createAction(CHANGE_INPUT, (input) => input);
-export const insert = createAction(INSERT, (id, text, price) => ({
+export const insert = createAction(INSERT, (id, text, price, images) => ({
     id: id,
     text: text,
     price: price,
+    images: images,
     number: 1,
     checked: false,
 }));

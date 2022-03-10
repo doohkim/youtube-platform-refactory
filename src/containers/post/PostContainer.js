@@ -122,10 +122,10 @@ const PostContainer = () => {
             dispatch(readPost(postId));
         }
         const cart = JSON.parse(sessionStorage.getItem('cart'));
-        console.log('session storage', cart);
+        console.log('post container session storage', cart);
         if (cart) {
             setCartList(cart);
-            console.log('set cart List', cartList);
+            console.log('post container set cart List', cartList);
         }
     }, [dispatch, postId, setCartList]);
 

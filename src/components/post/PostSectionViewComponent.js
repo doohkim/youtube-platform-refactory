@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
+import { numberWithCommas } from '../../lib/fpp';
 import PostNumberousCartListComponent from './cart/PostNumberousCartListComponent';
 import PostNumberousCartComponent from './cart/PostNumerousCartComponent';
 
@@ -184,16 +185,15 @@ const PostSectionViewComponent = ({
             const found = products.find(
                 (product) => product.name === e.target.value,
             );
+            console.log('found', found)
             const { id, name, price } = found;
-            onInsert(id, name, price);
+            onInsert(id, name, price, post_images);
             onChangeInput(input);
         },
         [onChangeInput],
     );
 
-    const numberWithCommas = (x) => {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    };
+    
     return (
         <PostSectionViewBlock>
             <div className="inner-view-block">

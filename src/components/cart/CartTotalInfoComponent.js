@@ -6,11 +6,11 @@ import Modal from '../common/postcode/Modal';
 import DaumPostcode from 'react-daum-postcode';
 import CartCalculateComponent from './CartCalculateComponent';
 import { Link } from 'react-router-dom';
+import { getTotalAmount } from '../../lib/fpp';
 
 const CartTotalInfoBlock = styled.div`
     width: 25%;
     margin-left: 20px;
-    
 
     .address-block {
         width: 100%;
@@ -58,17 +58,17 @@ const CartTotalInfoBlock = styled.div`
         width: 100%;
         padding: 20px 0 0;
         z-index: 2;
-        
-        .order-btn{
-            border:1px solid ${palette.cyan[5]};
+
+        .order-btn {
+            border: 1px solid ${palette.cyan[5]};
             background-color: ${palette.cyan[5]};
             width: 100%;
             height: 56px;
             border-radius: 6px;
             color: #fff;
         }
-        .disabled-order-btn{
-            border:1px solid ${palette.gray[3]};
+        .disabled-order-btn {
+            border: 1px solid ${palette.gray[3]};
             background-color: ${palette.gray[3]};
             width: 100%;
             height: 56px;
@@ -115,9 +115,9 @@ const SecondPopUpBlock = styled.div`
             }
         }
     }
-    .btn-block{
+    .btn-block {
         margin-top: 10px;
-        button{
+        button {
             background-color: ${palette.cyan[5]};
             border: 1px solid ${palette.cyan[5]};
             color: #fff;
@@ -128,11 +128,10 @@ const SecondPopUpBlock = styled.div`
             font-size: 14px;
             line-height: 42px;
         }
-
     }
 `;
 
-const CartTotalInfoComponent = ({ cartData, loading, user }) => {
+const CartTotalInfoComponent = ({ cartData, user }) => {
     const [selectedCartItems, setSelectedCartItems] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [isOpenSecondPopup, setIsOpenSecondPopup] = useState(false);
@@ -168,7 +167,7 @@ const CartTotalInfoComponent = ({ cartData, loading, user }) => {
     }, []);
     const closeModal = useCallback(() => {
         setModalVisible(false);
-        setIsOpenSecondPopup(false)
+        setIsOpenSecondPopup(false);
     });
     const onChange = useCallback(
         (e) => {
@@ -182,37 +181,35 @@ const CartTotalInfoComponent = ({ cartData, loading, user }) => {
             setAddress(address + detailAddress);
             setIsOpenSecondPopup(false);
             closeModal(false);
+            setDetailAddress('');
         },
-        [closeModal, address, detailAddress, setAddress],
+        [closeModal, address, detailAddress, setAddress, setDetailAddress],
     );
-    const onOrder = useCallback(() => {
-        if (selectedCartItems.length === 0) {
-            window.alert('주문할 상품을 선택해 주세요');
+
+    const getTotalAmount = useCallback((cartItems) => {
+        let acc = 0;
+        if (cartItems.length === 0) return 0;
+        else {
+            cartItems.map((item) => {
+                acc = acc + item.price * item.number;
+            });
+            return acc;
         }
-    }, [selectedCartItems]);
-    const getTotalAmount = (numbers) => {
-        if (numbers.length === 0) return 0;
-        const sum = numbers.reduce((acc, cur, i) => {
-            return acc + cur.price * cur.number;
-        });
-        return sum;
-    };
+    }, []);
+
     useEffect(() => {
         // user 정보가 바뀔수도 있음
         // user address 가 없을 수도 있음
 
         if (user) {
             setAddress(user.user.user_addresses[0].address);
-        } else {
-            setAddress(null);
         }
         if (cartData) {
             setSelectedCartItems(
                 cartData.filter((cart_item) => cart_item.checked === true),
             );
         }
-    }, [user, setAddress, cartData, selectedCartItems]);
-    console.log(selectedCartItems)
+    }, [user, cartData, setAddress, setSelectedCartItems]);
     return (
         <CartTotalInfoBlock>
             <div className="address-block">
@@ -284,28 +281,34 @@ const CartTotalInfoComponent = ({ cartData, loading, user }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className="btn-block"><button onClick={onClick}>저장</button></div>
-                                
+                                <div className="btn-block">
+                                    <button onClick={onClick}>저장</button>
+                                </div>
                             </SecondPopUpBlock>
                         )}
                     </Modal>
                 )}
             </div>
-            <CartCalculateComponent/>
-            { selectedCartItems.length === 0 ? (
+
+            <CartCalculateComponent
+                totalAmount={getTotalAmount(selectedCartItems)}
+            />
+
+            {selectedCartItems.length === 0 ? (
                 <div className="order-button-block">
-                <Link to="/list">
-                    <button disabled className="disabled-order-btn">상품을 담아주세요</button>
-                </Link>
-            </div>
-            ) 
-            :
-            (<div className="order-button-block">
-                <Link to="/order">
-                    <button  className="order-btn">주문하기</button>
-                </Link>
-            </div>)
-        }
+                    <Link to="/payment">
+                        <button disabled className="disabled-order-btn">
+                            상품을 담아주세요
+                        </button>
+                    </Link>
+                </div>
+            ) : (
+                <div className="order-button-block">
+                    <Link to="/order">
+                        <button className="order-btn">주문하기</button>
+                    </Link>
+                </div>
+            )}
         </CartTotalInfoBlock>
     );
 };

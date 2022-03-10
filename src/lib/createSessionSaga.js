@@ -13,7 +13,6 @@ export default function createSessionSaga(type) {
             console.log(
                 'get cart reducer , export session data'
             )
-            console.log(cartdata)
             yield put({
                 type: SUCCESS,
                 payload: cartdata,
@@ -26,5 +25,6 @@ export default function createSessionSaga(type) {
                 error: true
             })
         }
+        yield put(finishLoading(type))
     }
 }

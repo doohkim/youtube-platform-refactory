@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import CartContentComponent from './CartContentComponent';
 import CartTotalInfoComponent from './CartTotalInfoComponent';
@@ -20,23 +21,84 @@ const CartBlock = styled.div`
             text-align: center;
         }
     }
-    .content{
+    .content {
         display: flex;
     }
 `;
 
-const CartComponent = () => {
-    
-
-
+const CartComponent = ({
+    cartData,
+    cartError,
+    loading,
+    user,
+    increase,
+    decrease,
+    remove,
+    toggle,
+}) => {
+    const dispatch = useDispatch();
+    const onIncrease = useCallback(
+        (id) => {
+            dispatch(increase(id));
+        },
+        [dispatch],
+        cartData
+            ? sessionStorage.setItem('cart', JSON.stringify(cartData))
+            : console.log('not cart data'),
+    );
+    const onDecrease = useCallback(
+        (id) => {
+            dispatch(decrease(id));
+            if (cartData) {
+                sessionStorage.setItem('cart', JSON.stringify(cartData));
+            } else {
+                console.log('not cart data');
+            }
+        },
+        [dispatch],
+    );
+    const onToggle = useCallback(
+        (id) => {
+            dispatch(toggle(id));
+            if (cartData) {
+                sessionStorage.setItem('cart', JSON.stringify(cartData));
+            } else {
+                console.log('not cart data');
+            }
+        },
+        [dispatch],
+    );
+    const onRemove = useCallback(
+        (id) => {
+            dispatch(remove(id));
+            if (cartData) {
+                sessionStorage.setItem('cart', JSON.stringify(cartData));
+            } else {
+                console.log('not cart data');
+            }
+        },
+        [dispatch],
+    );
+    if (cartError) {
+        return <CartBlock>에러 발생했습니다.</CartBlock>;
+    }
     return (
         <CartBlock>
             <div className="page-tit">
                 <h2>장바구니</h2>
             </div>
+
             <div className="content">
-                <CartContentComponent />
-                <CartTotalInfoComponent />
+                <CartContentComponent
+                    cartData={cartData}
+                    user={user}
+                    loading={loading}
+                    onIncrease={onIncrease}
+                    onDecrease={onDecrease}
+                    onToggle={onToggle}
+                    onRemove={onRemove}
+                />
+                <CartTotalInfoComponent cartData={cartData} user={user} />
             </div>
         </CartBlock>
     );
