@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineUp, AiOutlineDown } from 'react-icons/ai';
 const PaymentProductListBlock = styled.div`
+    padding-bottom: 50px;
     color: #333;
     .title-block {
         padding-top: 14px;
@@ -53,19 +54,17 @@ const PaymentProductItemBlock = styled.div`
     .name-block {
         width: 70%;
         padding-left: 20px;
-        font-size:14px;
+        font-size: 14px;
         line-height: 24px;
-        
 
         .product-name {
             font-weight: 700;
             font-size: 16px;
             color: #000;
-            
         }
-        .post-name{
+        .post-name {
             padding-top: 6px;
-            
+
             color: #999;
             line-height: 22px;
         }
@@ -74,8 +73,7 @@ const PaymentProductItemBlock = styled.div`
         padding-right: 15px;
         text-align: right;
         width: 11%;
-        color:#333;
-
+        color: #333;
     }
     .price-block {
         text-align: right;
@@ -97,8 +95,12 @@ const PaymentProductItemComponent = () => {
                 />
             </div>
             <div className="name-block">
-                <div className="product-name">[남향푸드또띠아] 하와이안 브리또</div>
-                <div className="post-name">[남향푸드또띠아] 간편 간식 브리또 10종</div>
+                <div className="product-name">
+                    [남향푸드또띠아] 하와이안 브리또
+                </div>
+                <div className="post-name">
+                    [남향푸드또띠아] 간편 간식 브리또 10종
+                </div>
             </div>
             <div className="ea-block">1개</div>
             <div className="price-block">3,200원</div>
@@ -119,9 +121,9 @@ const PaymentProductListComponent = () => {
                 <div className="title">주문상품</div>
                 <div className="outline-arrow" onClick={() => onToggle()}>
                     {productListOpen ? (
-                        <AiOutlineDown size={28} />
-                    ) : (
                         <AiOutlineUp size={28} />
+                    ) : (
+                        <AiOutlineDown size={28} />
                     )}
                 </div>
             </div>

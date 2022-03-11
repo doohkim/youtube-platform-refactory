@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
+import palette from '../../lib/styles/palette';
 import PaymentAddressInfoComponent from './PaymentAddressInfoComponent';
-import PaymentCouponInfoComponent from './PaymentCouponInfoComponent';
-import PaymentMethodInfoComponent from './PaymentPersonalInfoComponent';
+// import PaymentCouponInfoComponent from './PaymentCouponInfoComponent';
+import PaymentMethodInfoComponent from './PaymentMethodInfoComponent';
+import PaymentPersonalInfoComponent from './PaymentPersonalInfoComponent';
 import PaymentProductListComponent from './PaymentProductListComponent';
 import PaymentUserInfoComponent from './PaymentUserInfoComponent';
-import PaymentPersonalInfoComponent from './PaymentPersonalInfoComponent';
 const PaymentBlock = styled.div`
     width: 1080px;
     margin: auto;
@@ -23,13 +24,40 @@ const PaymentBlock = styled.div`
     .content {
         width: 100%;
         padding-bottom: 60px;
-        background-color: beige;
         font-weight: 400;
+    }
+    .bth-block {
+        display: flex;
+        justify-content: center;
+        padding-top: 40px;
 
+        button {
+            border-radius: 3px;
+            width: 240px;
+            height: 56px;
+            display: block;
+            color: #fff;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .disabled-btn {
+            border: 1px solid ${palette.gray[5]};
+            background-color: ${palette.gray[5]};
+        }
+        .possible-btn {
+            border: 1px solid ${palette.cyan[5]};
+            background-color: ${palette.cyan[5]};
+            cursor: pointer;
+        }
     }
 `;
 
 const PaymentComponent = () => {
+    const [agreeOrder, setAgreeOrder] = useState(false);
+    const onClick = useCallback(() => {
+        setAgreeOrder(!agreeOrder);
+    }, [agreeOrder]);
     return (
         <PaymentBlock>
             <div className="page-tit">
@@ -39,9 +67,24 @@ const PaymentComponent = () => {
                 <PaymentProductListComponent />
                 <PaymentUserInfoComponent />
                 <PaymentAddressInfoComponent />
-                <PaymentCouponInfoComponent />
+                {/* <PaymentCouponInfoComponent /> */}
                 <PaymentMethodInfoComponent />
-                <PaymentPersonalInfoComponent />
+                <PaymentPersonalInfoComponent
+                    agreeOrder={agreeOrder}
+                    setAgreeOrder={setAgreeOrder}
+                    onClick={onClick}
+                />
+                <div className="bth-block">
+                    {agreeOrder ? (
+                        <button className="possible-btn">
+                            9,400원 결제하기
+                        </button>
+                    ) : (
+                        <button disabled className="disabled-btn">
+                            동의하기 버튼을 눌러주세요
+                        </button>
+                    )}
+                </div>
             </div>
         </PaymentBlock>
     );
