@@ -4,6 +4,7 @@ import { AiFillCheckCircle, AiOutlineCheckCircle } from 'react-icons/ai';
 import palette from '../../lib/styles/palette';
 import { BsX } from 'react-icons/bs';
 import { IoWaterOutline } from 'react-icons/io5';
+import { numberWithCommas } from '../../lib/fpp';
 const CartContentBlock = styled.div`
     width: 73%;
     .inner-select {
@@ -141,7 +142,7 @@ const CartItemComponent = ({ item,
                 <div className="number">{number}</div>
                 <button className="change-button" onClick={() => onIncrease(id)}>+</button>
             </div>
-            <div className="cart-item-product-price-block">{price}원</div>
+            <div className="cart-item-product-price-block">{numberWithCommas(price)}원</div>
             <div className="cart-item-item-remove-block">
                 <BsX size={28} color={`${palette.gray[5]}`}  onClick={()=> onRemove(id)}/>
             </div>

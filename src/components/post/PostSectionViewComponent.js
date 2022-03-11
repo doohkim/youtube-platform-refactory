@@ -190,7 +190,7 @@ const PostSectionViewComponent = ({
             onInsert(id, name, price, post_images);
             onChangeInput(input);
         },
-        [onChangeInput],
+        [onChangeInput, input,onInsert, post_images, products],
     );
 
     

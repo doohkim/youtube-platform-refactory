@@ -6,7 +6,6 @@ import Modal from '../common/postcode/Modal';
 import DaumPostcode from 'react-daum-postcode';
 import CartCalculateComponent from './CartCalculateComponent';
 import { Link } from 'react-router-dom';
-import { getTotalAmount } from '../../lib/fpp';
 
 const CartTotalInfoBlock = styled.div`
     width: 25%;
@@ -136,13 +135,13 @@ const CartTotalInfoComponent = ({ cartData, user }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [isOpenSecondPopup, setIsOpenSecondPopup] = useState(false);
     const [address, setAddress] = useState(null);
-    const [postCodes, setPostCodes] = useState(null);
+    // const [postCodes, setPostCodes] = useState(null);
     const [detailAddress, setDetailAddress] = useState('');
     const handleComplete = useCallback(
         (data) => {
             let fullAddress = data.address;
             let extraAddress = '';
-            let zoneCodes = data.zonecode;
+            // let zoneCodes = data.zonecode;
             if (data.addressType === 'R') {
                 if (data.bname !== '') {
                     extraAddress += data.bname;
@@ -157,10 +156,11 @@ const CartTotalInfoComponent = ({ cartData, user }) => {
             }
             //fullAddress -> 전체 주소반환
             setAddress(fullAddress);
-            setPostCodes(zoneCodes);
+            // setPostCodes(zoneCodes);
             setIsOpenSecondPopup(true);
         },
-        [address, postCodes, isOpenSecondPopup],
+        // address, postCodes, isOpenSecondPopup
+        [setAddress, setIsOpenSecondPopup],
     );
     const openModal = useCallback(() => {
         setModalVisible(true);
@@ -168,12 +168,12 @@ const CartTotalInfoComponent = ({ cartData, user }) => {
     const closeModal = useCallback(() => {
         setModalVisible(false);
         setIsOpenSecondPopup(false);
-    });
+    },[]);
     const onChange = useCallback(
         (e) => {
             setDetailAddress(e.target.value);
         },
-        [detailAddress],
+        [setDetailAddress],
     );
     const onClick = useCallback(
         (e) => {
@@ -296,7 +296,7 @@ const CartTotalInfoComponent = ({ cartData, user }) => {
 
             {selectedCartItems.length === 0 ? (
                 <div className="order-button-block">
-                    <Link to="/payment">
+                    <Link to="#">
                         <button disabled className="disabled-order-btn">
                             상품을 담아주세요
                         </button>
@@ -304,7 +304,7 @@ const CartTotalInfoComponent = ({ cartData, user }) => {
                 </div>
             ) : (
                 <div className="order-button-block">
-                    <Link to="/order">
+                    <Link to="/payment">
                         <button className="order-btn">주문하기</button>
                     </Link>
                 </div>

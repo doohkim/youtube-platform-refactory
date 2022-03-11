@@ -41,7 +41,7 @@ const CartComponent = ({
         (id) => {
             dispatch(increase(id));
         },
-        [dispatch],
+        [dispatch, increase],
         cartData
             ? sessionStorage.setItem('cart', JSON.stringify(cartData))
             : console.log('not cart data'),
@@ -55,7 +55,7 @@ const CartComponent = ({
                 console.log('not cart data');
             }
         },
-        [dispatch],
+        [dispatch, decrease, cartData],
     );
     const onToggle = useCallback(
         (id) => {
@@ -66,7 +66,7 @@ const CartComponent = ({
                 console.log('not cart data');
             }
         },
-        [dispatch],
+        [dispatch, toggle, cartData],
     );
     const onRemove = useCallback(
         (id) => {
@@ -77,7 +77,7 @@ const CartComponent = ({
                 console.log('not cart data');
             }
         },
-        [dispatch],
+        [dispatch, remove,cartData],
     );
     if (cartError) {
         return <CartBlock>에러 발생했습니다.</CartBlock>;

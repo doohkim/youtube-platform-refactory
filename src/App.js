@@ -7,6 +7,7 @@ import ChannelDetailPage from './pages/ChangeDetailPage';
 import ChannelListPage from './pages/ChannelListPage';
 import CustomerServicePage from './pages/CustomerServicePage';
 import LoginPage from './pages/LoginPage';
+import PaymentPage from './pages/PaymentPage';
 import PostListPage from './pages/PostListPage';
 import PostPage from './pages/PostPage';
 import RegisterPage from './pages/RegisterPage';
@@ -36,7 +37,7 @@ function App() {
                         element={<VideoDetailPage />}
                     />
                     <Route path="/cart" element={<CartPage />} />
-                    
+                    <Route path="/payment" element={<PaymentPage />}/>
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                 </Route>
