@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router';
 import HeaderComponent from '../../components/common/header/HeaderComponent';
 import { logout } from '../../modules/user';
 
@@ -16,13 +17,15 @@ const HeaderContainerBlock = styled.div`
 const HeaderContainer = () => {
     const { user } = useSelector(({ user }) => ({ user: user.user }));
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const onLogout = () => {
         dispatch(logout());
+        navigate('/')
     };
 
     return (
         <HeaderContainerBlock>
-            <HeaderComponent user={user} onLogout={onLogout} />
+            <HeaderComponent user={user} onLogout={onLogout}  />
         </HeaderContainerBlock>
     );
 };

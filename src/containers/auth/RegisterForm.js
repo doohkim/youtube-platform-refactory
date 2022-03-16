@@ -8,13 +8,14 @@ import { useNavigate } from 'react-router-dom';
 const RegisterForm = () => {
     const [error, setError] = useState(null);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
         form: auth.register,
         auth: auth.auth,
         authError: auth.authError,
         user: user.user,
     }));
-    const navigate = useNavigate;
+    
     const onChange = (e) => {
         const { value, name } = e.target;
         dispatch(
@@ -80,11 +81,10 @@ const RegisterForm = () => {
     // user 값이 잘 설정되었는지 확인
     useEffect(() => {
         if (user) {
-            console.log('check API 성공');
             try {
                 localStorage.setItem('user', JSON.stringify(user));
             } catch (e) {
-                console.log('local storage is not working');
+                console.log('Register local storage is not working');
             }
             navigate('/');
         }

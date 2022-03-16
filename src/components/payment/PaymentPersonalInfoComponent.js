@@ -66,7 +66,6 @@ const PaymentPersonalInfoBlock = styled.div`
 const PaymentPersonalInfoComponent = ({
     onClick,
     agreeOrder,
-    setAgreeOrder,
 }) => {
     return (
         <PaymentPersonalInfoBlock>

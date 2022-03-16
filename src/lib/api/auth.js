@@ -24,3 +24,14 @@ export const logout = () =>
             Authorization: `Token ${sessionStorage.getItem('token')}`,
         },
     });
+
+export const profileUpdate = ({ address }) =>
+    client.post(
+        '/members/update/',
+        { address },
+        {
+            headers: {
+                Authorization: `Token ${sessionStorage.getItem('token')}`,
+            },
+        },
+    );

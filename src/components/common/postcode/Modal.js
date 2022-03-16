@@ -34,7 +34,7 @@ const ModalInner = styled.div`
     box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
     background-color: #fff;
     border-radius: 10px;
-    width: 420px;
+    width: 513px;
     /* max-width: 480px; */
     top: 50%;
     transform: translateY(-50%);
@@ -70,13 +70,13 @@ const Modal = ({
             onClose(e);
         }
     };
-    const handlePayModalOff = (e) => {
-        const clicked = e.target.closest('.sc-hGPBjI')
-        if (clicked) return;
-        else{
+    // const handlePayModalOff = (e) => {
+    //     const clicked = e.target.closest('.sc-hGPBjI')
+    //     if (clicked) return;
+    //     else{
             
-        }
-    }
+    //     }
+    // }
 
     useEffect(() => {
         document.body.style.cssText = `position: fixed; top: -${window.scrollY}px`;

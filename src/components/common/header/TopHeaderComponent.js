@@ -37,7 +37,7 @@ const UserInfo = styled.div`
     font-weight: 800;
     margin-right: 1rem;
 `;
-const TopHeaderComponent = ({ user, onLogout }) => {
+const TopHeaderComponent = ({ user, onLogout  }) => {
     // console.log(user);
     return (
         <TopHeaderBlock>

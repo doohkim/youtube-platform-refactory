@@ -6,6 +6,8 @@ import Modal from '../common/postcode/Modal';
 import DaumPostcode from 'react-daum-postcode';
 import CartCalculateComponent from './CartCalculateComponent';
 import { Link } from 'react-router-dom';
+import SecondPopUpComponent from '../common/postcode/SecondPopUpComponent';
+import PostCodeListPopupComponent from '../common/postcode/PostCodeListPopupComponent';
 
 const CartTotalInfoBlock = styled.div`
     width: 25%;
@@ -77,62 +79,64 @@ const CartTotalInfoBlock = styled.div`
     }
 `;
 
-const SecondPopUpBlock = styled.div`
-    min-height: 320px;
-    padding: 0 30px;
-    .second-tit-block {
-        .second-tit {
-            width: 100%;
-            display: flex;
-            text-align: center;
-            padding: 20px 0 9px;
-            font-weight: 700;
-            font-size: 22px;
-            .delivery-type {
-                color: ${palette.cyan[5]};
-            }
-        }
-        .second-desc {
-            font-size: 16px;
-            line-height: 22px;
-            color: #999;
-        }
-    }
-    .field-block {
-        width: 100%;
-        .extra-address-block {
-            padding-top: 30px;
-            width: 100%;
-            .extra-address-input {
-                border: 1px solid ${palette.cyan[5]};
-                padding-left: 10px;
-                width: 100%;
-                height: 44px;
-                border-radius: 3px;
-                font-family: sans-serif;
-                font-size: 14px;
-            }
-        }
-    }
-    .btn-block {
-        margin-top: 10px;
-        button {
-            background-color: ${palette.cyan[5]};
-            border: 1px solid ${palette.cyan[5]};
-            color: #fff;
-            width: 100%;
-            height: 44px;
-            border-radius: 3px;
-            font-weight: 700;
-            font-size: 14px;
-            line-height: 42px;
-        }
-    }
-`;
+// const SecondPopUpBlock = styled.div`
+//     min-height: 320px;
+//     padding: 0 30px;
+//     .second-tit-block {
+//         .second-tit {
+//             width: 100%;
+//             display: flex;
+//             text-align: center;
+//             padding: 20px 0 9px;
+//             font-weight: 700;
+//             font-size: 22px;
+//             .delivery-type {
+//                 color: ${palette.cyan[5]};
+//             }
+//         }
+//         .second-desc {
+//             font-size: 16px;
+//             line-height: 22px;
+//             color: #999;
+//         }
+//     }
+//     .field-block {
+//         width: 100%;
+//         .extra-address-block {
+//             padding-top: 30px;
+//             width: 100%;
+//             .extra-address-input {
+//                 border: 1px solid ${palette.cyan[5]};
+//                 padding-left: 10px;
+//                 width: 100%;
+//                 height: 44px;
+//                 border-radius: 3px;
+//                 font-family: sans-serif;
+//                 font-size: 14px;
+//             }
+//         }
+//     }
+//     .btn-block {
+//         margin-top: 10px;
+//         button {
+//             background-color: ${palette.cyan[5]};
+//             border: 1px solid ${palette.cyan[5]};
+//             color: #fff;
+//             width: 100%;
+//             height: 44px;
+//             border-radius: 3px;
+//             font-weight: 700;
+//             font-size: 14px;
+//             line-height: 42px;
+//         }
+//     }
+// `;
 
 const CartTotalInfoComponent = ({ cartData, user }) => {
     const [selectedCartItems, setSelectedCartItems] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
+    const [postCodePopup, setPostCodePopup] = useState(false);
+    const [postCodeListPopup, setPostCodeListPopup] = useState(true);
     const [isOpenSecondPopup, setIsOpenSecondPopup] = useState(false);
     const [address, setAddress] = useState(null);
     // const [postCodes, setPostCodes] = useState(null);
@@ -165,10 +169,19 @@ const CartTotalInfoComponent = ({ cartData, user }) => {
     const openModal = useCallback(() => {
         setModalVisible(true);
     }, []);
+    const openNonMemberModal = useCallback(() => {
+        setModalVisible(true);
+        setPostCodeListPopup(false);
+        setPostCodePopup(true);
+    }, []);
+    const openPostCodePopup = useCallback(() => {
+        setPostCodeListPopup(false);
+        setPostCodePopup(true);
+    }, []);
     const closeModal = useCallback(() => {
         setModalVisible(false);
         setIsOpenSecondPopup(false);
-    },[]);
+    }, []);
     const onChange = useCallback(
         (e) => {
             setDetailAddress(e.target.value);
@@ -181,7 +194,9 @@ const CartTotalInfoComponent = ({ cartData, user }) => {
             setAddress(address + detailAddress);
             setIsOpenSecondPopup(false);
             closeModal(false);
-            setDetailAddress('');
+            setDetailAddress(null);
+            setPostCodeListPopup(true);
+            setPostCodePopup(false);
         },
         [closeModal, address, detailAddress, setAddress, setDetailAddress],
     );
@@ -202,7 +217,9 @@ const CartTotalInfoComponent = ({ cartData, user }) => {
         // user address 가 없을 수도 있음
 
         if (user) {
-            setAddress(user.user.user_addresses[0].address);
+            if (user.user.user_addresses.length !== 0) {
+                setAddress(user.user.user_addresses[0].address);
+            }
         }
         if (cartData) {
             setSelectedCartItems(
@@ -239,7 +256,7 @@ const CartTotalInfoComponent = ({ cartData, user }) => {
                         </div>
                         <button
                             className="address-input-btn"
-                            onClick={openModal}
+                            onClick={openNonMemberModal}
                         >
                             주소검색
                         </button>
@@ -252,39 +269,26 @@ const CartTotalInfoComponent = ({ cartData, user }) => {
                         maskClosable={true}
                         onClose={closeModal}
                     >
-                        <DaumPostcode
-                            onComplete={handleComplete}
-                            className="post-code"
-                        />
+                        {postCodeListPopup && (
+                            <>
+                                <PostCodeListPopupComponent />
+                                <button onClick={openPostCodePopup}>
+                                    추가
+                                </button>
+                            </>
+                        )}
+                        {postCodePopup && (
+                            <DaumPostcode
+                                onComplete={handleComplete}
+                                className="post-code"
+                            />
+                        )}
                         {isOpenSecondPopup && (
-                            <SecondPopUpBlock>
-                                <div className="second-tit-block">
-                                    <div className="second-tit">
-                                        <div className="delivery-type">
-                                            새벽배송
-                                        </div>
-                                        <div>지역입니다</div>
-                                    </div>
-
-                                    <div className="second-desc">
-                                        매일 아침, 문 앞까지 신선함을 전해
-                                        드려요
-                                    </div>
-                                </div>
-                                <div className="field-block">
-                                    <div className="extra-address-block">
-                                        <input
-                                            className="extra-address-input"
-                                            placeholder="상세주소 입력을 해주세요"
-                                            onChange={onChange}
-                                            value={detailAddress}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="btn-block">
-                                    <button onClick={onClick}>저장</button>
-                                </div>
-                            </SecondPopUpBlock>
+                            <SecondPopUpComponent
+                                onChange={onChange}
+                                detailAddress={detailAddress}
+                                onClick={onClick}
+                            />
                         )}
                     </Modal>
                 )}

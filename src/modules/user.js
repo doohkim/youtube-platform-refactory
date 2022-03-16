@@ -5,6 +5,7 @@ import createRequestSaga, {
     createRequestActionTypes,
 } from '../lib/createRequestSaga';
 
+
 // 새로고침 이후 임시 로그인 처리
 const TEMP_SET_USER = 'user/TEMP_SET_USER';
 const [CHECK, CHECK_SUCCESS, CHECK_FAILURE] =
@@ -31,7 +32,7 @@ function* logoutSaga() {
         yield call(authAPI.logout);
         localStorage.removeItem('user');
         sessionStorage.removeItem('token');
-        window.location.go();
+        console.log('logout module')
     } catch (e) {
         console.log(e);
     }

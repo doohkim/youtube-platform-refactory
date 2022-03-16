@@ -20,15 +20,17 @@ const store = createStore(
 
 function loadUser() {
     try {
-        const user = localStorage.getItem('user');
-        if (!user) {
+        // const user = localStorage.getItem('user');
+        const token = sessionStorage.getItem('token')
+        // if (!user && token) {
+        if(!token){
             // 보안을 위해서
             sessionStorage.removeItem('token');
-            localStorage.removeItem('token');
+            localStorage.removeItem('user');
             return;
         }
-        store.dispatch(tempSetUser(JSON.parse(user)));
-        store.dispatch(check);
+        // store.dispatch(tempSetUser(JSON.parse(user)));
+        store.dispatch(check());
     } catch (e) {
         console.log('local Storeage is not working');
     }

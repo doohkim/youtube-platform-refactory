@@ -7,10 +7,10 @@ import user, { userSaga } from './user';
 import category, { categorySaga } from './category';
 import channel, { channelListSaga } from './channel';
 import video, { videoListSaga } from './video';
-import posts, { postListSaga} from './posts';
-import select from './select'
-import cart, {getCartSaga} from './cart'
-
+import posts, { postListSaga } from './posts';
+import select from './select';
+import cart, { getCartSaga } from './cart';
+import order, { orderSaga } from './order';
 const rootReducer = combineReducers({
     auth,
     loading,
@@ -21,6 +21,7 @@ const rootReducer = combineReducers({
     posts,
     select,
     cart,
+    order,
 });
 
 export function* rootSaga() {
@@ -32,6 +33,7 @@ export function* rootSaga() {
         videoListSaga(),
         postListSaga(),
         getCartSaga(),
+        orderSaga(),
     ]);
 }
 
