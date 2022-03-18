@@ -8,6 +8,7 @@ import CartCalculateComponent from './CartCalculateComponent';
 import { Link } from 'react-router-dom';
 import SecondPopUpComponent from '../common/postcode/SecondPopUpComponent';
 import PostCodeListPopupComponent from '../common/postcode/PostCodeListPopupComponent';
+import PostCodeDeliveryUpdatePopupComponent from '../common/postcode/PostCodeDeliveryUpdatePopupComponent';
 
 const CartTotalInfoBlock = styled.div`
     width: 25%;
@@ -132,11 +133,21 @@ const CartTotalInfoBlock = styled.div`
 //     }
 // `;
 
-const CartTotalInfoComponent = ({ cartData, user }) => {
+const CartTotalInfoComponent = ({
+    cartData,
+    user,
+    onAddressCreate,
+    addressLoading,
+}) => {
     const [selectedCartItems, setSelectedCartItems] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [postCodePopup, setPostCodePopup] = useState(false);
     const [postCodeListPopup, setPostCodeListPopup] = useState(true);
+    // 배송지 상세 페이지 open or close
+    const [postCodeDeliveryUpdatePopup, setPostCodeDeliveryUpdatePopup] =
+        useState(false);
+    // 배송지 추가 버튼 클릭 루트 or 일반 배송지 주소 찾는 것 인지 구분
+    const [dividePopup, setDividePopup] = useState('default');
     const [isOpenSecondPopup, setIsOpenSecondPopup] = useState(false);
     const [address, setAddress] = useState(null);
     // const [postCodes, setPostCodes] = useState(null);
@@ -161,26 +172,63 @@ const CartTotalInfoComponent = ({ cartData, user }) => {
             //fullAddress -> 전체 주소반환
             setAddress(fullAddress);
             // setPostCodes(zoneCodes);
+            console.log(dividePopup);
             setIsOpenSecondPopup(true);
         },
         // address, postCodes, isOpenSecondPopup
         [setAddress, setIsOpenSecondPopup],
     );
+    // modal(popup) 창 열림
     const openModal = useCallback(() => {
         setModalVisible(true);
     }, []);
+
+    // 비회원 - post code modal(popup) 열림
     const openNonMemberModal = useCallback(() => {
         setModalVisible(true);
         setPostCodeListPopup(false);
         setPostCodePopup(true);
     }, []);
+
+    // 배송지 추가 버튼 누름
+    // post list 창 닫기 postCode modal(popup) 열림
     const openPostCodePopup = useCallback(() => {
         setPostCodeListPopup(false);
         setPostCodePopup(true);
+        setDividePopup('new');
     }, []);
-    const closeModal = useCallback(() => {
+
+    // post code list 창에서 수정 버튼 누를때
+    const openPostCodeDetailPopup = useCallback(() => {
+        // post code list 창 닫기
+        setPostCodeListPopup(false);
+        // 배송지 상세 페이지 창 열기
+        setPostCodeDeliveryUpdatePopup(true);
+    }, []);
+
+    // 주소 상세페이지(저장 버튼 클릭)
+    // Pop up 페이지 - 주소 리스트 - 주소 상세페이지(저장 버튼 클릭)
+    const onSavePostCodeDetailInfo = useCallback(() => {
         setModalVisible(false);
         setIsOpenSecondPopup(false);
+        setPostCodeListPopup(true);
+        setPostCodeDeliveryUpdatePopup(false);
+    }, []);
+
+    const onDeletePostCodeDetailInfo = useCallback(() => {
+        setModalVisible(false);
+        setIsOpenSecondPopup(false);
+        setPostCodeListPopup(true);
+        setPostCodeDeliveryUpdatePopup(false);
+    }, []);
+
+    const onCloseModal = useCallback(() => {
+        setPostCodeListPopup(true);
+        setModalVisible(false);
+        setIsOpenSecondPopup(false);
+        setPostCodePopup(false);
+        setPostCodeDeliveryUpdatePopup(false);
+        setDividePopup('default');
     }, []);
     const onChange = useCallback(
         (e) => {
@@ -191,14 +239,26 @@ const CartTotalInfoComponent = ({ cartData, user }) => {
     const onClick = useCallback(
         (e) => {
             e.preventDefault();
+            console.log(dividePopup);
+            if (dividePopup === 'new') {
+                onAddressCreate(address + detailAddress);
+            }
             setAddress(address + detailAddress);
             setIsOpenSecondPopup(false);
-            closeModal(false);
+            onCloseModal(false);
             setDetailAddress(null);
             setPostCodeListPopup(true);
             setPostCodePopup(false);
         },
-        [closeModal, address, detailAddress, setAddress, setDetailAddress],
+        [
+            onCloseModal,
+            address,
+            detailAddress,
+            setAddress,
+            setDetailAddress,
+            dividePopup,
+            setDividePopup,
+        ],
     );
 
     const getTotalAmount = useCallback((cartItems) => {
@@ -262,20 +322,31 @@ const CartTotalInfoComponent = ({ cartData, user }) => {
                         </button>
                     </div>
                 )}
-                {modalVisible && (
+                {!addressLoading && modalVisible && (
                     <Modal
                         visible={modalVisible}
                         closable={true}
                         maskClosable={true}
-                        onClose={closeModal}
+                        onClose={onCloseModal}
                     >
                         {postCodeListPopup && (
-                            <>
-                                <PostCodeListPopupComponent />
-                                <button onClick={openPostCodePopup}>
-                                    추가
-                                </button>
-                            </>
+                            <PostCodeListPopupComponent
+                                openPostCodePopup={openPostCodePopup}
+                                openPostCodeDetailPopup={
+                                    openPostCodeDetailPopup
+                                }
+                                addressList={user.user.user_addresses}
+                            />
+                        )}
+                        {postCodeDeliveryUpdatePopup && (
+                            <PostCodeDeliveryUpdatePopupComponent
+                                onSavePostCodeDetailInfo={
+                                    onSavePostCodeDetailInfo
+                                }
+                                onDeletePostCodeDetailInfo={
+                                    onDeletePostCodeDetailInfo
+                                }
+                            />
                         )}
                         {postCodePopup && (
                             <DaumPostcode

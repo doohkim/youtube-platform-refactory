@@ -35,6 +35,8 @@ const CartComponent = ({
     decrease,
     remove,
     toggle,
+    onAddressCreate,
+    addressLoading
 }) => {
     const dispatch = useDispatch();
     const onIncrease = useCallback(
@@ -77,7 +79,7 @@ const CartComponent = ({
                 console.log('not cart data');
             }
         },
-        [dispatch, remove,cartData],
+        [dispatch, remove, cartData],
     );
     if (cartError) {
         return <CartBlock>에러 발생했습니다.</CartBlock>;
@@ -98,7 +100,12 @@ const CartComponent = ({
                     onToggle={onToggle}
                     onRemove={onRemove}
                 />
-                <CartTotalInfoComponent cartData={cartData} user={user} />
+                <CartTotalInfoComponent
+                    cartData={cartData}
+                    user={user}
+                    onAddressCreate={onAddressCreate}
+                    addressLoading={addressLoading}
+                />
             </div>
         </CartBlock>
     );

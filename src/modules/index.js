@@ -11,6 +11,8 @@ import posts, { postListSaga } from './posts';
 import select from './select';
 import cart, { getCartSaga } from './cart';
 import order, { orderSaga } from './order';
+import address, { addressSaga } from './address';
+
 const rootReducer = combineReducers({
     auth,
     loading,
@@ -22,6 +24,7 @@ const rootReducer = combineReducers({
     select,
     cart,
     order,
+    address,
 });
 
 export function* rootSaga() {
@@ -34,6 +37,7 @@ export function* rootSaga() {
         postListSaga(),
         getCartSaga(),
         orderSaga(),
+        addressSaga(),
     ]);
 }
 
