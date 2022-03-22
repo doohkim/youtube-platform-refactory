@@ -36,7 +36,9 @@ const CartComponent = ({
     remove,
     toggle,
     onAddressCreate,
-    addressLoading
+    addresscreateLoading,
+    addressList,
+    addressListError,
 }) => {
     const dispatch = useDispatch();
     const onIncrease = useCallback(
@@ -101,10 +103,12 @@ const CartComponent = ({
                     onRemove={onRemove}
                 />
                 <CartTotalInfoComponent
+                    addressListError={addressListError}
+                    addressList={addressList}
                     cartData={cartData}
                     user={user}
                     onAddressCreate={onAddressCreate}
-                    addressLoading={addressLoading}
+                    addresscreateLoading={addresscreateLoading}
                 />
             </div>
         </CartBlock>

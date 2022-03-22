@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import { IoLocationOutline } from 'react-icons/io5';
@@ -9,6 +9,9 @@ import { Link } from 'react-router-dom';
 import SecondPopUpComponent from '../common/postcode/SecondPopUpComponent';
 import PostCodeListPopupComponent from '../common/postcode/PostCodeListPopupComponent';
 import PostCodeDeliveryUpdatePopupComponent from '../common/postcode/PostCodeDeliveryUpdatePopupComponent';
+import { useNavigate } from '../../../node_modules/react-router/index';
+import { useDispatch } from 'react-redux';
+import * as moduleAddress from '../../modules/address';
 
 const CartTotalInfoBlock = styled.div`
     width: 25%;
@@ -80,65 +83,16 @@ const CartTotalInfoBlock = styled.div`
     }
 `;
 
-// const SecondPopUpBlock = styled.div`
-//     min-height: 320px;
-//     padding: 0 30px;
-//     .second-tit-block {
-//         .second-tit {
-//             width: 100%;
-//             display: flex;
-//             text-align: center;
-//             padding: 20px 0 9px;
-//             font-weight: 700;
-//             font-size: 22px;
-//             .delivery-type {
-//                 color: ${palette.cyan[5]};
-//             }
-//         }
-//         .second-desc {
-//             font-size: 16px;
-//             line-height: 22px;
-//             color: #999;
-//         }
-//     }
-//     .field-block {
-//         width: 100%;
-//         .extra-address-block {
-//             padding-top: 30px;
-//             width: 100%;
-//             .extra-address-input {
-//                 border: 1px solid ${palette.cyan[5]};
-//                 padding-left: 10px;
-//                 width: 100%;
-//                 height: 44px;
-//                 border-radius: 3px;
-//                 font-family: sans-serif;
-//                 font-size: 14px;
-//             }
-//         }
-//     }
-//     .btn-block {
-//         margin-top: 10px;
-//         button {
-//             background-color: ${palette.cyan[5]};
-//             border: 1px solid ${palette.cyan[5]};
-//             color: #fff;
-//             width: 100%;
-//             height: 44px;
-//             border-radius: 3px;
-//             font-weight: 700;
-//             font-size: 14px;
-//             line-height: 42px;
-//         }
-//     }
-// `;
-
 const CartTotalInfoComponent = ({
     cartData,
     user,
     onAddressCreate,
-    addressLoading,
+    addresscreateLoading,
+    addressList,
+    addressListError,
 }) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [selectedCartItems, setSelectedCartItems] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [postCodePopup, setPostCodePopup] = useState(false);
@@ -151,7 +105,7 @@ const CartTotalInfoComponent = ({
     const [isOpenSecondPopup, setIsOpenSecondPopup] = useState(false);
     const [address, setAddress] = useState(null);
     // const [postCodes, setPostCodes] = useState(null);
-    const [detailAddress, setDetailAddress] = useState('');
+    const [detailAddres, setDetailAddres] = useState('');
     const handleComplete = useCallback(
         (data) => {
             let fullAddress = data.address;
@@ -172,7 +126,6 @@ const CartTotalInfoComponent = ({
             //fullAddress -> 전체 주소반환
             setAddress(fullAddress);
             // setPostCodes(zoneCodes);
-            console.log(dividePopup);
             setIsOpenSecondPopup(true);
         },
         // address, postCodes, isOpenSecondPopup
@@ -232,31 +185,36 @@ const CartTotalInfoComponent = ({
     }, []);
     const onChange = useCallback(
         (e) => {
-            setDetailAddress(e.target.value);
+            setDetailAddres(e.target.value);
         },
-        [setDetailAddress],
+        [setDetailAddres],
     );
+
     const onClick = useCallback(
         (e) => {
             e.preventDefault();
-            console.log(dividePopup);
             if (dividePopup === 'new') {
-                onAddressCreate(address + detailAddress);
+                onAddressCreate(address + detailAddres);
             }
-            setAddress(address + detailAddress);
+            setAddress(address + detailAddres);
+            setDetailAddres('');
             setIsOpenSecondPopup(false);
             onCloseModal(false);
-            setDetailAddress(null);
             setPostCodeListPopup(true);
             setPostCodePopup(false);
+            if (dividePopup === 'new') {
+                setDividePopup('default');
+                navigate(0);
+            }
         },
         [
             onCloseModal,
             address,
-            detailAddress,
+            detailAddres,
             setAddress,
-            setDetailAddress,
+            setDetailAddres,
             dividePopup,
+            onAddressCreate,
             setDividePopup,
         ],
     );
@@ -275,10 +233,21 @@ const CartTotalInfoComponent = ({
     useEffect(() => {
         // user 정보가 바뀔수도 있음
         // user address 가 없을 수도 있음
-
         if (user) {
-            if (user.user.user_addresses.length !== 0) {
-                setAddress(user.user.user_addresses[0].address);
+            if (addressList) {
+                sessionStorage.setItem(
+                    'address',
+                    JSON.stringify(addressList.results),
+                );
+                // dispatch(moduleAddress.setAddress(addressList.results));
+                const selectedAddress = addressList.results.filter(
+                    (address) => address.selected_address === true,
+                );
+                if (selectedAddress.length !== 0) {
+                    setAddress(selectedAddress[0].address);
+                } else {
+                    setAddress(null);
+                }
             }
         }
         if (cartData) {
@@ -286,7 +255,14 @@ const CartTotalInfoComponent = ({
                 cartData.filter((cart_item) => cart_item.checked === true),
             );
         }
-    }, [user, cartData, setAddress, setSelectedCartItems]);
+    }, [
+        user,
+        cartData,
+        setAddress,
+        setSelectedCartItems,
+        addressList,
+        dispatch,
+    ]);
     return (
         <CartTotalInfoBlock>
             <div className="address-block">
@@ -301,7 +277,7 @@ const CartTotalInfoComponent = ({
                         <div className="text">{address}</div>
                         <button
                             className="address-input-btn"
-                            onClick={openModal}
+                            onClick={user ? openModal : openNonMemberModal}
                         >
                             배송지 변경
                         </button>
@@ -316,13 +292,13 @@ const CartTotalInfoComponent = ({
                         </div>
                         <button
                             className="address-input-btn"
-                            onClick={openNonMemberModal}
+                            onClick={user ? openModal : openNonMemberModal}
                         >
                             주소검색
                         </button>
                     </div>
                 )}
-                {!addressLoading && modalVisible && (
+                {!addresscreateLoading && modalVisible && (
                     <Modal
                         visible={modalVisible}
                         closable={true}
@@ -335,7 +311,7 @@ const CartTotalInfoComponent = ({
                                 openPostCodeDetailPopup={
                                     openPostCodeDetailPopup
                                 }
-                                addressList={user.user.user_addresses}
+                                addressList={addressList.results}
                             />
                         )}
                         {postCodeDeliveryUpdatePopup && (
@@ -357,7 +333,7 @@ const CartTotalInfoComponent = ({
                         {isOpenSecondPopup && (
                             <SecondPopUpComponent
                                 onChange={onChange}
-                                detailAddress={detailAddress}
+                                detailAddres={detailAddres}
                                 onClick={onClick}
                             />
                         )}

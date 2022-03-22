@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 import { createRequestActionTypes } from '../lib/createRequestSaga';
 import { takeLatest } from 'redux-saga/effects';
 import createSessionSaga from '../lib/createSessionSaga';
+import createSessionSetItemSaga from '../lib/createSessionSetItemSaga';
 
 const [GET_CART, GET_CART_SUCCESS, GET_CART_FAILURE] =
     createRequestActionTypes('cart/GET_CART');
@@ -21,7 +22,8 @@ export const increase = createAction(INCREASE, (id) => id);
 export const decrease = createAction(DECREASE, (id) => id);
 
 const getCartListSaga = createSessionSaga(GET_CART);
-const setCartSaga = createSessionSaga(SET_CART);
+// const setCartSaga = createSessionSaga(SET_CART);
+const setCartSaga = createSessionSetItemSaga(SET_CART);
 
 export function* getCartSaga() {
     yield takeLatest(GET_CART, getCartListSaga);

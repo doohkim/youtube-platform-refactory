@@ -11,3 +11,11 @@ export const createAddress = (address) => {
         },
     );
 };
+
+export const readAddress = () => {
+    return client.get('/members/address/', {
+        headers: {
+            Authorization: `Token ${sessionStorage.getItem('token')}`,
+        },
+    });
+};

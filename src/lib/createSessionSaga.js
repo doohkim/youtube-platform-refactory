@@ -9,16 +9,16 @@ export default function createSessionSaga(type) {
         yield put(startLoading(type));
 
         try{
-            const cartdata = JSON.parse(sessionStorage.getItem('cart'));
-            console.log(
-                'get cart reducer , export session data'
-            )
+            
+            const data = JSON.parse(sessionStorage.getItem(type.split('/')[0]));
+            
             yield put({
                 type: SUCCESS,
-                payload: cartdata,
+                payload: data,
             })
 
         }catch(e) {
+            console.log(e)
             yield put({
                 type: FAILURE,
                 payload: e,

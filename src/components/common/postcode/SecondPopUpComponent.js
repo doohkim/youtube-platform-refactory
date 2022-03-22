@@ -55,7 +55,7 @@ const SecondPopUpBlock = styled.div`
     }
 `;
 
-const SecondPopUpComponent = ({onChange, onClick, detailAddress}) => {
+const SecondPopUpComponent = ({onChange, onClick, detailAddres}) => {
     return (
         <SecondPopUpBlock>
             <div className="second-tit-block">
@@ -74,7 +74,7 @@ const SecondPopUpComponent = ({onChange, onClick, detailAddress}) => {
                         className="extra-address-input"
                         placeholder="상세주소 입력을 해주세요"
                         onChange={onChange}
-                        value={detailAddress}
+                        value={detailAddres===null ? '' : detailAddres}
                     />
                 </div>
             </div>
