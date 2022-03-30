@@ -1,21 +1,30 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from '../../../node_modules/react-router/index';
 import PaymentComponent from '../../components/payment/PaymentComponent';
-import { createOrder } from '../../modules/order';
+import { createOrder, getSelectedAddress } from '../../modules/order';
 
 const PaymentContainer = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { order, orderError, getCartLoading, user } = useSelector(
-        ({ order, loading, user }) => ({
-            order: order.order,
-            orderError: order.orderError,
-            getCartLoading: loading['order/GET_CART_FILTER'],
-            createOrderLoading: loading['order/CREATE_ORDER'],
-            user: user.user,
-        }),
-    );
+    const {
+        order,
+        orderError,
+        getCartLoading,
+        user,
+        selectedAddress,
+        selectedAddressError,
+        selectedAddressLoading,
+    } = useSelector(({ order, loading, user, address }) => ({
+        order: order.order,
+        orderError: order.orderError,
+        getCartLoading: loading['order/GET_CART_FILTER'],
+        createOrderLoading: loading['order/CREATE_ORDER'],
+        user: user.user,
+        selectedAddress: address.selectedAddress,
+        selectedAddressError: address.selectedAddressError,
+        selectedAddressLoading: loading['order/SELECTED_ADDRESS'],
+    }));
 
     // const onDisabledClick = useCallback(() => {
     //     window.alert('결제 진행을 위해 결제 진행 필수 동의에 체크해주세요');
@@ -34,11 +43,11 @@ const PaymentContainer = () => {
     const onClick = useCallback((order) => {
         const order_items = JSON.stringify(order);
         const ordered_amount = getTotalAmount(order);
-        const address = sessionStorage.getItem('address')
-        console.log(address)
+        const address = sessionStorage.getItem('address');
+        console.log(address);
         const { IMP } = window;
         IMP.init('imp63703486');
-
+        
         const data = {
             pg: 'html_inicis',
             pay_method: 'card',
@@ -74,6 +83,16 @@ const PaymentContainer = () => {
             navigate('/order');
         }
     };
-    return <PaymentComponent />;
+    useEffect(() => {
+        dispatch(getSelectedAddress())
+    },[dispatch]);
+
+    return <PaymentComponent 
+    selectedAddress={selectedAddress}
+    selectedAddressError={selectedAddressError}
+    selectedAddressLoading={selectedAddressLoading}
+
+
+    />;
 };
 export default PaymentContainer;

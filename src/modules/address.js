@@ -4,8 +4,7 @@ import * as addressAPI from '../lib/api/address';
 import createRequestSaga, {
     createRequestActionTypes,
 } from '../lib/createRequestSaga';
-import createSessionSaga from '../lib/createSessionSaga';
-import createSessionSetItemSaga from '../lib/createSessionSetItemSaga';
+
 
 const [CREATE_ADDRESS, CREATE_ADDRESS_SUCCESS, CREATE_ADDRESS_FAILURE] =
     createRequestActionTypes('address/CREATE_ADDRESS');
@@ -94,6 +93,7 @@ const initialState = {
     phoneNumber: '',
     detailAddress: null,
     detailAddressError: null,
+
 };
 
 const address = handleActions(
@@ -151,7 +151,7 @@ const address = handleActions(
             ...state,
             detailAddressError: detailAddressError,
         }),
-        
+
     },
     initialState,
 );

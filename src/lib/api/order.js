@@ -19,3 +19,11 @@ export const getOrder = (id) => {
         },
     });
 };
+
+export const selectedAddress = () => {
+    return client.get(`/orders/address/`, {
+        headers: {
+            Authorization: `Token ${sessionStorage.getItem(`token`)}`,
+        },
+    });
+};

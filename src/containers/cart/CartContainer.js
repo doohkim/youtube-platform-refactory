@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from '../../../node_modules/react-router/index';
+import { useNavigate } from 'react-router';
 import CartComponent from '../../components/cart/CartComponent';
-import { updateAddress } from '../../lib/api/address';
+// import { updateAddress } from '../../lib/api/address';
 import {
     changeField,
     createAddress,
@@ -10,6 +10,7 @@ import {
     readAddress,
     updateAddressDetail,
     removeAddress,
+    updateAddress,
 } from '../../modules/address';
 import {
     decrease,

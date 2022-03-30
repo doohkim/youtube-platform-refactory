@@ -53,7 +53,11 @@ const PaymentBlock = styled.div`
     }
 `;
 
-const PaymentComponent = () => {
+const PaymentComponent = ({
+    selectedAddress,
+    selectedAddressError,
+    selectedAddressLoading,
+}) => {
     const [agreeOrder, setAgreeOrder] = useState(false);
     const onClick = useCallback(() => {
         setAgreeOrder(!agreeOrder);
