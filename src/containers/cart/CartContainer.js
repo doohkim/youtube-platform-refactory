@@ -8,8 +8,8 @@ import {
     createAddress,
     getAddressDetail,
     readAddress,
-    setAddress,
     updateAddressDetail,
+    removeAddress,
 } from '../../modules/address';
 import {
     decrease,
@@ -94,6 +94,18 @@ const CartContainer = () => {
         },
         [dispatch, navigate],
     );
+    const onRemoveAddress = useCallback(
+        (id) => {
+            try {
+                dispatch(removeAddress(id));
+            } catch (e) {
+                console.log(e);
+            }
+            navigate(0);
+        },
+        [dispatch],
+    );
+
     useEffect(() => {
         const token = sessionStorage.getItem('token');
         if (token) {
@@ -124,6 +136,7 @@ const CartContainer = () => {
             detailAddressError={detailAddressError}
             onDetailAddressClick={onDetailAddressClick}
             onGetAddressRetrieve={onGetAddressRetrieve}
+            onRemoveAddress={onRemoveAddress}
         />
     );
 };

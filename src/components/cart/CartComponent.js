@@ -46,7 +46,8 @@ const CartComponent = ({
     detailAddress,
     detailAddressError,
     onDetailAddressClick,
-    onGetAddressRetrieve
+    onGetAddressRetrieve,
+    onRemoveAddress
 }) => {
     const dispatch = useDispatch();
     const onIncrease = useCallback(
@@ -125,6 +126,7 @@ const CartComponent = ({
                     detailAddressError={detailAddressError}
                     onDetailAddressClick={onDetailAddressClick}
                     onGetAddressRetrieve={onGetAddressRetrieve}
+                    onRemoveAddress={onRemoveAddress}
                 />
             </div>
         </CartBlock>

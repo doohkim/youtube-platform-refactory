@@ -24,12 +24,9 @@ const [
     GET_DETAIL_ADDRESS_SUCCESS,
     GET_DETAIL_ADDRESS_FAILURE,
 ] = createRequestActionTypes('address/GET_DETAIL_ADDRESS');
+const [REMOVE_ADDRESS, REMOVE_ADDRESS_SUCCESS, REMOVE_ADDRESS_FAILURE] =
+    createRequestActionTypes('address/REMOVE_ADDRESS');
 const CHANGE_FIELD = 'address/CHANGE_FIELD';
-
-const [GET_ADDRESS, GET_ADDRESS_SUCCESS, GET_ADDRESS_FAILURE] =
-    createRequestActionTypes('address/GET_ADDRESS');
-const [SET_ADDRESS, SET_ADDRESS_SUCCESS, SET_ADDRESS_FAILURE] =
-    createRequestActionTypes('address/SET_ADDRESS');
 
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
     key,
@@ -55,8 +52,7 @@ export const updateAddressDetail = createAction(
     }),
 );
 export const getAddressDetail = createAction(GET_DETAIL_ADDRESS, (id) => id);
-export const getAddress = createAction(GET_ADDRESS);
-export const setAddress = createAction(SET_ADDRESS, (address) => address);
+export const removeAddress = createAction(REMOVE_ADDRESS, (id) => id);
 
 const createAddressSaga = createRequestSaga(
     CREATE_ADDRESS,
@@ -75,8 +71,10 @@ const getAddressDetailSaga = createRequestSaga(
     GET_DETAIL_ADDRESS,
     addressAPI.getAddressDetail,
 );
-const getAddressListSaga = createSessionSaga(GET_ADDRESS);
-const setAddressSaga = createSessionSetItemSaga(SET_ADDRESS);
+const removeAddressSaga = createRequestSaga(
+    REMOVE_ADDRESS,
+    addressAPI.removeAddress
+)
 
 export function* addressSaga() {
     yield takeLatest(CREATE_ADDRESS, createAddressSaga);
@@ -84,8 +82,7 @@ export function* addressSaga() {
     yield takeLatest(UPDATE_ADDRESS, updateAddressSaga);
     yield takeLatest(UPDATE_DETAIL_ADDRESS, updateAddressDetailSaga);
     yield takeLatest(GET_DETAIL_ADDRESS, getAddressDetailSaga);
-    yield takeLatest(GET_ADDRESS, getAddressListSaga);
-    yield takeLatest(SET_ADDRESS, setAddressSaga);
+    yield takeLatest(REMOVE_ADDRESS, removeAddressSaga)
 }
 
 const initialState = {
@@ -97,8 +94,6 @@ const initialState = {
     phoneNumber: '',
     detailAddress: null,
     detailAddressError: null,
-    sessionAddressList: null,
-    sessionAddressError: null,
 };
 
 const address = handleActions(
@@ -156,23 +151,7 @@ const address = handleActions(
             ...state,
             detailAddressError: detailAddressError,
         }),
-
-        [GET_ADDRESS_SUCCESS]: (state, { payload: sessionAddressList }) => ({
-            ...state,
-            sessionAddressList,
-        }),
-        [GET_ADDRESS_FAILURE]: (state, { payload: sessionAddressError }) => ({
-            ...state,
-            sessionAddressError: sessionAddressError,
-        }),
-        [SET_ADDRESS_SUCCESS]: (state, { payload: sessionAddressList }) => ({
-            ...state,
-            sessionAddressList,
-        }),
-        [SET_ADDRESS_FAILURE]: (state, { payload: sessionAddressError }) => ({
-            ...state,
-            sessionAddressError: sessionAddressError,
-        }),
+        
     },
     initialState,
 );

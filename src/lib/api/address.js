@@ -21,7 +21,6 @@ export const readAddress = () => {
 };
 
 export const getAddressDetail = (id) => {
-    console.log(id);
     return client.get(`/members/address/${id}/`, {
         headers: {
             Authorization: `Token ${sessionStorage.getItem('token')}`,
@@ -47,8 +46,6 @@ export const updateAddressDetail = ({
     phoneNumber,
     default_address,
 }) => {
-    console.log('detail update')
-    console.log('receiveName',receiveName, 'phonenumber',phoneNumber,'default', default_address, id)
     return client.put(
         `/members/address/${id}/detail/`,
         { receiveName, phoneNumber, default_address },
@@ -58,4 +55,12 @@ export const updateAddressDetail = ({
             },
         },
     );
+};
+
+export const removeAddress = (id) => {
+    return client.delete(`/members/address/${id}/detail/`, {
+        headers: {
+            Authorization: `Token ${sessionStorage.getItem('token')}`,
+        },
+    });
 };

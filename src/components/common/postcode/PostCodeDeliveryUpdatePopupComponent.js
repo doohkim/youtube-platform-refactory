@@ -116,12 +116,10 @@ const PostCodeDeliveryUpdatePopupComponent = ({
         phone_number,
         receive_name,
     } = detailAddress;
-    // console.log('phone_number', phoneNumber);
-    // console.log('receive_name', receiveName);
+
     const [defaultAddressValue, setDefaultAddressValue] =
         useState(default_address);
-    // const [phoneNumber, setPhoneNumber] = useState(phone_number)
-    // const [receiveName, setReceiveName] = useState(receive_name)
+
     const onDefaultAddressClick = useCallback(() => {
         setDefaultAddressValue(!defaultAddressValue);
     }, [defaultAddressValue]);
@@ -130,10 +128,6 @@ const PostCodeDeliveryUpdatePopupComponent = ({
         onChangeField({ key: e.target.name, value: e.target.value });
     }, []);
 
-    // useEffect(() => {
-    // console.log('defaultAddressValue',defaultAddressValue)
-    // setDefaultAddressValue(default_address);
-    // }, []);
     return (
         <PostCodeDeliveryUpdatePopupBlock>
             <div className="headline-block">
@@ -143,10 +137,6 @@ const PostCodeDeliveryUpdatePopupComponent = ({
                 <div className="info-block">
                     <div className="address-block">
                         <div className="main-address">{address}</div>
-                        {/* <input
-                            className="detail-address"
-                            placeholder="나머지 주소를 입력해주세요"
-                        ></input> */}
                     </div>
                 </div>
                 <div className="info-block">
@@ -218,7 +208,7 @@ const PostCodeDeliveryUpdatePopupComponent = ({
                     <div className="btn-block">
                         <button
                             className="delete-btn"
-                            onClick={onDeletePostCodeDetailInfo}
+                            onClick={() => onDeletePostCodeDetailInfo(id)}
                         >
                             삭제
                         </button>

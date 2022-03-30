@@ -98,6 +98,7 @@ const CartTotalInfoComponent = ({
     onGetAddressRetrieve,
     detailAddress,
     detailAddressError,
+    onRemoveAddress,
 }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -182,16 +183,17 @@ const CartTotalInfoComponent = ({
                 phoneNumber,
                 default_address,
             });
-            navigate(0)
+            navigate(0);
         },
         [],
     );
 
-    const onDeletePostCodeDetailInfo = useCallback(() => {
+    const onDeletePostCodeDetailInfo = useCallback((id) => {
         setModalVisible(false);
         setIsOpenSecondPopup(false);
         setPostCodeListPopup(true);
         setPostCodeDeliveryUpdatePopup(false);
+        onRemoveAddress(id)
     }, []);
 
     const onCloseModal = useCallback(() => {
