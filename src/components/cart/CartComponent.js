@@ -36,9 +36,17 @@ const CartComponent = ({
     remove,
     toggle,
     onAddressCreate,
+    onSelectedAddress,
+    onChangeField,
     addresscreateLoading,
     addressList,
     addressListError,
+    receiveName,
+    phoneNumber,
+    detailAddress,
+    detailAddressError,
+    onDetailAddressClick,
+    onGetAddressRetrieve
 }) => {
     const dispatch = useDispatch();
     const onIncrease = useCallback(
@@ -107,8 +115,16 @@ const CartComponent = ({
                     addressList={addressList}
                     cartData={cartData}
                     user={user}
+                    onChangeField={onChangeField}
                     onAddressCreate={onAddressCreate}
+                    onSelectedAddress={onSelectedAddress}
                     addresscreateLoading={addresscreateLoading}
+                    receiveName={receiveName}
+                    phoneNumber={phoneNumber}
+                    detailAddress={detailAddress}
+                    detailAddressError={detailAddressError}
+                    onDetailAddressClick={onDetailAddressClick}
+                    onGetAddressRetrieve={onGetAddressRetrieve}
                 />
             </div>
         </CartBlock>

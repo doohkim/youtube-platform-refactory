@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 // import palette from '../../../lib/styles/palette';
-import { AiOutlineCheckCircle } from 'react-icons/ai';
+import { AiOutlineCheckCircle, AiFillCheckCircle } from 'react-icons/ai';
 
 import { BsPencil } from 'react-icons/bs';
 import palette from '../../../lib/styles/palette';
@@ -122,22 +122,36 @@ const PostCodeItemBlock = styled.div`
         padding: 30px 18px 30px 18px;
     }
 `;
-const PostCodeItemComponent = ({ openPostCodeDetailPopup, addr }) => {
+const PostCodeItemComponent = ({
+    onSelectedAddress,
+    openPostCodeDetailPopup,
+    addr,
+}) => {
+    const { id, default_address, selected_address, address } = addr;
+
     return (
         <PostCodeItemBlock>
-            <div className="select-block">
-                <AiOutlineCheckCircle size={24} />
+            <div
+                className="select-block"
+                onClick={() => onSelectedAddress(addr)}
+            >
+                {selected_address ? (
+                    <AiFillCheckCircle size={24} color={`${palette.cyan[7]}`} />
+                ) : (
+                    <AiOutlineCheckCircle size={24} />
+                )}
             </div>
+
             <div className="address-info-block">
-                {addr.default_address === true ? (
+                {default_address === true ? (
                     <div className="default-address-tag">
                         <div className="tag-box">기본 배송지</div>
                     </div>
                 ) : null}
-                <div className="address-box">{addr.address}</div>
+                <div className="address-box">{address}</div>
                 <div className="deliverty-possible-tag">배송가능</div>
             </div>
-            <div className="update-block" onClick={openPostCodeDetailPopup}>
+            <div className="update-block" onClick={()=>openPostCodeDetailPopup(id)}>
                 <BsPencil size={24} />
             </div>
         </PostCodeItemBlock>
@@ -148,6 +162,7 @@ const PostCodeListPopupComponent = ({
     openPostCodePopup,
     openPostCodeDetailPopup,
     addressList,
+    onSelectedAddress,
 }) => {
     return (
         <PostCodeListPopupBlock>
@@ -166,6 +181,7 @@ const PostCodeListPopupComponent = ({
                 {addressList.map((addr, index) => (
                     <PostCodeItemComponent
                         openPostCodeDetailPopup={openPostCodeDetailPopup}
+                        onSelectedAddress={onSelectedAddress}
                         key={index}
                         addr={addr}
                     />

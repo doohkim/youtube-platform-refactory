@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import palette from '../../../lib/styles/palette';
-import { AiOutlineCheckCircle } from 'react-icons/ai';
+import { AiOutlineCheckCircle, AiFillCheckCircle } from 'react-icons/ai';
 const PostCodeDeliveryUpdatePopupBlock = styled.div`
     width: 100%;
     padding: 32px 30px 0 30px;
@@ -102,7 +102,38 @@ const PostCodeDeliveryUpdatePopupBlock = styled.div`
 const PostCodeDeliveryUpdatePopupComponent = ({
     onSavePostCodeDetailInfo,
     onDeletePostCodeDetailInfo,
+    onChangeField,
+    phoneNumber,
+    receiveName,
+    detailAddress,
+    detailAddressError,
 }) => {
+    const {
+        id,
+        address,
+        default_address,
+        selected_address,
+        phone_number,
+        receive_name,
+    } = detailAddress;
+    // console.log('phone_number', phoneNumber);
+    // console.log('receive_name', receiveName);
+    const [defaultAddressValue, setDefaultAddressValue] =
+        useState(default_address);
+    // const [phoneNumber, setPhoneNumber] = useState(phone_number)
+    // const [receiveName, setReceiveName] = useState(receive_name)
+    const onDefaultAddressClick = useCallback(() => {
+        setDefaultAddressValue(!defaultAddressValue);
+    }, [defaultAddressValue]);
+
+    const onChange = useCallback((e) => {
+        onChangeField({ key: e.target.name, value: e.target.value });
+    }, []);
+
+    // useEffect(() => {
+    // console.log('defaultAddressValue',defaultAddressValue)
+    // setDefaultAddressValue(default_address);
+    // }, []);
     return (
         <PostCodeDeliveryUpdatePopupBlock>
             <div className="headline-block">
@@ -111,48 +142,75 @@ const PostCodeDeliveryUpdatePopupComponent = ({
             <div className="delivery-info-block">
                 <div className="info-block">
                     <div className="address-block">
-                        <div className="main-address">
-                            경기도 광명시 시청로 26 302호
-                        </div>
-                        <input
+                        <div className="main-address">{address}</div>
+                        {/* <input
                             className="detail-address"
                             placeholder="나머지 주소를 입력해주세요"
-                        ></input>
+                        ></input> */}
                     </div>
                 </div>
                 <div className="info-block">
                     <div className="address-block">
                         <div className="column-block">받으실 분</div>
+                        <div className="column-block">{receive_name}</div>
                         <input
                             className="value-block"
                             placeholder="이름을 입력해주세요."
+                            name="receiveName"
+                            onChange={onChange}
+                            value={receiveName}
                         />
                     </div>
                 </div>
                 <div className="info-block">
                     <div className="address-block">
                         <div className="column-block">휴대폰 번호</div>
+                        <div className="column-block">{phone_number}</div>
                         <input
                             className="value-block"
-                            placeholder="번호를 입력해주세요."
+                            placeholder="핸드폰 번호를 입력해주세요."
+                            name="phoneNumber"
+                            onChange={onChange}
+                            value={phoneNumber}
                         />
                     </div>
                 </div>
                 <div className="default-address-block">
-                    <div className="default-address-inner-check">
-                        <div className="check-box">
-                            <AiOutlineCheckCircle
-                                size={24}
-                                color={`${palette.gray[3]}`}
-                            />
+                    {default_address === false ? (
+                        <div
+                            className="default-address-inner-check"
+                            onClick={() => onDefaultAddressClick()}
+                        >
+                            <div className="check-box">
+                                {defaultAddressValue === true ? (
+                                    <AiFillCheckCircle
+                                        size={24}
+                                        color={`${palette.cyan[3]}`}
+                                    />
+                                ) : (
+                                    <AiOutlineCheckCircle
+                                        size={24}
+                                        color={`${palette.gray[3]}`}
+                                    />
+                                )}
+                            </div>
+                            <div className="default-box">
+                                기본 배송지로 저장
+                            </div>
                         </div>
-                        <div className="default-box">기본 배송지로 저장</div>
-                    </div>
+                    ) : null}
 
                     <div className="btn-block">
                         <button
                             className="save-btn"
-                            onClick={onSavePostCodeDetailInfo}
+                            onClick={() =>
+                                onSavePostCodeDetailInfo(
+                                    id,
+                                    receiveName,
+                                    phoneNumber,
+                                    defaultAddressValue,
+                                )
+                            }
                         >
                             저장
                         </button>

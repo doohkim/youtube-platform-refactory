@@ -1,7 +1,16 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from '../../../node_modules/react-router/index';
 import CartComponent from '../../components/cart/CartComponent';
-import { createAddress , readAddress, setAddress} from '../../modules/address';
+import { updateAddress } from '../../lib/api/address';
+import {
+    changeField,
+    createAddress,
+    getAddressDetail,
+    readAddress,
+    setAddress,
+    updateAddressDetail,
+} from '../../modules/address';
 import {
     decrease,
     getCart,
@@ -12,6 +21,7 @@ import {
 
 const CartContainer = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const {
         cartData,
         cartError,
@@ -22,6 +32,10 @@ const CartContainer = () => {
         addressList,
         addressError,
         addressListError,
+        detailAddress,
+        detailAddressError,
+        receiveName,
+        phoneNumber,
     } = useSelector(({ cart, loading, user, address }) => ({
         cartData: cart.cartData,
         cartError: cart.cartError,
@@ -32,19 +46,58 @@ const CartContainer = () => {
         addressListError: address.addressError,
         addresscreateLoading: loading['address/CREATE_ADDRESS'],
         user: user.user,
+        detailAddress: address.detailAddress,
+        detailAddressError: address.detailAddressError,
+        receiveName: address.receiveName,
+        phoneNumber: address.phoneNumber,
     }));
 
+    const onChangeField = useCallback(
+        (payload) => dispatch(changeField(payload)),
+        [dispatch],
+    );
     const onAddressCreate = useCallback(
         (address) => {
             dispatch(createAddress(address));
         },
         [dispatch],
     );
-
+    const onGetAddressRetrieve = useCallback(
+        (id) => {
+            dispatch(getAddressDetail(id));
+        },
+        [dispatch],
+    );
+    const onDetailAddressClick = useCallback(
+        ({ id, receiveName, phoneNumber, default_address }) => {
+            dispatch(
+                updateAddressDetail({
+                    id,
+                    receiveName,
+                    phoneNumber,
+                    default_address,
+                }),
+            );
+        },
+        [dispatch],
+    );
+    const onSelectedAddress = useCallback(
+        (addr) => {
+            try {
+                const { id } = addr;
+                const selected_address = true;
+                dispatch(updateAddress({ id, selected_address }));
+            } catch (e) {
+                console.log(e);
+            }
+            navigate(0);
+        },
+        [dispatch, navigate],
+    );
     useEffect(() => {
-        const token = sessionStorage.getItem('token')
-        if(token){
-            dispatch(readAddress())
+        const token = sessionStorage.getItem('token');
+        if (token) {
+            dispatch(readAddress());
         }
         dispatch(getCart());
     }, [dispatch]);
@@ -59,10 +112,18 @@ const CartContainer = () => {
             addressListError={addressListError}
             addresscreateLoading={addresscreateLoading}
             onAddressCreate={onAddressCreate}
+            onSelectedAddress={onSelectedAddress}
+            onChangeField={onChangeField}
             increase={increase}
             decrease={decrease}
             toggle={toggle}
             remove={remove}
+            phoneNumber={phoneNumber}
+            receiveName={receiveName}
+            detailAddress={detailAddress}
+            detailAddressError={detailAddressError}
+            onDetailAddressClick={onDetailAddressClick}
+            onGetAddressRetrieve={onGetAddressRetrieve}
         />
     );
 };

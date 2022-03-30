@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import { IoLocationOutline } from 'react-icons/io5';
@@ -9,9 +9,9 @@ import { Link } from 'react-router-dom';
 import SecondPopUpComponent from '../common/postcode/SecondPopUpComponent';
 import PostCodeListPopupComponent from '../common/postcode/PostCodeListPopupComponent';
 import PostCodeDeliveryUpdatePopupComponent from '../common/postcode/PostCodeDeliveryUpdatePopupComponent';
-import { useNavigate } from '../../../node_modules/react-router/index';
+import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
-import * as moduleAddress from '../../modules/address';
+// import * as moduleAddress from '../../modules/address';
 
 const CartTotalInfoBlock = styled.div`
     width: 25%;
@@ -87,9 +87,17 @@ const CartTotalInfoComponent = ({
     cartData,
     user,
     onAddressCreate,
+    onSelectedAddress,
+    onChangeField,
     addresscreateLoading,
     addressList,
-    addressListError,
+    // addressListError,
+    receiveName,
+    phoneNumber,
+    onDetailAddressClick,
+    onGetAddressRetrieve,
+    detailAddress,
+    detailAddressError,
 }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -152,21 +160,32 @@ const CartTotalInfoComponent = ({
     }, []);
 
     // post code list 창에서 수정 버튼 누를때
-    const openPostCodeDetailPopup = useCallback(() => {
+    const openPostCodeDetailPopup = useCallback((id) => {
         // post code list 창 닫기
         setPostCodeListPopup(false);
         // 배송지 상세 페이지 창 열기
         setPostCodeDeliveryUpdatePopup(true);
+        onGetAddressRetrieve(id);
     }, []);
 
     // 주소 상세페이지(저장 버튼 클릭)
     // Pop up 페이지 - 주소 리스트 - 주소 상세페이지(저장 버튼 클릭)
-    const onSavePostCodeDetailInfo = useCallback(() => {
-        setModalVisible(false);
-        setIsOpenSecondPopup(false);
-        setPostCodeListPopup(true);
-        setPostCodeDeliveryUpdatePopup(false);
-    }, []);
+    const onSavePostCodeDetailInfo = useCallback(
+        (id, receiveName, phoneNumber, default_address) => {
+            setModalVisible(false);
+            setIsOpenSecondPopup(false);
+            setPostCodeListPopup(true);
+            setPostCodeDeliveryUpdatePopup(false);
+            onDetailAddressClick({
+                id,
+                receiveName,
+                phoneNumber,
+                default_address,
+            });
+            navigate(0)
+        },
+        [],
+    );
 
     const onDeletePostCodeDetailInfo = useCallback(() => {
         setModalVisible(false);
@@ -216,6 +235,7 @@ const CartTotalInfoComponent = ({
             dividePopup,
             onAddressCreate,
             setDividePopup,
+            navigate,
         ],
     );
 
@@ -235,10 +255,10 @@ const CartTotalInfoComponent = ({
         // user address 가 없을 수도 있음
         if (user) {
             if (addressList) {
-                sessionStorage.setItem(
-                    'address',
-                    JSON.stringify(addressList.results),
-                );
+                // sessionStorage.setItem(
+                //     'address',
+                //     JSON.stringify(addressList.results),
+                // );
                 // dispatch(moduleAddress.setAddress(addressList.results));
                 const selectedAddress = addressList.results.filter(
                     (address) => address.selected_address === true,
@@ -312,9 +332,10 @@ const CartTotalInfoComponent = ({
                                     openPostCodeDetailPopup
                                 }
                                 addressList={addressList.results}
+                                onSelectedAddress={onSelectedAddress}
                             />
                         )}
-                        {postCodeDeliveryUpdatePopup && (
+                        {postCodeDeliveryUpdatePopup && detailAddress && (
                             <PostCodeDeliveryUpdatePopupComponent
                                 onSavePostCodeDetailInfo={
                                     onSavePostCodeDetailInfo
@@ -322,6 +343,11 @@ const CartTotalInfoComponent = ({
                                 onDeletePostCodeDetailInfo={
                                     onDeletePostCodeDetailInfo
                                 }
+                                onChangeField={onChangeField}
+                                detailAddress={detailAddress}
+                                detailAddressError={detailAddressError}
+                                receiveName={receiveName}
+                                phoneNumber={phoneNumber}
                             />
                         )}
                         {postCodePopup && (
