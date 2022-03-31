@@ -15,14 +15,14 @@ const PaymentContainer = () => {
         selectedAddress,
         selectedAddressError,
         selectedAddressLoading,
-    } = useSelector(({ order, loading, user, address }) => ({
+    } = useSelector(({ order, loading, user }) => ({
         order: order.order,
         orderError: order.orderError,
         getCartLoading: loading['order/GET_CART_FILTER'],
         createOrderLoading: loading['order/CREATE_ORDER'],
         user: user.user,
-        selectedAddress: address.selectedAddress,
-        selectedAddressError: address.selectedAddressError,
+        selectedAddress: order.selectedAddress,
+        selectedAddressError: order.selectedAddressError,
         selectedAddressLoading: loading['order/SELECTED_ADDRESS'],
     }));
 

@@ -62,6 +62,9 @@ const PaymentComponent = ({
     const onClick = useCallback(() => {
         setAgreeOrder(!agreeOrder);
     }, [agreeOrder]);
+    if (selectedAddressError) {
+        return <PaymentBlock>api 에러</PaymentBlock>;
+    }
     return (
         <PaymentBlock>
             <div className="page-tit">
@@ -69,7 +72,11 @@ const PaymentComponent = ({
             </div>
             <div className="content">
                 <PaymentProductListComponent />
-                <PaymentUserInfoComponent />
+                {!selectedAddressLoading && selectedAddress && (
+                    <PaymentUserInfoComponent
+                        userInfo={selectedAddress.results[0]}
+                    />
+                )}
                 <PaymentAddressInfoComponent />
                 {/* <PaymentCouponInfoComponent /> */}
                 <PaymentMethodInfoComponent />

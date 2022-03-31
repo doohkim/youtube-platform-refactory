@@ -8,6 +8,7 @@ import ChannelListPage from './pages/ChannelListPage';
 import CustomerServicePage from './pages/CustomerServicePage';
 import LoginPage from './pages/LoginPage';
 import PaymentPage from './pages/PaymentPage';
+import PopupPage from './pages/PopupPage';
 import PostListPage from './pages/PostListPage';
 import PostPage from './pages/PostPage';
 import RegisterPage from './pages/RegisterPage';
@@ -40,7 +41,9 @@ function App() {
                     <Route path="/payment" element={<PaymentPage />}/>
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
+                    
                 </Route>
+                <Route path="/popup" element={<PopupPage />} />
             </Routes>
         </div>
     );

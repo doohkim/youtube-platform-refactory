@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import palette from '../../../lib/styles/palette';
-import { AiOutlineCheckCircle, AiFillCheckCircle } from 'react-icons/ai';
-const PostCodeDeliveryUpdatePopupBlock = styled.div`
+import palette from '../../lib/styles/palette';
+
+const PopupBlock = styled.div`
     width: 100%;
     padding: 32px 30px 0 30px;
     .headline-block {
@@ -99,108 +99,51 @@ const PostCodeDeliveryUpdatePopupBlock = styled.div`
     }
 `;
 
-const PostCodeDeliveryUpdatePopupComponent = ({
-    onSavePostCodeDetailInfo,
-    onDeletePostCodeDetailInfo,
-    onChangeField,
-    phoneNumber,
-    receiveName,
-    detailAddress,
-    detailAddressError,
-}) => {
-    const {
-        id,
-        address,
-        default_address,
-        selected_address,
-        phone_number,
-        receive_name,
-    } = detailAddress;
-
-    const [defaultAddressValue, setDefaultAddressValue] =
-        useState(default_address);
-
-    const onDefaultAddressClick = useCallback(() => {
-        setDefaultAddressValue(!defaultAddressValue);
-    }, [defaultAddressValue]);
-
-    const onChange = useCallback((e) => {
-        onChangeField({ key: e.target.name, value: e.target.value });
-    }, []);
-
+const PopupComponent = () => {
     return (
-        <PostCodeDeliveryUpdatePopupBlock>
+        <PopupBlock>
             <div className="headline-block">
-                <div className="title">배송지 수정</div>
+                <div className="title">배송지 정보</div>
             </div>
             <div className="delivery-info-block">
                 <div className="info-block">
                     <div className="address-block">
-                        <div className="main-address">{address}</div>
-                    </div>
-                </div>
-                <div className="info-block">
-                    <div className="address-block">
                         <div className="column-block">받으실 분</div>
-                        <div className="column-block">{receive_name}</div>
+                        <div className="column-block">김도오</div>
                         <input
                             className="value-block"
                             placeholder="이름을 입력해주세요."
                             name="receiveName"
-                            onChange={onChange}
-                            value={receiveName}
+                            // onChange={onChange}
+                            // value={receiveName}
                         />
                     </div>
                 </div>
                 <div className="info-block">
                     <div className="address-block">
                         <div className="column-block">휴대폰 번호</div>
-                        <div className="column-block">{phone_number}</div>
+                        <div className="column-block">01040116804</div>
                         <input
                             className="value-block"
                             placeholder="핸드폰 번호를 입력해주세요."
                             name="phoneNumber"
-                            onChange={onChange}
-                            value={phoneNumber}
+                            // onChange={onChange}
+                            // value={phoneNumber}
                         />
                     </div>
                 </div>
                 <div className="default-address-block">
-                    {default_address === false ? (
-                        <div
-                            className="default-address-inner-check"
-                            onClick={() => onDefaultAddressClick()}
-                        >
-                            <div className="check-box">
-                                {defaultAddressValue === true ? (
-                                    <AiFillCheckCircle
-                                        size={24}
-                                        color={`${palette.cyan[3]}`}
-                                    />
-                                ) : (
-                                    <AiOutlineCheckCircle
-                                        size={24}
-                                        color={`${palette.gray[3]}`}
-                                    />
-                                )}
-                            </div>
-                            <div className="default-box">
-                                기본 배송지로 저장
-                            </div>
-                        </div>
-                    ) : null}
-
                     <div className="btn-block">
                         <button
                             className="save-btn"
-                            onClick={() =>
-                                onSavePostCodeDetailInfo(
-                                    id,
-                                    receiveName,
-                                    phoneNumber,
-                                    defaultAddressValue,
-                                )
-                            }
+                            // onClick={() =>
+                            //     onSavePostCodeDetailInfo(
+                            //         id,
+                            //         receiveName,
+                            //         phoneNumber,
+                            //         defaultAddressValue,
+                            //     )
+                            // }
                         >
                             저장
                         </button>
@@ -208,15 +151,14 @@ const PostCodeDeliveryUpdatePopupComponent = ({
                     <div className="btn-block">
                         <button
                             className="delete-btn"
-                            onClick={() => onDeletePostCodeDetailInfo(id)}
+                            // onClick={() => onDeletePostCodeDetailInfo(id)}
                         >
-                            삭제
+                            취소
                         </button>
                     </div>
                 </div>
             </div>
-        </PostCodeDeliveryUpdatePopupBlock>
+        </PopupBlock>
     );
 };
-
-export default PostCodeDeliveryUpdatePopupComponent;
+export default PopupComponent;
