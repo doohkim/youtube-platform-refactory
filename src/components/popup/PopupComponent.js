@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 
@@ -99,7 +99,28 @@ const PopupBlock = styled.div`
     }
 `;
 
-const PopupComponent = () => {
+const PopupComponent = ({
+    selectedAddress,
+    selectedAddressError,
+    selectedAddressLoading,
+    onSavePostCodeDetailInfo,
+    onChangeField,
+    onClosePopup,
+    receiveName,
+    phoneNumber,
+    // id
+}) => {
+    const onChange = useCallback((e) => {
+        onChangeField({ key: e.target.name, value: e.target.value });
+    }, []);
+    if (selectedAddressError) {
+        <PopupBlock>주소 api error</PopupBlock>;
+    }
+    const { id, receive_name, phone_number } = selectedAddress.results[0];
+    console.log(id, receive_name, phone_number);
+    // 주소 상세페이지(저장 버튼 클릭)
+    // Pop up 페이지 - 주소 리스트 - 주소 상세페이지(저장 버튼 클릭)
+    // const { id } = selectedAddress.results[0]
     return (
         <PopupBlock>
             <div className="headline-block">
@@ -109,26 +130,30 @@ const PopupComponent = () => {
                 <div className="info-block">
                     <div className="address-block">
                         <div className="column-block">받으실 분</div>
-                        <div className="column-block">김도오</div>
+                        {!selectedAddressLoading && selectedAddress && (
+                            <div className="column-block">{receive_name}</div>
+                        )}
                         <input
                             className="value-block"
                             placeholder="이름을 입력해주세요."
                             name="receiveName"
-                            // onChange={onChange}
-                            // value={receiveName}
+                            onChange={onChange}
+                            value={receiveName}
                         />
                     </div>
                 </div>
                 <div className="info-block">
                     <div className="address-block">
                         <div className="column-block">휴대폰 번호</div>
-                        <div className="column-block">01040116804</div>
+                        {!selectedAddressLoading && selectedAddress && (
+                            <div className="column-block">{phone_number}</div>
+                        )}
                         <input
                             className="value-block"
                             placeholder="핸드폰 번호를 입력해주세요."
                             name="phoneNumber"
-                            // onChange={onChange}
-                            // value={phoneNumber}
+                            onChange={onChange}
+                            value={phoneNumber}
                         />
                     </div>
                 </div>
@@ -136,14 +161,13 @@ const PopupComponent = () => {
                     <div className="btn-block">
                         <button
                             className="save-btn"
-                            // onClick={() =>
-                            //     onSavePostCodeDetailInfo(
-                            //         id,
-                            //         receiveName,
-                            //         phoneNumber,
-                            //         defaultAddressValue,
-                            //     )
-                            // }
+                            onClick={() =>
+                                onSavePostCodeDetailInfo({
+                                    id,
+                                    receiveName,
+                                    phoneNumber,
+                                })
+                            }
                         >
                             저장
                         </button>
@@ -151,7 +175,7 @@ const PopupComponent = () => {
                     <div className="btn-block">
                         <button
                             className="delete-btn"
-                            // onClick={() => onDeletePostCodeDetailInfo(id)}
+                            onClick={() => onClosePopup()}
                         >
                             취소
                         </button>

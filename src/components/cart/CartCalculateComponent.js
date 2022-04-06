@@ -66,8 +66,7 @@ const CartCalculateBlock = styled.div`
     }
 `;
 
-const CartCalculateComponent = ({ totalAmount }) => {
-    
+const CartCalculateComponent = ({ totalAmount }) => {    
     return (
         <CartCalculateBlock>
             <div className="amount-block">

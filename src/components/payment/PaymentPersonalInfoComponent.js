@@ -64,7 +64,7 @@ const PaymentPersonalInfoBlock = styled.div`
 `;
 
 const PaymentPersonalInfoComponent = ({
-    onClick,
+    onPersonalAgreeClick,
     agreeOrder,
 }) => {
     return (
@@ -74,7 +74,7 @@ const PaymentPersonalInfoComponent = ({
             </div>
             <div className="agree-block">
                 <div className="agree-first-block">
-                    <div className="toggle-block" onClick={() => onClick()}>
+                    <div className="toggle-block" onClick={() => onPersonalAgreeClick()}>
                         {agreeOrder ? (
                             <AiFillCheckCircle
                                 size={24}

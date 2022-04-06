@@ -193,7 +193,7 @@ const CartTotalInfoComponent = ({
         setIsOpenSecondPopup(false);
         setPostCodeListPopup(true);
         setPostCodeDeliveryUpdatePopup(false);
-        onRemoveAddress(id)
+        onRemoveAddress(id);
     }, []);
 
     const onCloseModal = useCallback(() => {
@@ -248,6 +248,7 @@ const CartTotalInfoComponent = ({
             cartItems.map((item) => {
                 acc = acc + item.price * item.number;
             });
+
             return acc;
         }
     }, []);

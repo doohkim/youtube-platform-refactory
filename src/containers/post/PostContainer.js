@@ -41,16 +41,16 @@ const PostContainer = () => {
         let cart_db = [];
         let new_cart = [];
         let overlap_list = [];
-        console.log('클릭했을때 cartList 값', cartList);
+        // console.log('클릭했을때 cartList 값', cartList);
 
         if (cartList.length >= 0 && selectProducts.length === 0) {
             // cartList(session에서 가져와서 설정한값 존재) && 아무것도 선택하지 않은 경우
-            console.log('카트 변경 없음');
+            // console.log('카트 변경 없음');
             // sessionStorage.setItem('cart', JSON.stringify(cartList));
         } else if (cartList.length === 0) {
             // cartList가 비어있을 경우
             sessionStorage.setItem('cart', JSON.stringify(selectProducts));
-            console.log('cartList가 비어있고 상품을 선택했을경우');
+            // console.log('cartList가 비어있고 상품을 선택했을경우');
         } else {
             cartList.map((cart_item) => {
                 selectProducts.map((select_item) => {
@@ -65,10 +65,10 @@ const PostContainer = () => {
                 });
             });
 
-            console.log('중복 데이터', new_cart);
-            console.log('중복 리스트 아이디', overlap_list);
+            // console.log('중복 데이터', new_cart);
+            // console.log('중복 리스트 아이디', overlap_list);
             if (overlap_list.length !== 0) {
-                console.log('세션저장소에서 가져온 데이터 - 중복 제거');
+                // console.log('세션저장소에서 가져온 데이터 - 중복 제거');
                 // 마지막 코드
                 cartList.map((cart_item) => {
                     if (overlap_list.includes(cart_item.id)) {
@@ -90,7 +90,7 @@ const PostContainer = () => {
                     JSON.stringify(cart_db.concat(new_cart)),
                 );
             } else {
-                console.log('중복이 없음');
+                // console.log('중복이 없음');
                 console.log(cartList.concat(selectProducts));
                 sessionStorage.setItem(
                     'cart',
@@ -98,8 +98,8 @@ const PostContainer = () => {
                 );
             }
         }
-        console.log('클릭 마지막 session에 저장한값 가져오기');
-        console.log(JSON.parse(sessionStorage.getItem('cart')));
+        // console.log('클릭 마지막 session에 저장한값 가져오기');
+        // console.log(JSON.parse(sessionStorage.getItem('cart')));
         dispatch(setCart(JSON.parse(sessionStorage.getItem('cart'))));
         cart_db = [];
         new_cart = [];

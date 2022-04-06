@@ -2,7 +2,6 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import CartComponent from '../../components/cart/CartComponent';
-// import { updateAddress } from '../../lib/api/address';
 import {
     changeField,
     createAddress,

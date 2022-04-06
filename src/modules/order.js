@@ -15,49 +15,60 @@ const [CREATE_ORDER, CREATE_ORDER_SUCCESS, CREATE_ORDER_FAILURE] =
 const [GET_ORDER, GET_ORDER_SUCCESS, GET_ORDER_FAILURE] =
     createRequestActionTypes('order/GET_ORDER');
 
-const [SELECTED_ADDRESS, SELECTED_ADDRESS_SUCCESS, SELECTED_ADDRESS_FAILURE] = 
-    createRequestActionTypes('order/SELECTED_ADDRESS')
-
+const [SELECTED_ADDRESS, SELECTED_ADDRESS_SUCCESS, SELECTED_ADDRESS_FAILURE] =
+    createRequestActionTypes('order/SELECTED_ADDRESS');
+const CHANGE_FIELD = 'order/CHANGE_FIELD';
 const PAYMENT_FAILURE = 'order/PAYMENT_FAILURE';
 const UNLOAD_PAYMENT_ORDER = 'order/UNLOAD_PAYMENT_ORDER';
 
-
+export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
+    key,
+    value,
+}));
 export const getCartFilter = createAction(GET_CART_FILTER);
 export const createOrder = createAction(CREATE_ORDER, ({ response }) => ({
     response,
 }));
-
 export const getOrder = createAction(GET_ORDER, (id) => id);
 export const notSuccessedPayment = createAction(
     PAYMENT_FAILURE,
     ({ response }) => ({ response }),
 );
 export const unloadPaymentOrder = createAction(UNLOAD_PAYMENT_ORDER);
-export const getSelectedAddress = createAction(SELECTED_ADDRESS)
-
+export const getSelectedAddress = createAction(SELECTED_ADDRESS);
 
 const getCartFilterSaga = createSessionFilterSaga(GET_CART_FILTER);
 const createOrderSaga = createRequestSaga(CREATE_ORDER, orderAPI.createOrder);
 const getOrderSaga = createRequestSaga(GET_ORDER, orderAPI.getOrder);
-const selectedAddressSaga = createRequestSaga(SELECTED_ADDRESS, orderAPI.selectedAddress)
+const selectedAddressSaga = createRequestSaga(
+    SELECTED_ADDRESS,
+    orderAPI.selectedAddress,
+);
+
 export function* orderSaga() {
     yield takeLatest(GET_CART_FILTER, getCartFilterSaga);
     yield takeLatest(CREATE_ORDER, createOrderSaga);
     yield takeLatest(GET_ORDER, getOrderSaga);
-    yield takeLatest(SELECTED_ADDRESS, selectedAddressSaga)
+    yield takeLatest(SELECTED_ADDRESS, selectedAddressSaga);
 }
 
 const initialState = {
+    receiveName: '',
+    phoneNumber: '',
     order: null,
     orderError: null,
     payedOrder: null,
     payedOrderError: null,
-    selectedAddress:null,
+    selectedAddress: null,
     selectedAddressError: null,
 };
 
 const order = handleActions(
     {
+        [CHANGE_FIELD]: (state, { payload: { key, value } }) => ({
+            ...state,
+            [key]: value,
+        }),
         [GET_CART_FILTER_SUCCESS]: (state, { payload: order }) => ({
             ...state,
             order,
@@ -86,13 +97,16 @@ const order = handleActions(
             ...state,
             payedOrderError,
         }),
-        [SELECTED_ADDRESS_SUCCESS]: (state, {payload: selectedAddress}) => ({
+        [SELECTED_ADDRESS_SUCCESS]: (state, { payload: selectedAddress }) => ({
             ...state,
-            selectedAddress
+            selectedAddress,
         }),
-        [SELECTED_ADDRESS_FAILURE]: (state, {payload: selectedAddressError}) => ({
+        [SELECTED_ADDRESS_FAILURE]: (
+            state,
+            { payload: selectedAddressError },
+        ) => ({
             ...state,
-            selectedAddressError
+            selectedAddressError,
         }),
         [UNLOAD_PAYMENT_ORDER]: () => initialState,
     },

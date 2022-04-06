@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineUp, AiOutlineDown } from 'react-icons/ai';
+import { numberWithCommas } from '../../lib/fpp';
 const PaymentProductListBlock = styled.div`
     padding-bottom: 50px;
     color: #333;
@@ -85,36 +86,40 @@ const PaymentProductItemBlock = styled.div`
     }
 `;
 
-const PaymentProductItemComponent = () => {
+const PaymentProductItemComponent = ({ cart_item }) => {
+    const { images, number, price, text } = cart_item;
     return (
         <PaymentProductItemBlock>
             <div className="thumb-block">
                 <img
-                    src="https://img-cf.kurly.com/shop/data/goods/1582679290204i0.jpg"
+                    src={
+                        images.length > 0
+                            ? images[0].image.replace(
+                                  'http://youtube-market-front.s3.amazonaws.com/https%3A/',
+                                  'https://',
+                              )
+                            : null
+                    }
                     alt="thumb"
                 />
             </div>
             <div className="name-block">
-                <div className="product-name">
-                    [남향푸드또띠아] 하와이안 브리또
-                </div>
-                <div className="post-name">
-                    [남향푸드또띠아] 간편 간식 브리또 10종
-                </div>
+                <div className="product-name">{text}</div>
+                <div className="post-name">{text.split(']')[0] + ']'}</div>
             </div>
-            <div className="ea-block">1개</div>
-            <div className="price-block">3,200원</div>
+            <div className="ea-block">{number}개</div>
+            <div className="price-block">{numberWithCommas(price)}원</div>
         </PaymentProductItemBlock>
     );
 };
 
-const PaymentProductListComponent = () => {
+const PaymentProductListComponent = ({ cartFilterData }) => {
     const [productListOpen, setProductListOpen] = useState(false);
     const onToggle = useCallback(() => {
         setProductListOpen(!productListOpen);
     }, [productListOpen]);
 
-    const num = 1;
+    const num = cartFilterData.length;
     return (
         <PaymentProductListBlock>
             <div className="title-block">
@@ -128,12 +133,31 @@ const PaymentProductListComponent = () => {
                 </div>
             </div>
             {productListOpen ? (
-                <PaymentProductItemComponent />
+                <>
+                    {cartFilterData &&
+                        cartFilterData.map((cart_item) => (
+                            <PaymentProductItemComponent
+                                cart_item={cart_item}
+                                key={cart_item.id}
+                            />
+                        ))}
+                </>
             ) : (
-                <div className="item-list-block">
-                    [남향푸드또띠아] 하와이안 브리또외
-                    <div className="ea">{`${num}개`}</div>상품을 주문합니다.
-                </div>
+                <>
+                    {cartFilterData && (
+                        <div className="item-list-block">
+                            {cartFilterData.length > 1
+                                ? cartFilterData[0].text + '외'
+                                : cartFilterData[0].text}
+                            {cartFilterData.length > 1 ? (
+                                <>
+                                    <div className="ea">{`${num-1}개`}</div>
+                                    상품을 주문합니다.
+                                </>
+                            ) : ' 상품을 주문합니다.'}
+                        </div>
+                    )}
+                </>
             )}
         </PaymentProductListBlock>
     );

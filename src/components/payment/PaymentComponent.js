@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import PaymentAddressInfoComponent from './PaymentAddressInfoComponent';
 // import PaymentCouponInfoComponent from './PaymentCouponInfoComponent';
-import PaymentMethodInfoComponent from './PaymentMethodInfoComponent';
+// import PaymentMethodInfoComponent from './PaymentMethodInfoComponent';
 import PaymentPersonalInfoComponent from './PaymentPersonalInfoComponent';
 import PaymentProductListComponent from './PaymentProductListComponent';
 import PaymentUserInfoComponent from './PaymentUserInfoComponent';
+import { numberWithCommas } from '../../lib/fpp';
 const PaymentBlock = styled.div`
     width: 1080px;
     margin: auto;
@@ -57,21 +58,32 @@ const PaymentComponent = ({
     selectedAddress,
     selectedAddressError,
     selectedAddressLoading,
+    cartFilterData,
+    cartFilterError,
+    cartFilterLoading,
+    getTotalAmount,
+    onClick,
 }) => {
     const [agreeOrder, setAgreeOrder] = useState(false);
-    const onClick = useCallback(() => {
+    const onPersonalAgreeClick = useCallback(() => {
         setAgreeOrder(!agreeOrder);
     }, [agreeOrder]);
-    if (selectedAddressError) {
+
+    if (selectedAddressError || cartFilterError) {
         return <PaymentBlock>api 에러</PaymentBlock>;
     }
+    console.log(cartFilterData)
     return (
         <PaymentBlock>
             <div className="page-tit">
                 <h2>장바구니</h2>
             </div>
             <div className="content">
-                <PaymentProductListComponent />
+                {!cartFilterLoading && cartFilterData && (
+                    <PaymentProductListComponent
+                        cartFilterData={cartFilterData}
+                    />
+                )}
                 {!selectedAddressLoading && selectedAddress && (
                     <PaymentUserInfoComponent
                         userInfo={selectedAddress.results[0]}
@@ -79,16 +91,20 @@ const PaymentComponent = ({
                 )}
                 <PaymentAddressInfoComponent />
                 {/* <PaymentCouponInfoComponent /> */}
-                <PaymentMethodInfoComponent />
+                {/* <PaymentMethodInfoComponent /> */}
                 <PaymentPersonalInfoComponent
                     agreeOrder={agreeOrder}
                     setAgreeOrder={setAgreeOrder}
-                    onClick={onClick}
+                    onPersonalAgreeClick={onPersonalAgreeClick}
                 />
                 <div className="bth-block">
                     {agreeOrder ? (
-                        <button className="possible-btn">
-                            9,400원 결제하기
+                        <button
+                            className="possible-btn"
+                            onClick={() => onClick(cartFilterData)}
+                        >
+                            {numberWithCommas(getTotalAmount(cartFilterData))}원
+                            결제하기
                         </button>
                     ) : (
                         <button disabled className="disabled-btn">

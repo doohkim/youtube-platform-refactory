@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import palette from '../../lib/styles/palette';
 
 const PaymentUserInfoBlock = styled.div`
     color: #333;
@@ -34,13 +36,25 @@ const PaymentUserInfoBlock = styled.div`
             .value-block {
                 width: 80%;
             }
+            button{
+                width: 60px;
+                border: 1px solid ${palette.gray[5]};
+                height: 30px;
+                border-radius: 3px;
+                font-size: 12px;
+                font-weight: bold;
+                background-color: #fff;
+                
+
+            }
         }
     }
 `;
 
 const PaymentUserInfoComponent = ({ userInfo }) => {
-    const { id, user, address, phone_number, receive_name } = userInfo;
-    const { pk, username } = user;
+    const { phone_number, receive_name } = userInfo;
+    // const { pk, username } = user;
+
     return (
         <PaymentUserInfoBlock>
             <div className="title-block">
@@ -49,26 +63,21 @@ const PaymentUserInfoComponent = ({ userInfo }) => {
             <div className="user-block">
                 <div className="info-block">
                     <div className="column-block">보내는 분</div>
-                    {receive_name === '' ? (
-                        <div className="value-block">
-                            <button
-                                onClick={() =>
-                                    window.open(
-                                        'http://localhost:3000/popup',
-                                        '_blank',
-                                    )
-                                }
-                            >
-                                입력
-                            </button>
-                        </div>
-                    ) : (
-                        <div className="value-block">{receive_name}</div>
-                    )}
+                    <div className="value-block">{receive_name}</div>
                 </div>
                 <div className="info-block">
                     <div className="column-block">휴대폰</div>
                     <div className="value-block">{phone_number}</div>
+                </div>
+                <div className="info-block">
+                <div className="column-block"></div>
+                    <button
+                        onClick={() =>
+                            window.open('http://localhost:3000/popup', '_blank')
+                        }
+                    >
+                        {receive_name==="" || phone_number==="" ? "입력":"수정"}
+                    </button>
                 </div>
                 {/* <div className="info-block">
                     <div className="column-block">이메일</div>
