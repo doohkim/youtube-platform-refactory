@@ -28,7 +28,6 @@ const VideoContainer = () => {
         filterCategories: category.filterCategories,
         filterCategoriesError: category.filterCategoriesError,
     }));
-
     const onToggle = (text, factory) => {
         dispatch(toggle(text, factory));
     };
@@ -43,7 +42,6 @@ const VideoContainer = () => {
             dispatch(getListVideos(filterCategories, page, sort));
         }
     }, [dispatch, filterCategories, page, sort]);
-
     return (
         <VideoContainerBlock>
             <FilterTableContainer

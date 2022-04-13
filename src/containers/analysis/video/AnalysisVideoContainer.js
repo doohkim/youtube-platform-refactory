@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useOutletContext } from 'react-router-dom';
-import AnalysisVideoInfoComponent from './AnalysisVideoInfoComponent';
-import AnalysisVideoChartComponent from './AnalysisVideoChartComponent';
-import VideoListComponent from '../../video/detail/VideoListComponent';
+import AnalysisVideoInfoComponent from '../../../components/analysis/video/AnalysisVideoInfoComponent';
+import AnalysisVideoChartComponent from '../../../components/analysis/video/AnalysisVideoChartComponent';
+
 
 const AnalysisVideoBlock = styled.div`
     width: 1080px;

@@ -19,26 +19,70 @@ const AnalysisChannelChartBlock = styled.div`
         padding: 30px 35px;
         margin-top: 25px;
     }
-    
-   
 `;
-const data = {
-    labels: ['일일조회수', '영상별 평균 조회수', '조회수 증가율', '호감도'],
-    datasets: [
-        {
-            label: '블랙핑크 채널',
-            type: 'line',
-            backgroundColor: 'rgba(255,99,132,1)',
-            // borderColor: 'rgba(255,99,132,1)',
-            borderWidth: 1,
-            //stack: 1,
-            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-            hoverBorderColor: 'rgba(255,99,132,0.4)',
-            data: [65, 70, 80, 91],
-        },
-    ],
-};
-const AnalysisChannelChartComponent = ({ title = '블랙핑크' }) => {
+
+const AnalysisChannelChartComponent = ({
+    channelDetail,
+    channelDetailError,
+}) => {
+    const { title, channel_statistics } = channelDetail;
+
+    let youtubeSubscriberIncreaseArr = [];
+    let youtubeSubscriberIncreaseDateArr = [];
+
+    channel_statistics.map((channel_statistic) => {
+        youtubeSubscriberIncreaseArr.push(channel_statistic.subscriber_count);
+        youtubeSubscriberIncreaseDateArr.push(
+            channel_statistic.updated_at.split(' ')[0],
+        );
+    });
+    const youtubeSubscriberIncreaseData = {
+        labels: youtubeSubscriberIncreaseDateArr,
+        datasets: [
+            {
+                label: `${title} 채널`,
+                type: 'line',
+                backgroundColor: 'rgba(255,99,132,1)',
+                // borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1,
+                //stack: 1,
+                hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                hoverBorderColor: 'rgba(255,99,132,0.4)',
+                data: youtubeSubscriberIncreaseArr,
+            },
+        ],
+    };
+    let youtubeDaliyViewCountIncreaseArr = [];
+    let youtubeDaliyViewCountIncreaseDateArr = [];
+    channel_statistics.map((channel_statistic) => {
+        youtubeDaliyViewCountIncreaseArr.push(channel_statistic.view_count);
+        youtubeDaliyViewCountIncreaseDateArr.push(
+            channel_statistic.updated_at.split(' ')[0],
+        );
+    });
+    const youtubeDaliyViewCountIncreaseData = {
+        labels: youtubeDaliyViewCountIncreaseDateArr,
+        datasets: [
+            {
+                label: `${title} 채널`,
+                type: 'line',
+                backgroundColor: 'rgba(255,99,132,1)',
+                // borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1,
+                //stack: 1,
+                hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                hoverBorderColor: 'rgba(255,99,132,0.4)',
+                data: youtubeDaliyViewCountIncreaseArr,
+                // data: [
+                //     view_count / 365,
+                //     everageViewCountVideoCount,
+                //     rateOfIncrease,
+                //     like_ability,
+                // ],
+            },
+        ],
+    };
+
     const onSetting = useCallback((title) => {
         const options = {
             plugins: {
@@ -99,20 +143,26 @@ const AnalysisChannelChartComponent = ({ title = '블랙핑크' }) => {
                 <div className="title-block">
                     {`${title}유튜브 채널 구독자수 변화량`}
                 </div>
-                <Line data={data} options={() => onSetting(title)} />
+                <Line
+                    data={youtubeSubscriberIncreaseData}
+                    options={() => onSetting(title)}
+                />
             </div>
             <div className="performance-chart-block">
                 <div className="title-block">
-                    {`${title}유튜브 채널 구독자수 변화량`}
+                    {`${title} 유튜브 채널 일일 조회수 변화량`}
                 </div>
-                <Line data={data} options={() => onSetting(title)} />
+                <Line
+                    data={youtubeDaliyViewCountIncreaseData}
+                    options={() => onSetting(title)}
+                />
             </div>
-            <div className="performance-chart-block">
+            {/* <div className="performance-chart-block">
                 <div className="title-block">
-                    {`${title}유튜브 채널 구독자수 변화량`}
+                    {`${title} 관련 유튜브 채널 활성도`}
                 </div>
                 <Line data={data} options={() => onSetting(title)} />
-            </div>
+            </div> */}
         </AnalysisChannelChartBlock>
     );
 };

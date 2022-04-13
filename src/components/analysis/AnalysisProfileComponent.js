@@ -47,12 +47,13 @@ const AnalysisProfileBlock = styled.div`
                 }
                 .description-block {
                     font-size: 13px;
+                    
                     margin: 5px 0;
                     color: #212529;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
-                    width: 100%;
+                    width: 570px;
                     margin-bottom: 10px;
                     -webkit-line-clamp: 2;
                     -webkit-box-orient: vertical;
@@ -93,11 +94,29 @@ const AnalysisProfileBlock = styled.div`
     }
 `;
 
-const AnalysisProfileComponent = () => {
+const AnalysisProfileComponent = ({ channelDetail, channelDetailError }) => {
+    const {
+        // pk,
+        // published_at,
+        // channel_class,
+        categories,
+        title,
+        // channel_likeability_index,
+        // channel_statistics,
+        description,
+        logo,
+        // video_upload_count,
+    } = channelDetail;
+
     return (
         <AnalysisProfileBlock>
             <div className="banner-block">
-                <img src="https://yt3.ggpht.com/wMs1qwXoYZYHYfTqUjk_jIQy_wTRAlvVM2aNLYD7pQmvxbvmd5NUkaRygG5ZLG8T-lj5S1DY=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj" />
+                <img
+                    src={logo.replace(
+                        'http://youtube-market-front.s3.amazonaws.com/https%3A/',
+                        'https://',
+                    )}
+                />
             </div>
             <div className="channel-profile-block">
                 <div className="short-profile-block">
@@ -108,19 +127,14 @@ const AnalysisProfileComponent = () => {
                         />
                     </div>
                     <div className="info-block">
-                        <div className="title-block">BLACKPINK</div>
-                        <div className="description-block">
-                            BLACKPINK Official YouTube Channel 블랙핑크 공식
-                            유튜브 채널입니다. JISOO, JENNIE, ROSÉ, LISA 지수,
-                            제니, 로제, 리사
-                        </div>
+                        <div className="title-block">{title}</div>
+                        <div className="description-block">{description}</div>
                         <div className="category-block">
-                            <div className="tags-block">
-                                <span>음악</span>
-                            </div>
-                            <div className="tags-block">
-                                <span>엔터테이먼트</span>
-                            </div>
+                            {categories.map((category) => (
+                                <div className="tags-block" key={category.id}>
+                                    <span>{category.kind_hangle}</span>
+                                </div>
+                            ))}
                         </div>
 
                         <div className="sns-block"></div>

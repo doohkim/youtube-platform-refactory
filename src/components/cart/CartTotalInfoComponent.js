@@ -286,6 +286,7 @@ const CartTotalInfoComponent = ({
         addressList,
         dispatch,
     ]);
+    console.log(addressList)
     return (
         <CartTotalInfoBlock>
             <div className="address-block">
@@ -384,9 +385,17 @@ const CartTotalInfoComponent = ({
                 </div>
             ) : (
                 <div className="order-button-block">
-                    <Link to="/payment">
-                        <button className="order-btn">주문하기</button>
-                    </Link>
+                    {addressList && addressList.count == 0 ? (
+                        <Link to="/payment">
+                            <button disabled className="disabled-order-btn">
+                                주소를 입력해주세요
+                            </button>
+                        </Link>
+                    ) : (
+                        <Link to="/payment">
+                            <button className="order-btn">주문하기</button>
+                        </Link>
+                    )}
                 </div>
             )}
         </CartTotalInfoBlock>

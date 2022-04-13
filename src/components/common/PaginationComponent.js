@@ -14,6 +14,7 @@ const PaginationComponent = ({
     dataList,
     dataListError,
     loading,
+    totalCount,
     setPage,
     page,
 }) => {
@@ -29,7 +30,7 @@ const PaginationComponent = ({
             <Pagination
                 activePage={page}
                 itemsCountPerPage={20}
-                totalItemsCount={dataList.count}
+                totalItemsCount={totalCount}
                 pageRangeDisplayed={5}
                 onChange={setPage}
                 hideDisabled

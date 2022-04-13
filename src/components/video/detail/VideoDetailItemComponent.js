@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { BsPlay } from 'react-icons/bs';
+
 const VideoItemBlock = styled.div`
     align-items: center;
     width: 23%;
@@ -105,8 +106,8 @@ const VideoItemBlock = styled.div`
     }
 `;
 
-const VideoItemComponent = ({ videoInfo }) => {
-    const { title, thumbnail, published_at, video_statistics , channel} =
+const VideoDetailItemComponent = ({ videoInfo, channelInfo }) => {
+    const { title, thumbnail, published_at, video_statistics } =
         videoInfo;
     
     const { view_count } = video_statistics;
@@ -132,7 +133,7 @@ const VideoItemComponent = ({ videoInfo }) => {
                     <div className="channel-block">
                         <div className="logo-block">
                             <img
-                                src={channel.logo.replace(
+                                src={channelInfo.logo.replace(
                                     'http://youtube-market-front.s3.amazonaws.com/https%3A/',
                                     'https://',
                                 )}
@@ -140,7 +141,7 @@ const VideoItemComponent = ({ videoInfo }) => {
                             />
                         </div>
                         <div className="channel-info">
-                            <div className="title">{channel.title}</div>
+                            <div className="title">{channelInfo.title}</div>
                             <div className="view-block">
                                 <BsPlay />
                                 <span className="view">{view_count}</span>
@@ -153,4 +154,4 @@ const VideoItemComponent = ({ videoInfo }) => {
         </VideoItemBlock>
     );
 };
-export default VideoItemComponent;
+export default VideoDetailItemComponent;

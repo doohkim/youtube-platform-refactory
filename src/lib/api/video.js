@@ -1,6 +1,6 @@
 import client from './client';
 export const filterVideo = (filter_data) =>
-    client.post(
+    client.get(
         `/channels/video/?page=${filter_data.page}&sort=${filter_data.sort}/`,
         {
             filter_data,

@@ -8,23 +8,21 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { MdDateRange } from 'react-icons/md';
 import { BsPlayCircle } from 'react-icons/bs';
 
-
 const AnalysisChannelPerformanceBlock = styled.div`
     width: 100%;
     display: flex;
-    padding:1rem;
-
+    padding: 1rem;
 
     .channel-performance-chart-block {
         border-right: 1px solid #dcdcdc;
         border-top: 1px solid #dcdcdc;
         padding-right: 25px;
-        padding-top:1rem;
+        padding-top: 1rem;
         width: 60%;
     }
     .channel-performance-short-info-block {
         border-top: 1px solid #dcdcdc;
-        padding-top:2.5rem;
+        padding-top: 2.5rem;
         width: 40%;
         padding-left: 25px;
         /* background-color: lightskyblue; */
@@ -91,27 +89,57 @@ const AnalysisChannelPerformanceBlock = styled.div`
         }
     }
 `;
-const data = {
-    labels: ['일일조회수', '영상별 평균 조회수', '조회수 증가율', '호감도'],
-    datasets: [
-        {
-            label: '블랙핑크 채널',
-            type: 'bar',
-            backgroundColor: 'rgba(255,99,132,1)',
-            // borderColor: 'rgba(255,99,132,1)',
-            borderWidth: 1,
-            //stack: 1,
-            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-            hoverBorderColor: 'rgba(255,99,132,0.4)',
-            data: [65, -59, 80, -81],
-        },
-    ],
-};
+
 const AnalysisChannelPerformanceComponent = ({
     channelDetail,
     channelDetailError,
-    loading,
 }) => {
+    const {
+        pk,
+        published_at,
+        channel_class,
+        categories,
+        title,
+        channel_likeability_index,
+        channel_statistics,
+        description,
+        logo,
+        video_upload_count,
+    } = channelDetail;
+
+    const {
+        subscriber_count,
+        diff_view_count,
+        view_count,
+        video_count,
+        diff_subscriber_count,
+    } = channel_statistics[0];
+    const yesterdaySubscriberCount = subscriber_count - diff_subscriber_count;
+    const rateOfIncreaseSubscriberCount = (diff_subscriber_count / yesterdaySubscriberCount) * 100;
+    const yesterdayViewCount = view_count - diff_view_count;
+    const rateOfIncreaseViewCount = (diff_view_count / yesterdayViewCount) * 100;
+    const everageViewCountVideoCount = view_count / video_count;
+    const data = {
+        labels: ['일일조회수', '영상별 평균 조회수', '조회수 증가율', '호감도'],
+        datasets: [
+            {
+                label: '블랙핑크 채널',
+                type: 'bar',
+                backgroundColor: 'rgba(255,99,132,1)',
+                // borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1,
+                //stack: 1,
+                hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                hoverBorderColor: 'rgba(255,99,132,0.4)',
+                data: [
+                    Number(String(view_count).substr(0, 2)),
+                    Number(String(everageViewCountVideoCount).substr(0, 2)),
+                    rateOfIncreaseViewCount.toFixed(2),
+                    rateOfIncreaseSubscriberCount.toFixed(2),
+                ],
+            },
+        ],
+    };
     const options = {
         plugins: {
             title: {
@@ -124,16 +152,6 @@ const AnalysisChannelPerformanceComponent = ({
                     weight: 500,
                 },
             },
-            // callbacks: {
-            //     title: (context) => context[0].label + '💙',
-            //     label: (context) => {
-            //         let label = context.dataset.label + '' || '';
-
-            //         return context.parsed.y !== null
-            //             ? label + ': ' + context.parsed.y + '배'
-            //             : null;
-            //     },
-            // },
         },
         responsive: true,
         scales: {
@@ -147,17 +165,6 @@ const AnalysisChannelPerformanceComponent = ({
                 },
                 axis: 'x',
                 position: 'bottom',
-                // title:{
-                //     display: true,
-                //     align: 'end',
-                //     font: {
-                //         size: 12,
-                //         family: "'Noto Sans KR', sans-serif",
-                //         weight: 500,
-                //     },
-
-                //     text: '날짜',
-                // }
             },
             y: {
                 type: 'linear',
@@ -219,7 +226,7 @@ const AnalysisChannelPerformanceComponent = ({
                                 <div className="columns">구독자 등급</div>
                             </div>
                             <div className="right-td">
-                                <div className="values">다이아</div>
+                                <div className="values">{channel_class}</div>
                             </div>
                         </div>
                         <div className="channel-space-between-block">
@@ -230,7 +237,11 @@ const AnalysisChannelPerformanceComponent = ({
                                 <div className="columns">구독자수</div>
                             </div>
                             <div className="right-td">
-                                <div className="values">7220만</div>
+                                <div className="values">
+                                    {channel_statistics[0].subscriber_count /
+                                        1000}
+                                    만
+                                </div>
                             </div>
                         </div>
                         <div className="channel-space-between-block">
@@ -241,7 +252,9 @@ const AnalysisChannelPerformanceComponent = ({
                                 <div className="columns">채널 가입일</div>
                             </div>
                             <div className="right-td">
-                                <div className="values">2026-06-29</div>
+                                <div className="values">
+                                    {published_at.split(' ')[0]}
+                                </div>
                             </div>
                         </div>
                         <div className="channel-space-between-block">
@@ -252,7 +265,9 @@ const AnalysisChannelPerformanceComponent = ({
                                 <div className="columns">총 영상수</div>
                             </div>
                             <div className="right-td">
-                                <div className="values">396</div>
+                                <div className="values">
+                                    {channel_statistics[0].video_count}개
+                                </div>
                             </div>
                         </div>
                     </div>

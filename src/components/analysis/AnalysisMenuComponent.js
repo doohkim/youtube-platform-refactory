@@ -68,7 +68,6 @@ const AnalysisMenuComponent = ({ subCategory, onSubSelect }) => {
     const params = Object.values(useParams());
     const channelId = params[0];
     const type = params[1];
-    console.log(channelId)
     return (
         <AnalysisMenuBlock>
             {subCategories.map((c) => (

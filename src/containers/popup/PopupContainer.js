@@ -27,7 +27,6 @@ const PopupContainer = () => {
     );
     const onSavePostCodeDetailInfo = useCallback(
         ({ id, receiveName, phoneNumber }) => {
-            console.log(id)
             dispatch(
                 updateAddressDetail({
                     id,
@@ -35,13 +34,13 @@ const PopupContainer = () => {
                     phoneNumber,
                 }),
             );
-            window.opener.location.reload()
+            window.opener.location.replace('/payment')
             window.close()
         },
         [dispatch],
     );
     const onClosePopup = useCallback(() => {
-        window.opener.location.reload()
+        window.opener.location.replace('/payment')
         window.close()
     },[])
     useEffect(() => {

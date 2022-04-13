@@ -42,6 +42,7 @@ const RankChannelContentComponent = ({
                 <PaginationComponent
                     dataList={dataList}
                     dataListError={dataListError}
+                    totalCount={dataList.count}
                     loading={loading}
                     setPage={setPage}
                     page={page}

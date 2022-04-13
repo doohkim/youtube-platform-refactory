@@ -31,6 +31,7 @@ function loadUser() {
         }
         // store.dispatch(tempSetUser(JSON.parse(user)));
         store.dispatch(check());
+        console.log('index token value', token)
     } catch (e) {
         console.log('local Storeage is not working');
     }

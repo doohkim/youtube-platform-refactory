@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PaginationComponent from '../../common/PaginationComponent';
-import ResultComponent from '../../rank/video/ResultComponent';
-
+import VideoDetailResultComponent from './VideoDetailResultComponent'
 const VideoListBlock = styled.div`
     width: 1080px;
     margin: auto;
@@ -24,16 +23,17 @@ const VideoListComponent = ({
 }) => {
     return (
         <VideoListBlock>
-            <ResultComponent
+            <VideoDetailResultComponent
                 dataList={videoDetail}
                 dataListError={videoDetailError}
                 loading={loading}
-                
             />
+            
             <PaginationComponent
                 dataList={videoDetail}
                 dataListError={videoDetailError}
                 setPage={setPage}
+                totalCount={videoDetail.channel.videos.length}
                 page={page}
             />
         </VideoListBlock>

@@ -16,26 +16,27 @@ const VideoContentBlock = styled.div`
 const VideoContentComponent = ({
     videoDetail,
     videoDetailError,
-    loading,
+    videoReadLoading,
     setPage,
     page,
 }) => {
     
     return (
         <VideoContentBlock>
-            {!loading && videoDetail && (
+            {!videoReadLoading && videoDetail && (
                 <VideoInfoComponent
                     videoDetail={videoDetail}
                     videoDetailError={videoDetailError}
+                    loading={videoReadLoading}
                 />
             )}
-            {!loading && videoDetail && (
+            {!videoReadLoading && videoDetail && (
                 <VideoListComponent
                     setPage={setPage}
                     page={page}
                     videoDetail={videoDetail}
                     videoDetailError={videoDetailError}
-                    loading={loading}
+                    loading={videoReadLoading}
                 />
             )}
         </VideoContentBlock>

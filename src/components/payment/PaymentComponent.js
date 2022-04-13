@@ -72,7 +72,6 @@ const PaymentComponent = ({
     if (selectedAddressError || cartFilterError) {
         return <PaymentBlock>api 에러</PaymentBlock>;
     }
-    console.log(cartFilterData)
     return (
         <PaymentBlock>
             <div className="page-tit">

@@ -12,7 +12,7 @@ const AnalysisChannelBlock = styled.div`
 
 const AnalysisChannelContainer = () => {
     const [channelDetail, channelDetailError, isLoading] = useOutletContext();
-    // console.log(useParams())
+    
     return (
         <AnalysisChannelBlock>
             {!isLoading && channelDetail && (

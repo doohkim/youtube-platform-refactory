@@ -30,9 +30,13 @@ const AnalaysisContainer = () => {
             dispatch(readChannel(channelId));
         }
     }, [dispatch, channelId]);
+    console.log('analysis container ', channelDetail);
     return (
         <>
-            <AnalysisProfileComponent />
+            {!isLoading && channelDetail && <AnalysisProfileComponent 
+                channelDetail={channelDetail}
+                channelDetailError={channelDetailError}
+            />}
             <AnalysisMenuComponent
                 subCategory={subCategory}
                 onSubSelect={onSubSelect}

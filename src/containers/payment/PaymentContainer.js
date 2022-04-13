@@ -102,10 +102,12 @@ const PaymentContainer = () => {
         }
     };
     useEffect(() => {
+        console.log(user)
         if(user){
             dispatch(getSelectedAddress());
             dispatch(getSelectedCart());
         }else{
+            console.log('payment user not found ??')
             navigate('/login')
         }
         const jquery = document.createElement('script');

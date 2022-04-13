@@ -210,6 +210,7 @@ const ChannelItemBlock = styled.div`
     }
 `;
 const ChannelItemComponent = ({ channelInfo, index }) => {
+    // console.log(channelInfo, 'channelitemcomponent')
     const { videos } = channelInfo;
     // const { thumbnail } = videos;
     // console.log(videos&& videos.id,channelInfo.title)
@@ -346,7 +347,7 @@ const ChannelItemComponent = ({ channelInfo, index }) => {
                 </div>
                 <div className="channel-card-info-video-wrap">
                     <Link
-                        to={videos ? `/detail/video/${videos.id}` : '#'}
+                        to={videos ? `/detail/video/${videos.video_id}` : '#'}
                         className="video-link"
                     >
                         {videos === null ? (

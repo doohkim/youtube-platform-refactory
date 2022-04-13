@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { BiComment, BiLike } from 'react-icons/bi';
 import { BsShare } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 const VideoInfoBlock = styled.div`
     width: 100%;
     display: flex;
@@ -147,7 +147,7 @@ const ErrorBlock = styled.div`
     height: 100px;
     background: gray;
 `;
-const VideoInfoComponent = ({ videoDetail, videoDetailError, loading }) => {
+const VideoInfoComponent = ({ videoDetail, videoDetailError }) => {
     const { channel, video_statistics } = videoDetail;
     const navigate = useNavigate();
 
@@ -191,61 +191,13 @@ const VideoInfoComponent = ({ videoDetail, videoDetailError, loading }) => {
                 {videoDetail.description}
             </div>
             <div className="video-tags-block">
-                <div className="video-tag">
-                    <Link to="#" className="tag-block">
-                        kbs
-                    </Link>
-                </div>
-                <div className="video-tag">
-                    <Link to="#" className="tag-block">
-                        kbsworld
-                    </Link>
-                </div>
-                <div className="video-tag">
-                    <Link to="#" className="tag-block">
-                        kbs world V
-                    </Link>
-                </div>
-                <div className="video-tag">
-                    <Link to="#" className="tag-block">
-                        KBSWorld
-                    </Link>
-                </div>
-                <div className="video-tag">
-                    <Link to="#" className="tag-block">
-                        KBS
-                    </Link>
-                </div>
-                <div className="video-tag">
-                    <Link to="#" className="tag-block">
-                        kbsworldTV
-                    </Link>
-                </div>
-                <div className="video-tag">
-                    <Link to="#" className="tag-block">
-                        kbs월드
-                    </Link>
-                </div>
-                <div className="video-tag">
-                    <Link to="#" className="tag-block">
-                        월드TV
-                    </Link>
-                </div>
-                <div className="video-tag">
-                    <Link to="#" className="tag-block">
-                        kbs 월드
-                    </Link>
-                </div>
-                <div className="video-tag">
-                    <Link to="#" className="tag-block">
-                        KBS WORLD TV
-                    </Link>
-                </div>
-                <div className="video-tag">
-                    <Link to="#" className="tag-block">
-                        world tv
-                    </Link>
-                </div>
+                {channel.categories.map((category) => (
+                    <div className="video-tag" key={category.id}>
+                        <Link to="#" className="tag-block">
+                            {category.kind}
+                        </Link>
+                    </div>
+                ))}
             </div>
             <div className="video-channel-profile-block">
                 <div className="channel-logo">
@@ -262,7 +214,11 @@ const VideoInfoComponent = ({ videoDetail, videoDetailError, loading }) => {
                         <Link to="#">{channel.title}</Link>
                     </div>
                     <div className="channel-view-block">
-                        <Link to="#">{channel.channel_statistics[0].subscriber_count/10000}만</Link>
+                        <Link to="#">
+                            {channel.channel_statistics[0].subscriber_count /
+                                10000}
+                            만
+                        </Link>
                     </div>
                 </div>
             </div>

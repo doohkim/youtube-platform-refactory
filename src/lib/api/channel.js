@@ -1,8 +1,8 @@
 import client from './client';
 
-export const filterChannel = (filter_data, ) =>
-    client.post(
-        `/channels/list/?page=${filter_data.page}&sort=${filter_data.sort}/`,
+export const filterChannel = (filter_data) =>
+    client.get(
+        `/channels/?page=${filter_data.page}&sort=${filter_data.sort}/`,
         { filter_data },
     );
 export const filterCategory = () => client.get('/channels/category/');

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { BsPlayCircle } from 'react-icons/bs';
 import { FiPlay } from 'react-icons/fi';
 import { FaRegCommentDots, FaRegThumbsUp } from 'react-icons/fa';
-
+import {numberWithCommas} from '../../../lib/fpp'
 const AnalysisVideoInfoBlock = styled.div`
     width: 100%;
     border-radius: 3px;
@@ -56,7 +56,26 @@ const AnalysisVideoInfoBlock = styled.div`
         }
     }
 `;
-const AnalysisVideoInfoComponent = () => {
+const AnalysisVideoInfoComponent = ({ channelDetail, channelDetailError }) => {
+    const {
+        // pk,
+        // published_at,
+        // channel_class,
+        categories,
+        title,
+        // channel_likeability_index,
+        channel_statistics,
+        description,
+        logo,
+        // video_upload_count,
+    } = channelDetail;
+    const {
+        subscriber_count,
+        diff_view_count,
+        view_count,
+        video_count,
+        diff_subscriber_count,
+    } = channel_statistics[0];
     return (
         <AnalysisVideoInfoBlock>
             <div className="channel-title-block">
@@ -64,7 +83,9 @@ const AnalysisVideoInfoComponent = () => {
             </div>
             <div className="channel-average-info-block">
                 <div className="video-part-block">
-                    <div className="video-number-block">10</div>
+                    <div className="video-number-block">
+                        {numberWithCommas(video_count)}
+                    </div>
                     <div className="video-column-block">
                         <div className="column-img-block">
                             <BsPlayCircle />
@@ -74,7 +95,9 @@ const AnalysisVideoInfoComponent = () => {
                 </div>
 
                 <div className="video-part-block">
-                    <div className="video-number-block">3,328,926</div>
+                    <div className="video-number-block">
+                        {numberWithCommas(Math.round(view_count / video_count))}
+                    </div>
                     <div className="video-column-block">
                         <div className="column-img-block">
                             <FiPlay />

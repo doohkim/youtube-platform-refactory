@@ -31,36 +31,39 @@ const AnalysisVideoChartBlock = styled.div`
         margin-top: 25px;
     }
 `;
-const data = {
-    labels: [
-        '2021-03',
-        '2021-04',
-        '2021-05',
-        '2021-06',
-        '2021-07',
-        '2021-08',
-        '2021-09',
-        '2021-10',
-        '2021-11',
-        '2021-12',
-    ],
-    datasets: [
-        {
-            label: '블랙핑크 채널',
-            type: 'bar',
-            backgroundColor: 'rgba(255,99,132,1)',
-            // borderColor: 'rgba(255,99,132,1)',
-            borderWidth: 1,
-            //stack: 1,
-            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-            hoverBorderColor: 'rgba(255,99,132,0.4)',
-            data: [1, 1, 1, 1, 2, 1, 1, 1, 3, 3, 3],
-        },
-    ],
-};
+
 // data label 길이가 12개이면 1년 30개이면 1개월로 하자
 // data.length=== 30 or length ===12
-const AnalysisVideoChartComponent = ({ title = 'BLACKPINK' }) => {
+const AnalysisVideoChartComponent = ({channelDetail, channelDetailError }) => {
+    const {
+        // pk,
+        // published_at,
+        // channel_class,
+        categories,
+        title,
+        // channel_likeability_index,
+        channel_statistics,
+        description,
+        logo,
+        video_upload_count,
+    } = channelDetail;
+    const { data, video_ea} = video_upload_count
+    const uploadData = {
+        labels: video_ea,
+        datasets: [
+            {
+                label: `${title} 채널`,
+                type: 'bar',
+                backgroundColor: 'rgba(255,99,132,1)',
+                // borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1,
+                //stack: 1,
+                hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                hoverBorderColor: 'rgba(255,99,132,0.4)',
+                data: Array(video_ea.length).fill(1),
+            },
+        ],
+    };
     const onSetting = useCallback((title) => {
         const options = {
             plugins: {
@@ -125,7 +128,7 @@ const AnalysisVideoChartComponent = ({ title = 'BLACKPINK' }) => {
                     <AnalysisButtonComponent selected={true} text={'1개월'}/>
                     <AnalysisButtonComponent text={'1년'}/>
                 </div>
-                <Bar data={data} options={() => onSetting(title)} />
+                <Bar data={uploadData} options={() => onSetting(title)} />
             </div>
         </AnalysisVideoChartBlock>
     );

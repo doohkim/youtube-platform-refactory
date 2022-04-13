@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom'
-import VideoItemComponent from './VideoItemComponent';
+import VideoDetailItemComponent from './VideoDetailItemComponent';
 
 const ResultBlock = styled.div`
     width: 100%;
@@ -14,7 +14,8 @@ const VideoListErrorBlock = styled.div`
     width: 1080px;
     background: gray;
 `;
-const ResultComponent = ({ dataList, dataListError, loading }) => {
+const VideoDetailResultComponent = ({ dataList, dataListError, loading }) => {
+    
     const navigate = useNavigate();
     if (dataListError) {
         navigate('');
@@ -28,14 +29,15 @@ const ResultComponent = ({ dataList, dataListError, loading }) => {
         <ResultBlock>
             {!loading &&
                 dataList &&
-                dataList.results.map((video, index) => (
-                    <VideoItemComponent
+                dataList.channel.videos.map((video, index) => (
+                    <VideoDetailItemComponent
                         key={index}
                         index={index}
                         videoInfo={video}
+                        channelInfo={dataList.channel}
                     />
                 ))}
         </ResultBlock>
     );
 };
-export default ResultComponent;
+export default VideoDetailResultComponent;

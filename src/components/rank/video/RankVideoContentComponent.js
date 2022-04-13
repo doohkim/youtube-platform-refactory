@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { videoStandards } from '../../../utils/standards';
 import PaginationComponent from '../../common/PaginationComponent';
 import SortComponent from '../channel/SortComponent';
-import ResultComponent from './ResultComponent';
+import VideoResultComponent from './VideoResultComponent';
 
 const RankVideoContentBlock = styled.div`
     width: 1080px;
@@ -34,7 +34,7 @@ const RankVideoContentComponent = ({
                 standards={videoStandards}
             />
             {dataList && (
-                <ResultComponent
+                <VideoResultComponent
                     dataList={dataList}
                     dataListError={dataListError}
                     loading={loading}
@@ -44,6 +44,7 @@ const RankVideoContentComponent = ({
                 <PaginationComponent
                     dataList={dataList}
                     dataListError={dataListError}
+                    totalCount={dataList.count}
                     loading={loading}
                     setPage={setPage}
                     page={page}
