@@ -59,6 +59,7 @@ const PostListComponent = ({
                 <PaginationComponent
                     dataList={postList}
                     setPage={setPage}
+                    totalCount={postList.count}
                     page={page}
                     dataListError={postListError}
                     loading={loading}
